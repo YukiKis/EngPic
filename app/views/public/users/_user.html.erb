@@ -1,0 +1,4 @@
+<td><%= attachment_image_tag user, :image, :fill, 50, 40, fallback: "noimage.jpg", size: "50x40" %></td>
+<td><%= link_to user.name, user_path(user) %></td>
+<td>Word count</td>
+<td><button>Follow / Unfollow</button></td>

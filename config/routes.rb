@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+
   scope module: :public do 
     devise_for :users, controllers: {
       sessions: "public/users/sessions",
       registrations: "public/users/registrations"
     }
+    resources :users
   end
   root "homes#top"
   get "/about", to: "homes#about"
