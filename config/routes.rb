@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope module: :users do 
+  scope module: :public do 
     devise_for :users, controllers: {
       sessions: "public/users/sessions",
       registrations: "public/users/registrations"
