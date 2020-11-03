@@ -7,6 +7,12 @@ Rails.application.routes.draw do
     }
     resources :users
     resources :words
+    resource :dictionary, only: [:show]
+    get "dictionary/question"
+    post "dictionary/check"
+    get "dictionary/result"
+    post "dictionary/words/:id", to: "dictionary#add"
+    delete "dictionary/words/:id", to: "dictionary#remove"
   end
   root "homes#top"
   get "/about", to: "homes#about"
