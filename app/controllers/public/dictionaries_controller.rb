@@ -10,7 +10,6 @@ class Public::DictionariesController < ApplicationController
   end
   
   def check
-    
   end
   
   def result
@@ -18,7 +17,7 @@ class Public::DictionariesController < ApplicationController
   
   def add
     @word = Word.find(params[:id])
-    current_user.dictionary.items.new(word: @word)
+    current_user.dictionary.items.create(word: @word)
     redirect_to word_path(@word)
   end
   

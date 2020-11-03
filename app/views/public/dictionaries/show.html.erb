@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <h3>Your Dictionary</h3>
+    <h4 class="text-right">has <%= pluralize(@dictionary.words.count, "word") %></h4>
+    <%# @dictionary.words.tag_list.each do |tag| %>
+    
+    <!--get 5 tags which have most words-->
+    
+      <span class="label label-primary"><%#= tag %></span>
+      <!--get number of how many words each tag has-->
+    <%# end %>
+    <h4>Last updated: on <%= @dictionary.updated_at.strftime("%Y%m%d") %></h4>
+    <h4>Do you want to check your words?</h4>
+    <h4 class="text-right"><%= link_to "Let's test!", dictionary_check_path %></h4>
+    <!--<p>label which changes color depending on how many words user registered so far.</p>-->
+  </div>
+</div>
