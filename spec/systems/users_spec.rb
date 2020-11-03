@@ -99,6 +99,7 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_button "Update"
     end
     it "succeeds to update" do
+      attach_file "", "#{ Rails.root }/assets/images/noimage.jpg"
       fill_in "user[name]", with: "Yuki Kis"
       fill_in "user[introduction]", with: "Nice to meet you"
       click_button "Update"
