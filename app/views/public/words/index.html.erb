@@ -5,8 +5,8 @@
     <div class="row">
       <% @words.each do |word| %>
         <div class="col-sm-3 card">
-          <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail" %><br>
-          <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle" %>
+          <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+          <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
           by <%= word.user.name %>
         </div>
       <% end %>
