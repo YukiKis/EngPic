@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       registrations: "public/users/registrations"
     }
     resources :users
+    resources :words
   end
   root "homes#top"
   get "/about", to: "homes#about"

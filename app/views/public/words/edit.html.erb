@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <h3><%= @title %> word</h3>
+    <%= render "layouts/error", resource: @word %>
+    <div class="row">
+      <%= form_with model: @word, local: true do |f| %>
+        <div class="col-sm-4">
+          <%= attachment_image_tag @word, :image, :fill, 300, 300, fallback: "noimage.jpg", size: "300x300" %>
+          <%= f.attachment_field :image %>
+        </div>
+        <div class="col-sm-4 col-sm-offset-4">
+          <div class="form-group"> 
+            <%= f.label :name, "Name", class: "control-label" %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :meaning, "Meaning", class: "control-label" %>
+            <%= f.text_field :meaning, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :sentence, "Sentence", class: "control-label" %>
+            <%= f.text_area :sentence, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :tag_list, "Tags(カンマ区切りで入力)", class: "control-label" %>
+            <%= f.text_area :tag_list, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :status, "Show to Everybody?", class: "control-label" %>
+            <%= f.radio_button :status, true, class: "form-control" %>
+            <%= f.label :status_true, "YES", class: "control-label" %>
+            <%= f.radio_button :status, false, class: "form-control" %>
+            <%= f.label :status_false, "NO", class: "control-label" %>
+          </div>
+          <%= f.submit "#{ @btn }", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

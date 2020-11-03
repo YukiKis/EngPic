@@ -6,5 +6,7 @@ class User < ApplicationRecord
   
   attachment :image
   
+  has_many :words
+  
   validates :name, presence: true, length: { in: 2..20 }
 end

@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <div class="text-center" style="height: 500px;">
+      <%= attachment_image_tag @word, :image, :fill, 300, 300, fallback: "noimage.jpg", size: "300x300" %>
+      <% @word.tag_list.each do |tag| %>
+        <span class="label-primary"><%= tag %></span>
+      <% end %>
+      <% if current_user.dictionary.include(word) %>
+        <%#= link_to "Add", ###, class: "btn btn-primary" %>
+      <% else %>
+        <%#= link_to "Remove", ###, class: "btn btn-danger" %>
+      <% end %>
+      <% if @word.user == current_user %>
+        <%= link_to "Edit", edit_word_path(@word) %>
+      <% end %>
+      <!--related_word-->
+    </div>
+  </div>
+</div>
