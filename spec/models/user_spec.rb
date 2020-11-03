@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user1) { build(:user1) }
   context "on user validation" do
+    it "has_one dictionary" do
+      expect(User.reflect_on_association(:dictionary).macro).to eq :has_one
+    end
     it "has_many words" do
       expect(User.reflect_on_association(:words).macro).to eq :has_many
     end
