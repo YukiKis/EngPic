@@ -1,14 +1,15 @@
 class Public::DictionariesController < ApplicationController
   before_action :authenticate_user!
+  before_action :setup
   
   def show
-    @dictionary = current_user.dictionary
   end
   
   def choose
   end
   
   def question
+    # @questions = 
   end
   
   def check
@@ -18,15 +19,21 @@ class Public::DictionariesController < ApplicationController
   end
   
   def add
-    @word = Word.find(params[:id])
-    current_user.dictionary.items.create(word: @word)
+    @dictionary.add(Word.find(params[:id]))
     redirect_to word_path(@word)
   end
   
   def remove
-    @word = Word.find(params[:id])
-    current_user.dictionary.items.find_by(word: @word).destroy
+    @dictionary.remove(Word.find(params[:id]))
     redirect_to word_path(@word)
   end
   
+  private
+    def setup
+      @dictionary = current_user.dictionary
+    end
+    
+    # def answer_params
+      # params.require(:answer).permit(:answer)
+    # end
 end

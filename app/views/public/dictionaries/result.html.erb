@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <h3>RESULT</h3>
+    <h4>You made 4 out of 4!</h4>
+    <div class="row">
+      <%= @questions.each do |question| %>
+        <div class="col-sm-6">
+          <%= attachment_image_tag question, :image, :fill, 200, 200, fallback: "noimage.jpg", size: "200x200" %><br>
+          <%= question.name %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <%= link_to "Test Again!", dictionary_select_path %><br>
+        <%= link_to "Back", dictionary_path %>
+    </div>
+  </div>
+</div>
