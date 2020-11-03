@@ -5,8 +5,10 @@ class Public::DictionariesController < ApplicationController
     @dictionary = current_user.dictionary
   end
   
+  def choose
+  end
+  
   def question
-    @dictionary = current_user.dictionary
   end
   
   def check

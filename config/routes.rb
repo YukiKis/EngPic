@@ -8,11 +8,13 @@ Rails.application.routes.draw do
     resources :users
     resources :words
     resource :dictionary, only: [:show]
-    get "dictionary/question"
-    post "dictionary/check"
-    get "dictionary/result"
-    post "dictionary/words/:id", to: "dictionary#add"
-    delete "dictionary/words/:id", to: "dictionary#remove"
+    get "dictionary/choose", to: "dictionaries#choose", as: "dictionary_choose"
+    get "dictionary/question", to: "dictionaries#question", as: "dictionary_question"
+    post "dictionary/check", to: "dictionaries#check", as: "dictionary_check"
+
+    get "dictionary/result",to: "dictionaries#result", as: "dictionary_result"
+    post "dictionary/words/:id", to: "dictionaries#add", as: "dictionary_add"
+    delete "dictionary/words/:id", to: "dictionaries#remove", as: "dictionary_remove"
   end
   root "homes#top"
   get "/about", to: "homes#about"
