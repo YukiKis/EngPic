@@ -3,10 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  
-  attachment :image
-  
+
+  has_one :dictionary, dependent: :destroy
   has_many :words
+
+  attachment :image
   
   validates :name, presence: true, length: { in: 2..20 }
 end

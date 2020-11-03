@@ -24,6 +24,7 @@ RSpec.describe "words page", type: :system do
       end
     end
   end
+  
   context "on show page" do
     before do 
       visit word_path(word1)

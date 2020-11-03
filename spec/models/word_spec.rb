@@ -4,6 +4,9 @@ RSpec.describe "word", type: :model do
   let(:user1){ create(:user1) }
   let(:word1){ build(:word1, user: user1) }
   context "on validation" do
+    it "has_many item" do
+      expect(Word.reflect_on_association(:items).macro).to eq :has_many
+    end
     it "belongs_to user" do
       expect(Word.reflect_on_association(:user).macro).to eq :belongs_to
     end
