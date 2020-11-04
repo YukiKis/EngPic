@@ -35,19 +35,22 @@ RSpec.describe User, type: :model do
       expect(user1).to be_invalid
     end
     it "is invalid if name is too long" do
-      user1.name = "a"* 100
+      user1.name = "a" * 100
       expect(user1).to be_invalid
     end
     it "can follow other user" do
-      expect(user1.followins.count).to chane{ user1.follow(user2) }.by(1)
+      expect{ user2.follow(user3) }.to change{ user2.followings.count }.by(1)
     end
     it "can unfollow other user" do
-      user1.follow(user2)
-      expect(user1.followings.count).to change{ user1.unfollow(user2) }.from(1).to(0)
+      user2.follow(user3)
+      expect{ user2.unfollow(user3) }.to change{ user2.followings.count }.from(1).to(0)
     end
     it "can check whether following other user or not" do
-      user1.follow(user2)
-      expect(user1.following?(user2)).to be true
+      expect(user2.following?(user3)).to be false
+      user2.follow(user3)
+      expect(user2.following?(user3)).to be true
+      user2.unfollow(user3)
+      expect(user2.following?(user3)).to be false
     end
   end
 end

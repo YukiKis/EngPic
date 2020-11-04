@@ -16,7 +16,6 @@ class Public::Users::RegistrationsController < Devise::RegistrationsController
         resource.create_dictionary
       end
     end
-    debugger
   end
 
   # GET /resource/edit
