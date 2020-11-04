@@ -8,16 +8,20 @@ Rails.application.routes.draw do
     resources :users
     post "users/follow/:id", to: "users#follow", as: "users_follow"
     delete "users/unfollow/:id", to: "users#unfollow", as: "users_unfollow"
+    
     resources :words
-    resource :dictionary, only: [:show]
+    
+    resource :dictionary, only: [:show, :create]
+    get "dictionary/words", to: "dictionaries#words", as: "dictionary_words"
     get "dictionary/choose", to: "dictionaries#choose", as: "dictionary_choose"
     get "dictionary/question", to: "dictionaries#question", as: "dictionary_question"
     post "dictionary/check", to: "dictionaries#check", as: "dictionary_check"
-
     get "dictionary/result",to: "dictionaries#result", as: "dictionary_result"
     post "dictionary/words/:id", to: "dictionaries#add", as: "dictionary_add"
     delete "dictionary/words/:id", to: "dictionaries#remove", as: "dictionary_remove"
+    
   end
+  
   root "homes#top"
   get "/about", to: "homes#about"
   get "/howto", to: "homes#howto"
