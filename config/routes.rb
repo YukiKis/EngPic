@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     delete "users/unfollow/:id", to: "users#unfollow", as: "users_unfollow"
     
     resources :words
+    get "words/tagged_words/:tag", to: "words#tagged_words", as: "tagged_words"
     
     resource :dictionary, only: [:show, :create]
     get "dictionary/words", to: "dictionaries#words", as: "dictionary_words"

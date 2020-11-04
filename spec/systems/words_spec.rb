@@ -23,6 +23,13 @@ RSpec.describe "words page", type: :system do
         expect(page).to have_link "", href: word_path(word)
       end
     end
+    it "has blue color if out of dictionary but in items" do
+      user1.dictionary.remove(word1)
+      expect(page).to have_css "#card-1.bg-info"
+    end
+    it "has yellow color if in dictionary" do
+      expect(page).to have_css "#card-1.bg-warning"
+    end
   end
   
   context "on show page" do
