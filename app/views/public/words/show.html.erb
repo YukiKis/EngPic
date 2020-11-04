@@ -5,11 +5,9 @@
       <% @word.tag_list.each do |tag| %>
         <span class="label-primary"><%= tag %></span>
       <% end %>
-      <% if current_user.dictionary.include(word) %>
-        <%#= link_to "Add", ###, class: "btn btn-primary" %>
-      <% else %>
-        <%#= link_to "Remove", ###, class: "btn btn-danger" %>
-      <% end %>
+      <span id="add-btn-<%= @word.id %>">
+        <%= render "public/dictionaries/add-btn", word: @word %> 
+      </span>
       <% if @word.user == current_user %>
         <%= link_to "Edit", edit_word_path(@word) %>
       <% end %>

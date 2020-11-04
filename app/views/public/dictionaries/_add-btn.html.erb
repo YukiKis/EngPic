@@ -1,0 +1,5 @@
+<% if current_user.dictionary.words.include?(word) %>
+  <%= link_to "Remove", dictionary_remove_path(word), method: :delete, remote: true, class: "btn btn-danger" %>
+<% else %>
+  <%= link_to "Add", dictionary_add_path(word), method: :post, remote: true, class: "btn btn-primary" %>
+<% end %>

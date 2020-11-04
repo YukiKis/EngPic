@@ -29,6 +29,14 @@ class Public::UsersController < ApplicationController
     end
   end
   
+  def follow
+    current_user.follow(@user)
+  end
+  
+  def unfollow
+    current_user.unfollow(@user)
+  end
+  
   private
     def setup
       @user = User.find(params[:id])

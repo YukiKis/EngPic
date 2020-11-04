@@ -22,7 +22,7 @@ RSpec.describe "word", type: :model do
       expect(word1).to be_invalid
     end
     it "is invalid without image" do
-      word1.image_id = ""
+      word1.image = ""
       expect(word1).to be_invalid
     end
   end

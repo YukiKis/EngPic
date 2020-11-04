@@ -4,6 +4,7 @@ class Public::WordsController < ApplicationController
 
   def index
     @words = Word.all
+    @word_count = @words.count
   end
   
   def show
@@ -19,6 +20,7 @@ class Public::WordsController < ApplicationController
   def create
     @word = current_user.words.new(word_params)
     if @word.save
+      current_user.dictionary.add(@word)
       redirect_to word_path(@word)
     else
       render "edit"

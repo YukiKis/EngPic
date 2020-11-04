@@ -13,7 +13,7 @@ RSpec.describe "words page", type: :system do
       visit words_path
     end
     it "has word count" do
-      exepct(page).to have_content Word.all.count
+      expect(page).to have_content Word.all.count
     end
     it "has word-cards" do
       Word.all.each do |word|
