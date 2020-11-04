@@ -25,12 +25,12 @@
             <%= f.label :tag_list, "Tags(カンマ区切りで入力)", class: "control-label" %>
             <%= f.text_area :tag_list, class: "form-control" %>
           </div>
-          <div class="form-group">
-            <%= f.label :status, "Show to Everybody?", class: "control-label" %>
-            <%= f.radio_button :status, true, class: "form-control" %>
-            <%= f.label :status_true, "YES", class: "control-label" %>
-            <%= f.radio_button :status, false, class: "form-control" %>
-            <%= f.label :status_false, "NO", class: "control-label" %>
+          <!--<div class="form-group">-->
+            <%#= f.label :status, "Show to Everybody?", class: "control-label" %>
+            <%#= f.radio_button :status, true, class: "form-control" %>
+            <%#= f.label :status_true, "YES", class: "control-label" %>
+            <%#= f.radio_button :status, false, class: "form-control" %>
+            <%#= f.label :status_false, "NO", class: "control-label" %>
           </div>
           <%= f.submit "#{ @btn }", class: "btn btn-primary" %>
         </div>

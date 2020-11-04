@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       registrations: "public/users/registrations"
     }
     resources :users
+    get "users/:id/followers", to: "users#followers", as: "users_followers"
+    get "users/:id/followings", to: "users#followings", as: "users_followings"
     post "users/follow/:id", to: "users#follow", as: "users_follow"
     delete "users/unfollow/:id", to: "users#unfollow", as: "users_unfollow"
     

@@ -49,6 +49,18 @@ RSpec.describe "users page", type: :system do
     it "has own introduction" do
       expect(page).to have_content user1.introduction
     end
+    it "has link to followers" do
+      expect(page).to have_link "Followers", href: "users_followers_path"
+    end
+    it "has number how many followers s/he has" do
+      expect(page).to have_content user1.followers.count
+    end
+    it "has link to followings" do
+      expect(page).to have_link "Followings", href: "users_followings_path"
+    end
+    it "has number how many followings s/he has" do
+      expect(page).to have_content user1.followings.count
+    end
     it "has own word count" do
       expect(page).to have_content user1.words.count
     end
@@ -73,12 +85,12 @@ RSpec.describe "users page", type: :system do
     it "does NOT have link for editing if it is not own information" do
       expect(page).to have_no_link "Editing", href: edit_user_path(user2)
     end
-    # it "has follow button if not following" do
-    #   expect(page).to have_link "Follow", href: ###
-    # end
-    # it "has unfollow buttonn if following" do
-    #   expect(page).to have_link "Unfollow", href: ###
-    # end
+    it "has follow button if not following" do
+      expect(page).to have_link "Follow", href: users_follow_path(user2)
+    end
+    it "has unfollow buttonn if following" do
+      expect(page).to have_link "Unfollow", href: users_unfollow_path(user2)
+    end
   end
   
   context "on edit page" do
@@ -104,7 +116,7 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_button "Update"
     end
     it "succeeds to update" do
-      attach_file "", "#{ Rails.root }/assets/images/noimage.jpg"
+      attach_file "user[image]", "#{ Rails.root }/spec/factories/noimage.jpg"
       fill_in "user[name]", with: "Yuki Kis"
       fill_in "user[introduction]", with: "Nice to meet you"
       click_button "Update"

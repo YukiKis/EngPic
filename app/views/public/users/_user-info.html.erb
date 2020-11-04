@@ -1,9 +1,12 @@
 <div id="user-info">
-  <%= attachment_image_tag user, :image, class: "img-square my-img", fallback: "noimage.jpg", size: "225x225" %>
+  <%= attachment_image_tag user, :image, :fill, 150, 150, class: "my-img", fallback: "noimage.jpg", size: "150x150" %>
   <table class="table table-hover">
     <tr><th>Name</th><td><%= user.name %></td></tr>
     <tr><th>Introduction</th><td><%= user.introduction %></td></tr>
-    <tr><th>Follower</th><td id="followers-number"><%= user.followers.count %></td></tr>
-    <tr><th>Followings</th><td id="followers-number"><%= user.followings.count %></td></tr>
+    <tr><th><%= link_to "Followers", users_followers_path(user) %></th><td id="followers-number"><%= user.followers.count %></td></tr>
+    <tr><th><%= link_to "Followings", users_followings_path(user) %></th><td id="followers-number"><%= user.followings.count %></td></tr>
   </table>
+  <% if user == current_user %>
+    <span><%= link_to "Editing", edit_user_path(user), class: "btn btn-block" %></span> 
+  <% end %>
 </div>

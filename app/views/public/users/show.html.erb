@@ -4,24 +4,37 @@
       
       <div class="col-sm-3">
         <%= render "user-info", user: @user %>
-        <% if @user == current_user %>
-          <span><%= link_to "Editing", edit_user_path(@user), class: "btn btn-block" %></span> 
-        <% end %>
         <span id="follow-btn-<%= @user.id %>"><%= render "follow-btn", user: @user %></span>
       </div>
       
       <div class="col-sm-9">
+        <h3><%= @user.name %>'s words</h3>
         <div class="row">
-          <% if @user.words.any? %>
-            <% @user.words.each do |word| %>
-              <%= render "layouts/word", word: word %>
-            <% end %>
-          <% else %>
-            <h4>No words yet in the dictionary</h4>
+          <% @user.words.each do |word| %>
+            <div class="col-sm-3">
+              <% if current_user.dictionary.words.include?(word) %>
+                <div class="card bg-warning" id="card-<%= word.id %>">
+                  <%= link_to word_path(word) do %>
+                    <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                  <% end %>
+                </div>
+              <% elsif current_user.words.include?(word) %>
+                <div class="card bg-info" id="card-<%= word.id %>">
+                  <%= link_to word_path(word) do %>
+                    <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                  <% end %>
+                </div>
+              <% else %>
+                <div class="card">
+                  <%= link_to word_path(word) do %>
+                    <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
           <% end %>
         </div>
       </div>
-      
     </div>
   </div>
 </div>

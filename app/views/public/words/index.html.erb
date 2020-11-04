@@ -1,41 +1,44 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
-    <h3><%= pluralize(@words.count, "word") %> in Total</h3>
-    <% if current_user.dictionary.present? %>
-      <%= link_to "+", new_word_path %>
-    <% else %>
-      <%= link_to "Start to make My Dictionary", dictionary_path, method: :post %>
-    <% end %>
     <div class="row">
-      <% @words.each do |word| %>
-        <div class="col-sm-3">
-          <% if current_user.dictionary.words.include?(word) %>
-            <div class="card bg-warning" id="card-<%= word.id %>">
-              <%= link_to word_path(word) do %>
-                <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
-                <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
-                by <%= word.user.name %>
-              <% end %>
-            </div>
-          <% elsif current_user.words.include?(word) %>
-            <div class="card bg-info" id="card-<%= word.id %>">
-              <%= link_to word_path(word) do %>
-                <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
-                <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
-                by <%= word.user.name %>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="card">
-              <%= link_to word_path(word) do %>
-                <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
-                <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
-                by <%= word.user.name %>
+      <div class="col-sm-3">
+        <%= render "public/users/user-info", user: current_user %>
+      </div>
+      <div class="col-sm-9">
+        <h3><%= pluralize(@words.count, "word") %> in Total</h3>
+        <h3 class="text-right"><%= link_to "+", new_word_path %></h3>
+        <div class="row">
+          <% @words.each do |word| %>
+            <div class="col-sm-3">
+              <% if current_user.dictionary.words.include?(word) %>
+                <div class="card bg-warning" id="card-<%= word.id %>">
+                  <%= link_to word_path(word) do %>
+                    <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                    <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
+                    by <%= word.user.name %>
+                  <% end %>
+                </div>
+              <% elsif current_user.words.include?(word) %>
+                <div class="card bg-info" id="card-<%= word.id %>">
+                  <%= link_to word_path(word) do %>
+                    <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                    <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
+                    by <%= word.user.name %>
+                  <% end %>
+                </div>
+              <% else %>
+                <div class="card">
+                  <%= link_to word_path(word) do %>
+                    <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                    <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
+                    by <%= word.user.name %>
+                  <% end %>
+                </div>
               <% end %>
             </div>
           <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
   <!--paginate text-center-->

@@ -7,6 +7,8 @@
           <%= link_to tag, tagged_words_path(tag), class: "label-info" %>
         <% end %>
       </div>
+      <h4><%= @word.meaning %></h4>
+      <p><%= @word.sentence %></p>
       <span id="add-btn-<%= @word.id %>">
         <%= render "public/dictionaries/add-btn", word: @word %> 
       </span>
