@@ -3,7 +3,7 @@
     <div class="text-center" style="height: 500px;">
       <%= attachment_image_tag @word, :image, :fill, 300, 300, fallback: "noimage.jpg", size: "300x300", id: "word-image-#{ @word.id }" %>
       <div class="tag-lists">
-        <% @word.tag_list.each do |tag| %>
+        <% @word.tags.each do |tag| %>
           <%= link_to tag, tagged_words_path(tag), class: "label-info" %>
         <% end %>
       </div>

@@ -3,11 +3,13 @@ class Public::WordsController < ApplicationController
   before_action :get_word, only: [:show, :edit, :update, :destroy]
 
   def index
+    @q = Word.ransack(params[:q])
     @words = Word.all
     @word_count = @words.count
   end
   
   def tagged_words
+    @q = Word.ransack(params[:q])
     @words = Word.tagged_with(params[:tag])
     @word_count = @words.count
     render "index"
@@ -58,6 +60,13 @@ class Public::WordsController < ApplicationController
       @word.destroy
       redirect_to user_path(user)
     end
+  end
+  
+  def search
+    @q = Word.ransack(params[:q])
+    @words = @q.result(distinct: true)
+    @word_count = @words.count
+    render "index"
   end
   
   private

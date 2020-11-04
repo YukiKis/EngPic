@@ -2,9 +2,12 @@
   <div class="col-sm-10 col-sm-offset-1">
     <h3>Check your vocabulary</h3>
     <p>Check from category?</p>
-    <!-- select from tag words have -->
+    <%= form_with scope: :category, url: question_dictionary_path, local: true do |f| %>
+      <%= f.select :tag, @tags, {}, { class: "form-control" } %>
+      <%= f.submit "Check!" %>
+    <% end %>
     <p>Check from all words?</p>
-    <%= link_to "Check!", dictionary_question_path %>
+    <%= link_to "Check!", question_dictionary_path, class: "btn btn-default" %>
     <br>
     <%= link_to "Back", dictionary_path %>
   </div>
