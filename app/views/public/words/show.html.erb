@@ -5,7 +5,7 @@
       <% @word.tag_list.each do |tag| %>
         <span class="label-primary"><%= tag %></span>
       <% end %>
-      <% if current_user.dictionary.include(word) %>
+      <% if current_user.dictionary.words.include?(@word) %>
         <%#= link_to "Add", ###, class: "btn btn-primary" %>
       <% else %>
         <%#= link_to "Remove", ###, class: "btn btn-danger" %>

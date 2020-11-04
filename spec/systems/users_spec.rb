@@ -22,12 +22,17 @@ RSpec.describe "users page", type: :system do
       User.all.each do |user|
         expect(page).to have_link user.name, href: user_path(user)
         expect(page).to have_content user.words.count
-        if user1.following?(user)
-          expect(page).to have_link "Unfollow"
-        else
-          expect(page).to have_link "Follow"
-        end
       end
+    end
+    it "does not have button for myself" do
+      expect(page).to have_no_link "Follow", href: users_follow_path(user1)
+    end
+    it "has button to follow" do
+      expect(page).to have_link "Follow", href: users_follow_path(user2)
+    end
+    it "has button to unfollow user" do
+      user1.follow(user2)
+      expect(page).to have_link "Unfollow", href: users_unfollow_path(user2)
     end
   end
   

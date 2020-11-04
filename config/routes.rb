@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       registrations: "public/users/registrations"
     }
     resources :users
+    post "users/follow/:id", to: "users#follow", as: "users_follow"
+    delete "users/unfollow/:id", to: "users#unfollow", as: "users_unfollow"
     resources :words
     resource :dictionary, only: [:show]
     get "dictionary/choose", to: "dictionaries#choose", as: "dictionary_choose"
