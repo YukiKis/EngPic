@@ -37,6 +37,16 @@ class Public::UsersController < ApplicationController
     current_user.unfollow(@user)
   end
   
+  def followers
+    @users = @user.followers.all
+    render "index"
+  end
+  
+  def followings
+    @users = @user.followings.all
+    render "index"
+  end
+  
   private
     def setup
       @user = User.find(params[:id])

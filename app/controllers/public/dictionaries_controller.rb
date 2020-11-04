@@ -2,11 +2,6 @@ class Public::DictionariesController < ApplicationController
   before_action :authenticate_user!
   before_action :setup
   
-  def create
-    current_user.create_dictionary
-    redirect_to dictionary_path
-  end
-  
   def show
   end
   

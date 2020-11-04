@@ -6,7 +6,6 @@ class CreateWords < ActiveRecord::Migration[5.2]
       t.string :meaning, null: false
       t.text :sentence
       t.string :image_id, null: false
-      t.boolean :status, default: true
       t.timestamps
     end
   end

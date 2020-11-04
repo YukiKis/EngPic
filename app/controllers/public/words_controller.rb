@@ -7,6 +7,12 @@ class Public::WordsController < ApplicationController
     @word_count = @words.count
   end
   
+  def tagged_words
+    @words = Word.tagged_with(params[:tag])
+    @word_count = @words.count
+    render "index"
+  end
+  
   def show
   end
   
@@ -56,7 +62,8 @@ class Public::WordsController < ApplicationController
   
   private
     def word_params
-      params.require(:word).permit(:name, :meaning, :image, :sentence, :status)
+      params.require(:word).permit(:name, :meaning, :image, :sentence, :tag_list)
+      # params: :status
     end
     
     def get_word

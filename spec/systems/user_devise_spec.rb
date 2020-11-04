@@ -36,7 +36,7 @@ RSpec.describe "devise-user", type: :system do
       fill_in "user[password]", with: user1.password
       fill_in "user[password_confirmation]", with: user1.password_confirmation
       click_button "Sign up"
-      expect(current_path).to eq root_path
+      expect(current_path).to eq user_path(User.find_by(email: "yuki@com"))
       expect(page).to have_content "Welcome"
     end
     it "fails to make a new user" do
@@ -61,8 +61,8 @@ RSpec.describe "devise-user", type: :system do
       fill_in "user[email]", with: user1.email
       fill_in "user[password]", with: user1.password
       click_button "Sign in"
-      expect(current_path).to eq user_path(:user1)
-      expect(page).to have_content "Welcome"
+      expect(current_path).to eq user_path(User.find_by(email: "yuki@com"))
+      expect(page).to have_content "Signed in successfully"
     end
     it "fails to login" do
       click_button "Sign in"

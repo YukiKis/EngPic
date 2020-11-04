@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_120214) do
     t.string "meaning", null: false
     t.text "sentence"
     t.string "image_id", null: false
-    t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

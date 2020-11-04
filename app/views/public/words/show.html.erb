@@ -2,9 +2,13 @@
   <div class="col-sm-10 col-sm-offset-1">
     <div class="text-center" style="height: 500px;">
       <%= attachment_image_tag @word, :image, :fill, 300, 300, fallback: "noimage.jpg", size: "300x300", id: "word-image-#{ @word.id }" %>
-      <% @word.tag_list.each do |tag| %>
-        <span class="label-primary"><%= tag %></span>
-      <% end %>
+      <div class="tag-lists">
+        <% @word.tag_list.each do |tag| %>
+          <%= link_to tag, tagged_words_path(tag), class: "label-info" %>
+        <% end %>
+      </div>
+      <h4><%= @word.meaning %></h4>
+      <p><%= @word.sentence %></p>
       <span id="add-btn-<%= @word.id %>">
         <%= render "public/dictionaries/add-btn", word: @word %> 
       </span>

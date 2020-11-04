@@ -10,9 +10,13 @@ class Public::Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super do |resource|
+      if resource.save
+        resource.create_dictionary
+      end
+    end
+  end
 
   # GET /resource/edit
   # def edit
