@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "users page", type: :system do
   let(:user1){ create(:user1) }
-  let(:user2){ create(:user2) }
+  let!(:user2){ create(:user2) }
   before do 
     sign_in user1
   end
@@ -25,14 +25,15 @@ RSpec.describe "users page", type: :system do
       end
     end
     it "does not have button for myself" do
-      expect(page).to have_no_link "Follow", href: users_follow_path(user1)
+      expect(page).to have_no_link "Follow", href: follow_user_path(user1)
     end
     it "has button to follow" do
-      expect(page).to have_link "Follow", href: users_follow_path(user2)
+      expect(page).to have_link "Follow", href: follow_user_path(user2)
     end
     it "has button to unfollow user" do
       user1.follow(user2)
-      expect(page).to have_link "Unfollow", href: users_unfollow_path(user2)
+      visit users_path
+      expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
     end
   end
   
@@ -50,13 +51,13 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_content user1.introduction
     end
     it "has link to followers" do
-      expect(page).to have_link "Followers", href: "users_followers_path"
+      expect(page).to have_link "Followers", href: followers_user_path(user1)
     end
     it "has number how many followers s/he has" do
       expect(page).to have_content user1.followers.count
     end
     it "has link to followings" do
-      expect(page).to have_link "Followings", href: "users_followings_path"
+      expect(page).to have_link "Followings", href: followings_user_path(user1)
     end
     it "has number how many followings s/he has" do
       expect(page).to have_content user1.followings.count
@@ -86,10 +87,12 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_no_link "Editing", href: edit_user_path(user2)
     end
     it "has follow button if not following" do
-      expect(page).to have_link "Follow", href: users_follow_path(user2)
+      expect(page).to have_link "Follow", href: follow_user_path(user2)
     end
     it "has unfollow buttonn if following" do
-      expect(page).to have_link "Unfollow", href: users_unfollow_path(user2)
+      user1.follow(user2)
+      visit user_path(user2)
+      expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
     end
   end
   

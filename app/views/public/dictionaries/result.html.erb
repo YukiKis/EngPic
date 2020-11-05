@@ -1,18 +1,31 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <h3>RESULT</h3>
-    <h4>You made 4 out of 4!</h4>
+    <h4>You made <%= @rights %>  / <%= @questions.count %>!</h4>
     <div class="row">
-      <%= @questions.each do |question| %>
-        <div class="col-sm-6">
-          <%= attachment_image_tag question, :image, :fill, 200, 200, fallback: "noimage.jpg", size: "200x200" %><br>
-          <%= question.name %>
+    <% @questions.each_with_index do |question, i| %>
+      <% if question.name == @answers[i] %>
+        <div class="col-sm-3">
+          <div class="card bg-info">
+            <%= attachment_image_tag question, :image, :fill, 200, 200, fallback: "noimage.jpg", size: "200x200" %><br>
+            Your answer: <%= @answers[i] %><br>
+            In your dictionary: <%= question.name %>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-sm-3">
+          <div class="card bg-warning">
+            <%= attachment_image_tag question, :image, :fill, 200, 200, fallback: "noimage.jpg", size: "200x200" %><br>
+            Your answer: <%= @answers[i] %><br>
+            In your dictionary: <%= question.name %>
+          </div>
         </div>
       <% end %>
+    <% end %>
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <%= link_to "Test Again!", dictionary_select_path %><br>
+        <%= link_to "Test Again!", choose_dictionary_path %><br>
         <%= link_to "Back", dictionary_path %>
     </div>
   </div>

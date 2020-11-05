@@ -1,8 +1,9 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :setup, except: :index
+  before_action :setup, except: [:index, :search]
   
   def index
+    @q = User.ransack(params[:q])
     @users = User.all
   end
 
@@ -44,6 +45,12 @@ class Public::UsersController < ApplicationController
   
   def followings
     @users = @user.followings.all
+    render "index"
+  end
+  
+  def search
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true)
     render "index"
   end
   

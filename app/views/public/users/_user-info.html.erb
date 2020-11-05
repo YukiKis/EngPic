@@ -3,8 +3,8 @@
   <table class="table table-hover">
     <tr><th>Name</th><td><%= user.name %></td></tr>
     <tr><th>Introduction</th><td><%= user.introduction %></td></tr>
-    <tr><th><%= link_to "Followers", users_followers_path(user) %></th><td id="followers-number"><%= user.followers.count %></td></tr>
-    <tr><th><%= link_to "Followings", users_followings_path(user) %></th><td id="followers-number"><%= user.followings.count %></td></tr>
+    <tr><th><%= link_to "Followers", followers_user_path(user) %></th><td id="followers-number"><%= user.followers.count %></td></tr>
+    <tr><th><%= link_to "Followings", followings_user_path(user) %></th><td id="followers-number"><%= user.followings.count %></td></tr>
   </table>
   <% if user == current_user %>
     <span><%= link_to "Editing", edit_user_path(user), class: "btn btn-block" %></span> 
