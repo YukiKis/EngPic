@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   scope module: :public do 
     devise_for :users, controllers: {
       sessions: "public/users/sessions",
