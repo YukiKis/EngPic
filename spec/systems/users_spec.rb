@@ -35,6 +35,14 @@ RSpec.describe "users page", type: :system do
       visit users_path
       expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
     end
+    it "has search_field" do
+      expect(page).to have_field "q_name_start"
+      expect(page).to have_button "Search"
+    end
+    it "can search by user_name" do
+      fill_in "q_name_start", with: user1.name
+      expect(page).to have_link user1.name, href: user_path(user1)
+    end
   end
   
   context "on show page for own" do

@@ -3,6 +3,7 @@ FactoryBot.define do
     name { "doll" }
     meaning { "人形" }
     sentence { "I bought a doll yesterday" }
+    tag_list { ["doll", "toy"] }
     image { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/factories/noimage.jpg')) }
   end
   
