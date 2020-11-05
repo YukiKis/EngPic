@@ -87,6 +87,17 @@ RSpec.describe "dictionary page", type: :system do
     it "has button to submit" do
       expect(page).to have_button "Finish!"
     end
+    it "selects from tag" do
+      visit choose_dictionary_path
+      select "toy", from: "category[tag]"
+      click_button "Check!"
+      questions = user1.dictionary.words.tagged_with("toy")[0..1]
+      questions.each do |q|
+        expect(page).to have_css "#img-#{ q.id }"
+        expect(page).to have_css "#label-#{ q.id }"
+        expect(page).to have_field "check[answer#{ q.id }]"
+      end
+    end
   end
   context "on dictionary-result-page" do
     before do
@@ -117,8 +128,13 @@ RSpec.describe "dictionary page", type: :system do
       end
     end
     it "has yellow color if answer is wrong" do
-      @questions.each do |question|
-        expect(page).to have_css "#card-#{ question.id }.bg-warning"
+      visit choose_dictionary_path
+      click_link "Check!", href: question_dictionary_path
+      questions = user1.dictionary.words.all[0..1]
+      click_button "Finish!"
+      expect(current_path).to eq check_dictionary_path
+      questions.each do |q|
+        expect(page).to have_css "#card-#{ q.id }"
       end
     end
     it "has blue color if answer is right" do

@@ -30,10 +30,12 @@ RSpec.describe "words page", type: :system do
     it "has blue color if out of dictionary but in words" do
       user1.dictionary.add(word1)
       user1.dictionary.remove(word1)
+      visit current_path
       expect(page).to have_css "#card-1.bg-info"
     end
     it "has yellow color if in dictionary" do
       user1.dictionary.add(word1)
+      visit current_path
       expect(page).to have_css "#card-1.bg-warning"
     end
     it "has search_form" do
@@ -66,7 +68,7 @@ RSpec.describe "words page", type: :system do
     end
     it "has tag-list" do
       word1.tags.each do |tag|
-        expect(page).to have_link tagged_words_path(tag.name)
+        expect(page).to have_link tag.name, href: tagged_words_path(tag.name)
       end
     end
     it "has button to add to dictionary" do
@@ -129,6 +131,7 @@ RSpec.describe "words page", type: :system do
       fill_in "word[tag_list]", with: "drink, juice, tomato"
       # choose "YES"
       click_button "Update!"
+      word1.reload
       expect(current_path).to eq word_path(word1)
       expect(page).to have_content "juice"
       expect(page).to have_content "ジュース"

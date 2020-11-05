@@ -16,29 +16,29 @@
           <% @words.each do |word| %>
             <div class="col-sm-3">
               <% if current_user.dictionary.words.include?(word) %>
-                <div class="card bg-warning" id="card-<%= word.id %>">
-                  <%= link_to word_path(word) do %>
+                <%= link_to word_path(word) do %>
+                  <div class="card bg-warning" id="card-<%= word.id %>">
                     <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><%= word.name %><br>
                     <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
                     by <%= word.user.name %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
               <% elsif current_user.words.include?(word) %>
-                <div class="card bg-info" id="card-<%= word.id %>">
-                  <%= link_to word_path(word) do %>
+                <%= link_to word_path(word) do %>
+                  <div class="card bg-info" id="card-<%= word.id %>">
                     <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><%= word.name %><br>
                     <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
                     by <%= word.user.name %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
               <% else %>
-                <div class="card">
-                  <%= link_to word_path(word) do %>
+                <%= link_to word_path(word) do %>
+                  <div class="card">
                     <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><%= word.name %><br>
                     <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
                     by <%= word.user.name %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           <% end %>
