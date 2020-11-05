@@ -13,7 +13,7 @@
         <%= render "public/dictionaries/add-btn", word: @word %> 
       </span>
       <% if @word.user == current_user %>
-        <%= link_to "Edit", edit_word_path(@word) %>
+        <%= link_to "Edit", edit_word_path(@word), data: { turbolinks: false } %>
       <% end %>
       <!--related_word-->
     </div>
