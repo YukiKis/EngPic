@@ -16,18 +16,21 @@
                 <div class="card bg-warning" id="card-<%= word.id %>">
                   <%= link_to word_path(word) do %>
                     <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                    <%= word.name %>
                   <% end %>
                 </div>
               <% elsif current_user.words.include?(word) %>
                 <div class="card bg-info" id="card-<%= word.id %>">
                   <%= link_to word_path(word) do %>
                     <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                    <%= word.name %>
                   <% end %>
                 </div>
               <% else %>
                 <div class="card">
                   <%= link_to word_path(word) do %>
                     <%= attachment_image_tag word, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", class: "img-thumbnail word-image-#{ word.id }", id: "word-image-#{ word.id }" %><br>
+                    <%= word.name %>
                   <% end %>
                 </div>
               <% end %>

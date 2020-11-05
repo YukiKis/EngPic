@@ -1,4 +1,4 @@
-lass Public::DictionariesController < ApplicationController
+class Public::DictionariesController < ApplicationController
   before_action :authenticate_user!
   before_action :setup
   
@@ -12,7 +12,7 @@ lass Public::DictionariesController < ApplicationController
     render "public/words/index"
   end
   
-  def choo
+  def choose
     @tags = Word.tag_counts.map { |tag| tag.name }
   end
   
@@ -27,19 +27,22 @@ lass Public::DictionariesController < ApplicationController
   end
   
   def check
-    questions = answers = []
-    questions << [ answer_params[:question0], answer_params[:question1], answer_params[:question2], answer_params[:question3]]
-    answers << [ answer_params[:answer0], answer_params[:answer1], answer_params[:answer2], answer_params[:answer3]]
-    @right = 0
-    questions.each do |q|
-      answers.each do |a|
-        if q == a
-          @right += 1
+    questions = [answer_params[:question0], answer_params[:question1], answer_params[:question2], answer_params[:question3]].compact
+    @questions = questions.map do |q|
+      Word.find(q)
+    end
+    @questions.compact
+    @answers =[ answer_params[:answer0], answer_params[:answer1], answer_params[:answer2], answer_params[:answer3]].compact
+    @rights = 0
+    @questions.each do |q|
+      @answers.each do |a|
+        if q.name == a
+          @rights += 1
         end
       end
     end
+    debugger
     render "result"
-       
   end
 
   def add
@@ -62,6 +65,6 @@ lass Public::DictionariesController < ApplicationController
       params.require(:category).permit(:tag)
     end
     def answer_params
-      params.require(:check).permit(:"0", :"1", :"2", :"3", :question0, :question1, :question2, :question3)
+      params.require(:check).permit(:answer0, :answer1, :answer2, :answer3, :question0, :question1, :question2, :question3)
     end
 end
