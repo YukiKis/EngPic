@@ -18,11 +18,11 @@ ActiveAdmin.register User do
   
   index do |u|
     column "ID", :id
-    column "image", :image do |img|
-      attachment_image_tag(u, :img)
-    end
     column "name", :name
     column "email", :email
+    actions defaults: false do |user|
+      item "View", admin_user_path(user)
+    end
   end
   
   form do |f|

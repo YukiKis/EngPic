@@ -5,7 +5,7 @@ ActiveAdmin.register Word do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :user_id, :name, :meaning, :sentence, :image_id, :tag_list
+  permit_params :user_id, :name, :meaning, :sentence, :image, :tag_list
   
   menu parent: ["管理項目"], label: "単語", priority: 1
   
@@ -21,19 +21,36 @@ ActiveAdmin.register Word do
     selectable_column
     column :name
     column :meaning
-    column :created_at
+    column :tags
+    column :user
     actions defaults: false do |word|
       item "View", admin_word_path(word)
     end
-    column :user
   end
+  
+  show do |w|
+    attributes_table do
+      row :name
+      row :meaning
+      row :tags
+      row :sentence 
+      row :image do 
+        attachment_image_tag(w, :image, :fill, 200, 200, fallback: "noimage.jpg", size: "200x200")
+      end
+    end
+    active_admin_comments
+  end
+
+      
   
   form do |f|
     f.semantic_errors *f.object.errors.keys
     f.inputs do
       f.input :name
       f.input :meaning
+      f.input :tag_list
       f.input :sentence
+      f.attachment_field :image
     end
     f.actions
   end
