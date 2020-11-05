@@ -6,8 +6,8 @@
       <!--</div>-->
       <div class="col-sm-9">
         <%= search_form_for @q, url: search_words_path, local: true do |f| %>
-          <%= f.label :name_or_meaning_or_tags_name_cont, "Tag or Word" %>
-          <%= f.search_field :name_or_meaning_or_tags_name_cont %>
+          <%= f.label :name_or_meaning_or_tags_name_start, "Tag or Word" %>
+          <%= f.search_field :name_or_meaning_or_tags_name_start %>
           <%= f.submit %>
         <% end %>
         <h3><%= pluralize(@words.count, "word") %> in Total</h3>
