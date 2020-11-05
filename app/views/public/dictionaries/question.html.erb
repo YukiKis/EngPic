@@ -4,13 +4,13 @@
     <p>We have <%= pluralize(@questions.count, "question") %></p>
     <div class="row">
       <%= form_with scope: :check, url: check_dictionary_path, local: true do |f| %>
-        <% @questions.each_with_index do |question, i| %>
+        <% @questions.each do |question| %>
           <div class="col-sm-3">
             <div class="card">
-              <%= attachment_image_tag question, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50" %><br>
-              <%= f.label :"answer#{ i }", "Answer", class: "control-label" %>
-              <%= f.text_field :"answer#{ i }", class: "form-control" %>
-              <%= f.hidden_field :"question#{ i }", value: question.id %>
+              <%= attachment_image_tag question, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50", id: "img-#{ question.id }" %><br>
+              <%= f.label :"answer#{ question.id }", "Answer", class: "control-label", id: "label-#{ question.id }" %>
+              <%= f.text_field :"answer#{ question.id }", class: "form-control" %>
+              <%= f.hidden_field :"question#{ question.id }", value: question.id %>
             </div>
           </div>
         <% end %>

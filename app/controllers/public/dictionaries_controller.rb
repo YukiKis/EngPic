@@ -13,15 +13,15 @@ class Public::DictionariesController < ApplicationController
   end
   
   def choose
-    @tags = Word.tag_counts.map { |tag| tag.name }
+    @tags = current_user.dictionary.words.tag_counts_on(:tags).map { |tag| tag.name }
   end
   
   def question
     if request.post?
       category = category_params[:tag]
-      @questions = Word.tagged_with(category)[0..1]
+      @questions = current_user.dictionary.words.tagged_with(category)[0..1]
     else
-      @questions = Word.all[0..1]
+      @questions = current_user.words.all[0..1]
     end
     render "question"
   end
@@ -40,8 +40,8 @@ class Public::DictionariesController < ApplicationController
           @rights += 1
         end
       end
+
     end
-    debugger
     render "result"
   end
 
@@ -65,6 +65,6 @@ class Public::DictionariesController < ApplicationController
       params.require(:category).permit(:tag)
     end
     def answer_params
-      params.require(:check).permit(:answer0, :answer1, :answer2, :answer3, :question0, :question1, :question2, :question3)
+      params.require(:check).permit(:answer1, :answer2, :answer3, :answer4, :question1, :question2, :question3, :question4)
     end
 end

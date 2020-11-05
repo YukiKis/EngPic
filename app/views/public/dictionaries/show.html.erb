@@ -5,12 +5,12 @@
     <%# @dictionary.words.tag_list.each do |tag| %>
     
     <!--get 5 tags which have most words-->
-    <h4><%= link_to "See all words in my dictionary", words_dictionary_path %></h4>
-    <h4><%= link_to "Add a new word", new_word_path %></h4>
+    <h4><%= link_to "Check my dictionary", words_dictionary_path %></h4>
+    <h4><%= link_to "Add a new word", new_word_path, data: { turbolinks: false } %></h4>
     <span class="label label-primary"><%#= tag %></span>
       <!--get number of how many words each tag has-->
     <%# end %>
-    <h4>Last updated: on <%= @dictionary.updated_at.strftime("%Y%m%d") %></h4>
+    <h4>Last updated: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
     <h4>Do you want to check your words?</h4>
     <h4 class="text-right"><%= link_to "Let's test!", choose_dictionary_path %></h4>
     <!--<p>label which changes color depending on how many words user registered so far.</p>-->
