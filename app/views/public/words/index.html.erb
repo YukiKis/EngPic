@@ -11,7 +11,7 @@
           <%= f.submit %>
         <% end %>
         <h3><%= pluralize(@words.count, "word") %> in Total</h3>
-        <h3 class="text-right"><%= link_to "+", new_word_path %></h3>
+        <h3 class="text-right"><%= link_to "+", new_word_path, data: { turbolinks: false }  %></h3>
         <div class="row">
           <% @words.each do |word| %>
             <div class="col-sm-3">

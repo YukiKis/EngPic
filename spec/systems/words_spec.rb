@@ -36,6 +36,25 @@ RSpec.describe "words page", type: :system do
       user1.dictionary.add(word1)
       expect(page).to have_css "#card-1.bg-warning"
     end
+    it "has search_form" do
+      expect(page).to have_field "q_name_or_meaning_or_tags_name_start"
+      expect(page).to have_button "Search"
+    end
+    it "can search by word_name" do
+      fill_in "q_name_or_meaning_or_tags_name_start", with: word1.name
+      click_button "Search"
+      expect(page).to have_link "", href: word_path(word1)
+    end
+    it "can search by word_meaning" do
+      fill_in "q_name_or_meaning_or_tags_name_start", with: word1.meaning
+      click_button "Search"
+      expect(page).to have_link "", href: word_path(word1)
+    end
+    it "can search by word_tag_name" do
+      fill_in "q_name_or_meaning_or_tags_name_start", with: word1.tags.first.name
+      click_button "Search"
+      expect(page).to have_link "", href: word_path(word1)
+    end
   end
   
   context "on show page" do
@@ -46,8 +65,8 @@ RSpec.describe "words page", type: :system do
       expect(page).to have_css "#word-image-#{ word1.id }"
     end
     it "has tag-list" do
-      word1.tag_list.each do |tag|
-        expect(page).to have_link tagged_words_path(tag)
+      word1.tags.each do |tag|
+        expect(page).to have_link tagged_words_path(tag.name)
       end
     end
     it "has button to add to dictionary" do

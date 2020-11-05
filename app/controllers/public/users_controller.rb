@@ -40,11 +40,13 @@ class Public::UsersController < ApplicationController
   
   def followers
     @users = @user.followers.all
+    @q = User.ransack(params[:q])
     render "index"
   end
   
   def followings
     @users = @user.followings.all
+    @q = User.ransack(params[:q])
     render "index"
   end
   
