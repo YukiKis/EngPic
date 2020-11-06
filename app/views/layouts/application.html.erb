@@ -4,13 +4,14 @@
     <title>EngPic</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <script src="https://kit.fontawesome.com/6d2f46eeba.js" crossorigin="anonymous"></script>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'main/application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'main/application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div class="container-fluid">
+    <div class="container">
       <%= render "layouts/header" %>
       <%= yield %>
       <%= render "layouts/footer" %>

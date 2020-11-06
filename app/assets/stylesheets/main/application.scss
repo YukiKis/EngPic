@@ -10,8 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_tree ../../../vendor/assets/stylesheets/.
+ *= require_tree ./
  *= require_self
  */
  @import "bootstrap-sprockets";
@@ -22,13 +21,32 @@
 //   border: 3px solid #dddddd;
 //  }
 // }
-#container{
- height: 300px;
+
+.container{
+  border: 1px solid #111111;
 }
 
-#theTarget div {
- background-position: center;
- background-size: cover;
- background-repeat: no-repeat;
+
+.navbar{
+  background-color: rgba(66, 139, 242, 0.9);
+  .navbar-nav{
+    li{
+      a{
+        color: white;
+       }
+      &:hover{
+        border-left: 1px solid white;
+        border-right: 1px solid white;
+        a{
+           color: white !important;
+           font-size: 120%;
+        }
+     }
+    }
+  }
 }
 
+.footer {
+  margin-top: 30px;
+  background-color: rgba(66, 139, 242, 0.9);
+}

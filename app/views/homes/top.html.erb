@@ -1,4 +1,4 @@
-<div class="row" style="margin-bottom: 100px;">
+<div class="row">
   <div class="col-sm-12">
     <div id="container">
       <div id="theTarget">
@@ -10,47 +10,39 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-10 col-sm-offset-1">
-    <div class="row">
-      <h1>TOP PAGE</h1>
-      <div class="col-sm-5">
-        <p>TOPIC</p>
-      </div>
-      <div class="col-sm-7">
-        <p>
+<div class="row" style="margin-top: 30px;">
+  <div class="col-sm-8 top-heading">
+    <h1 class="text-center"><b>EngPic</b>, <br>Dictionary<br>ONLY for YOU,<br> but WITH EVERYBODY</h1>
+    <table class="table" style="vertical-align: middle">
+      <tr class="row">
+        <th class="col-sm-5 text-center" style="font-size: 26px;">Tag</th>
+        <td class="col-sm-7">
           <% Word.tag_counts.sample(4).each do |t| %>
-            <%= link_to t.name, tagged_words_path(t.name) %>
+            <%= link_to t.name, tagged_words_path(t.name), style: "font-size: 26px; margin-right: 5px;" %>
           <% end %><%= link_to "See more tags", tags_words_path %>
-        </p>
-      </div>
-    </div>
+        </td>
+      </tr>
     
-    <div class="row">
-      <div class="col-sm-5">
-        <p>WORD</p>
-      </div>
-      <div class="col-sm-7">
-        <p>
+      <tr class="row">
+        <th class="col-sm-5 text-center" style="font-size: 26px;">Word</th>
+        <td class="col-sm-7">
           <% Word.all.sample(4).each do |w| %>
-            <%= link_to w.name, same_name_words_path(w.name) %>
+            <%= link_to w.name, same_name_words_path(w.name), style: "font-size: 26px; margin-right: 5px;"%>
           <% end %>
-        </p>
-      </div>
-    </div>
+        </td>
+      </tr>
     
-    <div class="row">
-      <div class="col-sm-5">
-        <p>MEANING</p>
-      </div>
-      <div class="col-sm-7">
-        <p>
+      <tr class="row">
+        <th class="col-sm-5 text-center" style="font-size: 26px;">Meaning</th>
+        <td class="col-sm-7">
           <% Word.all.sample(4).each do |w| %>
-            <%= link_to w.meaning, same_meaning_words_path(w.meaning) %>
+            <%= link_to w.meaning, same_meaning_words_path(w.meaning), style: "font-size: 26px; margin-right: 5px;" %>
           <% end %>
-        </p>
-      </div>
-    </div>
-    
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-sm-4" style="height: 378px;">
+    <div style="background-image: url('<%= asset_path("kid.jpg") %>'); height: inherit; background-size: contain; background-repeat: no-repeat;"></div>
   </div>
 </div>
