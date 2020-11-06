@@ -10,4 +10,7 @@ class Word < ApplicationRecord
   validates :meaning, presence: true
   validates :image, presence: true
   
+  scope :by_same_name, ->(name){ where(name: name) }
+  scope :by_same_meaning, ->(meaning){ where(meaning: meaning) }
+  
 end

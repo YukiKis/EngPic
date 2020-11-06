@@ -23,6 +23,9 @@ Rails.application.routes.draw do
       collection do
         get "tagged_words/:tag", to: "words#tagged_words", as: "tagged"
         match 'search' => 'words#search', via: [:get, :post], as: :search
+        get "/by_name/:name", to: "words#same_name", as: "same_name"
+        get "/by_meaning/:meaning", to: "words#same_meaning", as: "same_meaning"
+        get "tags", to: "words#tags", as: "tags"
       end
     end
 

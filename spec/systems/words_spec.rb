@@ -218,4 +218,21 @@ RSpec.describe "words page", type: :system do
       expect(page).to have_content "エラー"
     end
   end
+  context "on tags_page" do
+    before do 
+      visit tags_words_path
+    end
+    it "has tag count" do
+      expect(page).to have_content Word.tag_counts.count
+    end
+    it "has path for word-new page" do
+      expect(page).to have_link "+", href: new_word_path
+    end
+    it "has tag info" do
+      Word.tag_counts.each do |t|
+        expect(page).to have_link t.name, herf: tagged_words_path(t)
+        expect(page).to have_content Word.tagged_with(t).count
+      end
+    end
+  end
 end
