@@ -1,3 +1,13 @@
 // Place all the styles related to the homes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#container{
+ height: 300px;
+}
+
+#theTarget div {
+ background-position: center;
+ background-size: cover;
+ background-repeat: no-repeat;
+}

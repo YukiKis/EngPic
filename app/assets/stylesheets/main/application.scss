@@ -21,13 +21,23 @@
 //   border: 3px solid #dddddd;
 //  }
 // }
-#container{
- height: 300px;
-}
 
-#theTarget div {
- background-position: center;
- background-size: cover;
- background-repeat: no-repeat;
-}
 
+.navbar{
+  background-color: rgba(66, 139, 242, 0.9);
+  .navbar-nav{
+    li{
+      a{
+        color: white;
+       }
+      &:hover{
+        border-left: 1px solid white;
+        border-right: 1px solid white;
+        a{
+           color: white !important;
+           font-size: 120%;
+        }
+     }
+    }
+  }
+}
