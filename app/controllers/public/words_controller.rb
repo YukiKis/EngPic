@@ -69,6 +69,26 @@ class Public::WordsController < ApplicationController
     render "index"
   end
   
+  def same_name
+    @q = Word.ransack(params[:q])
+    @words = Word.by_same_name(params[:name])
+    @word_count = @words.count
+    render "index"
+  end
+  
+  def same_meaning
+    @q = Word.ransack(params[:q])
+    @words = Word.by_same_meaning(params[:meaning])
+    @word_count = @words.count
+    render "index"
+    debugger
+  end
+  
+  def tags
+    @tags = Word.tag_counts.all
+    @tag_count = @tags.count
+  end
+  
   private
     def word_params
       params.require(:word).permit(:name, :meaning, :image, :sentence, :tag_list)

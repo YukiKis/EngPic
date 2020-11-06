@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require_tree ../../../vendor/assets/stylesheets/.
  *= require_self
  */
  @import "bootstrap-sprockets";
@@ -21,3 +22,13 @@
 //   border: 3px solid #dddddd;
 //  }
 // }
+#container{
+ height: 300px;
+}
+
+#theTarget div {
+ background-position: center;
+ background-size: cover;
+ background-repeat: no-repeat;
+}
+

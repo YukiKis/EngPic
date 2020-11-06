@@ -1,6 +1,12 @@
 <div class="row" style="margin-bottom: 100px;">
   <div class="col-sm-12">
-    <p class="bg-info" style="height: 500px; line-height: 500px;">ここにスライドショーで写真をスライドさせて、イメージを沸かせる</p>    
+    <div id="container">
+      <div id="theTarget">
+        <div style="background-image: url('<%= asset_path("english.jpg") %>');"></div>
+        <div style="background-image: url('<%= asset_path("fun.jpg") %>');"></div>
+        <div style="background-image: url('<%= asset_path("picture.png") %>');"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -12,7 +18,11 @@
         <p>TOPIC</p>
       </div>
       <div class="col-sm-7">
-        <p>RANDOM TAGS HERE</p>
+        <p>
+          <% Word.tag_counts.sample(4).each do |t| %>
+            <%= link_to t.name, tagged_words_path(t.name) %>
+          <% end %><%= link_to "See more tags", tags_words_path %>
+        </p>
       </div>
     </div>
     
@@ -21,7 +31,11 @@
         <p>WORD</p>
       </div>
       <div class="col-sm-7">
-        <p>RANDOM WORD HERE</p>
+        <p>
+          <% Word.all.sample(4).each do |w| %>
+            <%= link_to w.name, same_name_words_path(w.name) %>
+          <% end %>
+        </p>
       </div>
     </div>
     
@@ -30,7 +44,11 @@
         <p>MEANING</p>
       </div>
       <div class="col-sm-7">
-        <p>RANDOM JAPANESE MEANINGH HERE</p>
+        <p>
+          <% Word.all.sample(4).each do |w| %>
+            <%= link_to w.meaning, same_meaning_words_path(w.meaning) %>
+          <% end %>
+        </p>
       </div>
     </div>
     
