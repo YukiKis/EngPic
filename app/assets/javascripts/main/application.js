@@ -15,7 +15,6 @@
 //= require activestorage
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require_tree ../../../vendor/assets/javascripts/.
 //= require_tree .
 
 

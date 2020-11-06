@@ -5,6 +5,12 @@ ActiveAdmin.setup do |config|
   # for each of the active admin pages.
   #
   config.site_title = "Eng Pic"
+  
+  config.clear_stylesheets!
+  config.register_stylesheet "admin/active_admin.css"
+  
+  config.clear_javascripts!
+  config.register_javascript "admin/active_admin.js"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
