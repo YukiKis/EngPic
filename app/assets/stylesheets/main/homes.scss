@@ -11,3 +11,31 @@
  background-size: cover;
  background-repeat: no-repeat;
 }
+
+.top-heading{
+ border: 5px solid #111111;
+}
+
+.about-heading-box{
+ border: 5px solid #111111;
+ .about-heading{
+  padding-left: 50px;
+ }
+ .about-subheading-box{
+  padding: 5px 15px;
+  border-bottom: 3px solid #222222;
+  &:nth-first-child{
+   border-top: 3px solid #222222;
+  }
+  .about-subheading {
+    span{
+      border-bottom: 2px solid red;
+    }
+  }
+ }
+}
+
+.howto-image{
+ height: 300px;
+ background-repeat: no-repeat;
+}

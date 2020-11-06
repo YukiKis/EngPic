@@ -22,6 +22,10 @@
 //  }
 // }
 
+.container{
+  border: 1px solid #111111;
+}
+
 
 .navbar{
   background-color: rgba(66, 139, 242, 0.9);
@@ -40,4 +44,9 @@
      }
     }
   }
+}
+
+.footer {
+  margin-top: 30px;
+  background-color: rgba(66, 139, 242, 0.9);
 }
