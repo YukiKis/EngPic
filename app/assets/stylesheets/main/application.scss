@@ -22,31 +22,43 @@
 //  }
 // }
 
-.container{
-  border: 1px solid #111111;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
 
 .navbar{
   background-color: rgba(66, 139, 242, 0.9);
   .navbar-nav{
     li{
+      overflow: hidden;
       a{
         color: white;
-       }
-      &:hover{
-        border-left: 1px solid white;
-        border-right: 1px solid white;
-        a{
-           color: white !important;
-           font-size: 120%;
+        transition: 0.3s;
+        &:hover{
+          color: white;
+          outline: 3px solid white;
+          outline-offset: -3px;
         }
-     }
+      }
     }
   }
 }
 
 .footer {
+  height: 50px;
+  line-height: 50px;
+  color: white;
   margin-top: 30px;
+  padding: 0 15px;
+  border-radius: 5px;
   background-color: rgba(66, 139, 242, 0.9);
 }
+
+.heading{
+  display: inline-block;
+  border-bottom: 5px double #ccc;
+  text-shadow: 4px 4px 5px rgb(66, 139, 242);
+}
+
