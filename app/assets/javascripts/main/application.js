@@ -58,4 +58,20 @@ $(function(){
   }).on("mouseout", function(){
     $(this).find(".answer-form").stop(true).animate({ opacity: 0.5 }, 300);
   });
+  
+  // when type the wrong form in email-form, change color  
+  $("#user_email").on("change", function(){
+    var pattern =  /.+@.+/i
+    var value = $(this).val();
+    if($(this).hasClass("invalid")){ $(this).removeClass("invalid"); }
+    if( !value.match(pattern) && value !== "" ){
+      $(this).addClass("invalid");
+    }
+    if($(this).hasClass("invalid")){
+      $(this).css("background-color", "#f08080");
+      // $(this).parent().append(`<span class="wrong">WRONG</span>`);
+    }else{
+      $(this).css("background-color", "white");
+    };
+  });
 });
