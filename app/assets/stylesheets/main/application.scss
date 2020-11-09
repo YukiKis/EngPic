@@ -28,11 +28,6 @@
   box-sizing: border-box;
 }
 
-.container{
-  border: 1px solid #111111;
-}
-
-
 .navbar{
   background-color: rgba(66, 139, 242, 0.9);
   .navbar-nav{
@@ -52,6 +47,17 @@
 }
 
 .footer {
+  height: 50px;
+  line-height: 50px;
+  color: white;
   margin-top: 30px;
+  padding: 0 15px;
+  border-radius: 5px;
   background-color: rgba(66, 139, 242, 0.9);
+}
+
+.heading{
+  display: inline-block;
+  border-bottom: 5px double #ccc;
+  text-shadow: 4px 4px 5px rgb(66, 139, 242);
 }

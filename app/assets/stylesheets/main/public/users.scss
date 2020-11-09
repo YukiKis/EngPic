@@ -4,8 +4,8 @@
 
 .card{
   height: 200px;
-  border: 2px solid rgb(66, 139, 242);
-  border-radius: 5px;
+  // border: 2px inset rgb(66, 139, 242);
+  border-radius: 10px;
   box-shadow: 2px 2px #ccc;
   text-align: center;
   margin-bottom: 15px;
@@ -30,15 +30,34 @@
     font-size: 15px;
     text-align: center;
     border-bottom: 1px dotted rgb(66, 139, 242);
+    transition: 0.3s;
   }
   
   .card-author-name{
     padding: 5px;
   }
+
   &:hover{
     box-shadow: 5px 5px 10px 5px #ccc;
+    // border: 8px outset #ccc
     .card-image{
       transform: scale(1.1, 1.1);
     }
+    .card-content{
+      font-size: 22px;
+    }
   }
 }
+
+
+// .answer-card{
+//   .answer-form{
+//     display: none;
+//     transition: 0.3;
+//   }
+//   &:hover{
+//     .answer-form{
+//       display: block;
+//     }
+//   }
+// }

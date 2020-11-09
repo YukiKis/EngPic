@@ -4,17 +4,17 @@
       <!--<div class="col-sm-3">-->
         <%#= render "public/users/user-info", user: current_user %>
       <!--</div>-->
-      <div class="col-sm-9">
+      <div class="col-sm-12">
         <%= search_form_for @q, url: search_words_path, local: true do |f| %>
           <%= f.label :name_or_meaning_or_tags_name_start, "Tag or Word" %>
           <%= f.search_field :name_or_meaning_or_tags_name_start %>
           <%= f.submit %>
         <% end %>
-        <h3><%= pluralize(@words.count, "word") %> in Total</h3>
+        <h3 class="heading"><%= pluralize(@words.count, "word") %> in Total</h3>
         <h3 class="text-right"><%= link_to "+", new_word_path, data: { turbolinks: false }  %></h3>
         <div class="row">
           <% @words.each do |word| %>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <%= render "layouts/card", word: word %>
             </div>
           <% end %>

@@ -52,4 +52,10 @@ $(function(){
   // }).on("mouseout", function(){
   //   $(this).animate({ boxShadow: "2px 2px #ccc"}, 0.3);
   // });
+  
+  $(".answer-card").on("mouseover", function(){
+    $(this).find(".answer-form").stop(true).animate({ opacity: 1 }, 300);
+  }).on("mouseout", function(){
+    $(this).find(".answer-form").stop(true).animate({ opacity: 0.5 }, 300);
+  });
 });
