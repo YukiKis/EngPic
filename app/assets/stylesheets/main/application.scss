@@ -22,6 +22,12 @@
 //  }
 // }
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container{
   border: 1px solid #111111;
 }
@@ -31,17 +37,16 @@
   background-color: rgba(66, 139, 242, 0.9);
   .navbar-nav{
     li{
+      overflow: hidden;
       a{
         color: white;
-       }
-      &:hover{
-        border-left: 1px solid white;
-        border-right: 1px solid white;
-        a{
-           color: white !important;
-           font-size: 120%;
+        transition: 0.3s;
+        &:hover{
+          color: white;
+          outline: 3px solid white;
+          outline-offset: -3px;
         }
-     }
+      }
     }
   }
 }

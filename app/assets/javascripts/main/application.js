@@ -35,16 +35,21 @@ $(function(){
   });
   
   $("#theTarget").skippr({
-  transition: "fade",
-  speed: 1000,
-  easing: "easeOutQuart",
-  navType: "block",
-  childrenElementType: "div",
-  arrows: true,
-  autoPlay: true,
-  autoPlayDuration: 5000,
-  keyboardOnAlways: true,
-  hidePrevious: false
-})
-
+    transition: "fade",
+    speed: 1000,
+    easing: "easeOutQuart",
+    navType: "block",
+    childrenElementType: "div",
+    arrows: true,
+    autoPlay: true,
+    autoPlayDuration: 5000,
+    keyboardOnAlways: true,
+    hidePrevious: false
+  });
+  
+  // $(".card").on("mouseover", function(){
+  //   $(this).animate({ boxShadow: "5px 5px 5px #ccc"}, 0.3);
+  // }).on("mouseout", function(){
+  //   $(this).animate({ boxShadow: "2px 2px #ccc"}, 0.3);
+  // });
 });

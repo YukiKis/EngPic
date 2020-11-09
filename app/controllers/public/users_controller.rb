@@ -8,6 +8,7 @@ class Public::UsersController < ApplicationController
   end
 
   def show
+    @words = Word.where(user_id: current_user.id).or(Word.where(user_id: current_user.followings.ids))
   end
 
   def edit
