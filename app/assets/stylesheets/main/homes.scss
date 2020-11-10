@@ -3,12 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #container{
- height: 450px;
+ height: 300px;
 }
 
-#theTarget div {
+#theTarget .slide-image {
  background-position: center;
- background-size: cover;
+ background-size: contain;
  background-repeat: no-repeat;
 }
 
