@@ -1,5 +1,7 @@
 <div id="user-info">
-  <%= attachment_image_tag user, :image, :fill, 150, 150, class: "my-img", fallback: "noimage.jpg", size: "150x150" %>
+  <div class="text-center" style="margin-bottom: 15px;">
+    <%= attachment_image_tag user, :image, :fill, 150, 150, class: "my-img", fallback: "noimage.jpg", size: "150x150", style: "border-radius: 50%;" %>
+  </div>
   <table class="table table-hover">
     <tr><th>Name</th><td><%= user.name %></td></tr>
     <tr><th>Introduction</th><td><%= user.introduction %></td></tr>
@@ -7,6 +9,10 @@
     <tr><th><%= link_to "Followings", followings_user_path(user) %></th><td id="followers-number"><%= user.followings.count %></td></tr>
   </table>
   <% if user == current_user %>
-    <span><%= link_to "Editing", edit_user_path(user), class: "btn btn-block" %></span> 
+    <div>
+      <%= link_to edit_user_path(user), class: "btn btn-default btn-block" do %>
+        <i class="fas fa-wrench"></i> Editing
+      <% end %>
+    </div>
   <% end %>
 </div>
