@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// Top page
+
 #container{
  height: 300px;
 }
@@ -16,8 +18,31 @@
  border: 5px solid #111111;
 }
 
+// About page
+
+
+
+.about-top{
+ display: block;
+}
+
+.about-heading{
+  margin: 0;
+  display: inline-block;
+  padding: 5px;
+  background-color: yellow;
+  position: relative;
+  top: 0;
+  left: 20%;
+  border-bottom: none !important;
+}
+
+
 .about-heading-box{
- border: 5px solid #111111;
+ border: 5px solid #ccc;
+ border-left: 30px solid blue;
+ background-color: rgba(255,255,240, 0.5);
+ box-shadow: 5px 5px 15px #ccc;
  .about-heading{
   padding-left: 50px;
  }

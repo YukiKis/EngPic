@@ -2,7 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "./../variable";
+
 .card{
+  font-family: 'Caveat', cursive;
   height: 200px;
   // border: 2px inset rgb(66, 139, 242);
   border-radius: 10px;
@@ -26,8 +29,8 @@
     };
   }
   .card-content{
+    font-size: 25px;
     padding: 5px;
-    font-size: 15px;
     text-align: center;
     border-bottom: 1px dotted rgb(66, 139, 242);
     transition: 0.3s;
@@ -35,6 +38,7 @@
   
   .card-author-name{
     padding: 5px;
+    font-size: 15px;
   }
 
   &:hover{
