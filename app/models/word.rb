@@ -12,5 +12,6 @@ class Word < ApplicationRecord
   
   scope :by_same_name, ->(name){ where(name: name) }
   scope :by_same_meaning, ->(meaning){ where(meaning: meaning) }
+  scope :today, ->(){ where("created_at >= ?", Date.today) }
   
 end
