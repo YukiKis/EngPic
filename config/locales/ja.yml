@@ -12,6 +12,7 @@ ja:
       tags: "タグ"
       admin_user: "管理者"
       active_admin_comment: "管理者コメント"
+      comment: "コメント"
     attributes:
       user:
         name: "名前"
