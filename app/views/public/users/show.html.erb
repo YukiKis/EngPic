@@ -9,6 +9,13 @@
       
       <div class="col-sm-9">
         <h3 class="heading">Words</h3>
+        <p>
+          In <span class="bg-warning">YELLOW</span>, your word IN your dictionary<br>
+          In <span class="bg-info">BLUE</span>, your word NOT in yours
+        </p>
+        <% if current_user == @user %>
+          <p class="text-right"><%= link_to "New word", new_word_path, class: "btn btn-primary" %></p>
+        <% end %>
         <div class="row">
           <% @words.each do |word| %>
             <div class="col-sm-3">

@@ -2,15 +2,18 @@ class Public::DictionariesController < ApplicationController
   before_action :authenticate_user!
   before_action :setup
   
-  def show
-  end
-  
-  def words
+  def show    
     @q = Word.ransack(params[:q])
     @words = @dictionary.words.all
     @word_count = @words.count
-    render "public/words/index"
   end
+  
+  # def words
+  #   @q = Word.ransack(params[:q])
+  #   @words = @dictionary.words.all
+  #   @word_count = @words.count
+  #   render "public/words/index"
+  # end
   
   def choose
     @tags = current_user.dictionary.words.tag_counts_on(:tags).map { |tag| tag.name }
@@ -19,9 +22,9 @@ class Public::DictionariesController < ApplicationController
   def question
     if request.post?
       category = category_params[:tag]
-      @questions = current_user.dictionary.words.tagged_with(category)[0..1]
+      @questions = current_user.dictionary.words.tagged_with(category).sample(4)
     else
-      @questions = current_user.words.all[0..1]
+      @questions = current_user.words.all.sample(4)
     end
     render "question"
   end
@@ -31,7 +34,6 @@ class Public::DictionariesController < ApplicationController
     @questions = questions.map do |q|
       Word.find(q)
     end
-    @questions.compact
     @answers =[ answer_params[:answer0], answer_params[:answer1], answer_params[:answer2], answer_params[:answer3]].compact
     @rights = 0
     @questions.each do |q|
@@ -65,6 +67,6 @@ class Public::DictionariesController < ApplicationController
       params.require(:category).permit(:tag)
     end
     def answer_params
-      params.require(:check).permit(:answer1, :answer2, :answer3, :answer4, :question1, :question2, :question3, :question4)
+      params.require(:check).permit(:answer0, :answer1, :answer2, :answer3, :question0, :question1, :question2, :question3)
     end
 end

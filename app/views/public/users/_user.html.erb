@@ -2,5 +2,14 @@
   <td><%= attachment_image_tag user, :image, :fill, 50, 40, fallback: "noimage.jpg", size: "50x40" %></td>
   <td><%= link_to user.name, user_path(user), data: { turbulinks: false } %></td>
   <td><%= pluralize(user.words.count, "word") %></td>
+  <td>
+    <% if user.words.present? %>
+      <% user.words.tag_counts.map { |t| t.name }.uniq.sample(4).each do |t| %> <!-- Userの持っているタグの名前を4つランダムにかぶりなく取り出す  -->
+         <%= t %>
+      <% end %>
+    <% else %>
+      no tags yet
+    <% end %>
+  </td>
   <td id="follow-btn-<%= user.id %>"><%= render "follow-btn", user: user %></td>
 </tr>

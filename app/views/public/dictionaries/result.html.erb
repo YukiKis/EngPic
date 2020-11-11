@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
-    <h3>RESULT</h3>
+    <h3 class="heading">RESULT</h3>
     <h4>You made <%= @rights %>  / <%= @questions.count %>!</h4>
     <div class="row">
     <% @questions.each_with_index do |question, i| %>
@@ -8,7 +8,7 @@
         <div class="col-sm-3">
           <div class="card result-card bg-info" id="card-<%= question.id %>">
             <%= attachment_image_tag question, :image, fallback: "noimage.jpg", id: "img-#{ question.id }" %><br>
-            <p class="result-content">
+            <p class="result-content" style="font-family: sans-serif;">
               Your answer: <%= @answers[ i ] %><br>
               In your dictionary: <%= question.name %>
             </p>
@@ -16,9 +16,9 @@
         </div>
       <% else %>
         <div class="col-sm-3">
-          <div class="card result-card bg-warning" id="card-<%=question.id %>">
-            <%= attachment_image_tag question, :image, fallback: "noimage.jpg", id: "imd-#{ question.id }" %><br>
-            <p class="result-content">
+          <div class="card result-card bg-danger" id="card-<%=question.id %>">
+            <%= attachment_image_tag question, :image, fallback: "noimage.jpg", id: "img-#{ question.id }" %><br>
+            <p class="result-content" style="font-family: sans-serif;">
               Your answer: <%= @answers[ i ] %><br>
               In your dictionary: <%= link_to question.name, word_path(question) %>
             </p>
@@ -29,8 +29,10 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <%= link_to "Test Again!", choose_dictionary_path %><br>
-        <%= link_to "Back", dictionary_path %>
+        <h4>
+          <%= link_to "Test Again!", choose_dictionary_path %><br>
+          <%= link_to "Back", dictionary_path %>
+        </h4>
     </div>
   </div>
 </div>

@@ -11,7 +11,12 @@
           <%= f.submit %>
         <% end %>
         <h3 class="heading"><%= pluralize(@words.count, "word") %> in Total</h3>
-        <h3 class="text-right"><%= link_to "+", new_word_path, data: { turbolinks: false }  %></h3>
+                <p>
+          In <span class="bg-warning">YELLOW</span>, your word IN your dictionary<br>
+          In <span class="bg-info">BLUE</span>, your word NOT in yours
+        </p>
+
+        <h3 class="text-right"><%= link_to "New word", new_word_path, data: { turbolinks: false }, class: "btn btn-primary" %></h3>
         <div class="row">
           <% @words.each do |word| %>
             <div class="col-sm-2">

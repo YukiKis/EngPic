@@ -17,11 +17,16 @@ RSpec.describe "users page", type: :system do
     it "has table-heading" do
       expect(page).to have_content "Name"
       expect(page).to have_content "Word Count"
+      expect(page).to have_content "Word tags"
     end
     it "has users table" do
       User.all.each do |user|
         expect(page).to have_link user.name, href: user_path(user)
         expect(page).to have_content user.words.count
+        tags = user.words.map { |w| w.tag_list }.uniq.sample(4)
+        tags.each do |tag|
+          expect(page).to have_content tag
+        end
       end
     end
     it "does not have button for myself" do
@@ -32,7 +37,7 @@ RSpec.describe "users page", type: :system do
     end
     it "has button to unfollow user" do
       user1.follow(user2)
-      visit users_path
+      visit current_path
       expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
     end
     it "has search_field" do
@@ -79,6 +84,9 @@ RSpec.describe "users page", type: :system do
     it "has count for how many words already posted" do
       expect(page).to have_content user1.words.count
     end
+    it "has button if current_user == user you see" do
+      expect(page).to have_link "New word", href: new_word_path
+    end
     it "has words-img" do
       user1.words.each do |word|
         expect(page).to have_css "#word-img-#{ word.id }"
@@ -99,8 +107,11 @@ RSpec.describe "users page", type: :system do
     end
     it "has unfollow buttonn if following" do
       user1.follow(user2)
-      visit user_path(user2)
+      visit current_path
       expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
+    end
+    it "does not have button if it is different user" do
+      expect(page).to have_no_link "New wordr", href: new_word_path
     end
   end
   
