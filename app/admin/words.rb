@@ -30,6 +30,7 @@ ActiveAdmin.register Word do
   
   show do |w|
     attributes_table do
+      row :user
       row :name
       row :meaning
       row :tags
