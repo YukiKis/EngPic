@@ -9,7 +9,7 @@
       <%= render "public/users/shared/error_messages", resource: resource %>
     
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-5 z-index-1">
           <%= f.label :name, class: "control-label" %>
         </div>
         <div class="col-sm-7 form-group">
@@ -18,7 +18,7 @@
       </div>
       
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-5 z-index-1">
           <%= f.label :introduction, class: "control-label" %>
         </div>
         <div class="col-sm-7 form-group">
@@ -28,7 +28,7 @@
       
     
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-5 z-index-1">
           <%= f.label :email, class: "control-label" %>
         </div>
         <div class="col-sm-7 form-group">
@@ -37,7 +37,7 @@
       </div>
       
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-5 z-index-1">
           <%= f.label :password, class: "control-label" %>
         </div>
         <div class="col-sm-7 form-group">
@@ -49,7 +49,7 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-5 z-index-1">
           <%= f.label :password_confirmation, class: "control-label" %>
         </div>
         <div class="col-sm-7 form-group">
@@ -65,5 +65,5 @@
     <% end %>
     <%#= render "public/users/shared/links" %>
   </div>
-  <img src="<%= asset_path('writing.png')%>" alt="" style="position: absolute; left: 10%; bottom: 0; opacity: 0.1; z-index: -1">
+  <img src="<%= asset_path('writing.png')%>" alt="" style="position: absolute; left: 10%; bottom: 0; opacity: 0.3;">
 </div>

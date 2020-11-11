@@ -5,6 +5,9 @@ RSpec.describe "words page", type: :system do
   let(:user2){ create(:user2) }
   let(:word1){ create(:word1, user: user1) }
   let(:word2){ create(:word2, user: user2) }
+  let(:word3){ create(:word3, user: user1) }  # name: doll
+  let(:word4){ create(:word4, user: user2) }  # name: doll
+  let(:word5){ create(:word5, user: user1) }  # name: doll
   before do
     sign_in user1
     user1.create_dictionary
@@ -17,7 +20,7 @@ RSpec.describe "words page", type: :system do
       expect(page).to have_content Word.all.count
     end
     it "has button to go to new page" do
-      expect(page).to have_link "+", href: new_word_path
+      expect(page).to have_link "New word", href: new_word_path
     end
     it "has word-cards" do
       Word.all.each do |word|
@@ -88,7 +91,18 @@ RSpec.describe "words page", type: :system do
       expect(page).to have_no_link "Edit", href: edit_word_path(word2)
     end
     it "has related words" do
-      # expect(page).to have 
+    # related_words = []
+    # Word.by_same_name(word1.name).sample(5).each do |w|
+    #   if w == word1
+    #   else
+    #     related_words << w
+    #   end
+    # end.sample(4)
+      related_words = [word3, word4, word5]
+      visit current_path  # 同名の配列を作成し、再度読み込み
+      related_words.each do |w|
+        expect(page).to have_link "", href: word_path(w)
+      end
     end
   end
   context "on edit page" do

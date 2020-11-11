@@ -20,11 +20,16 @@ RSpec.describe "dictionary page", type: :system do
     it "has number of words in dictionary" do
       expect(page).to have_content user1.dictionary.words.count
     end
-    it "has link to words-index" do
-      expect(page).to have_link "Check my dictionary", href: words_dictionary_path
+    it "has words-index" do
+      words = [word1, word1]
+      visit current_path
+      words.each do |w|
+        expect(page).to have_link "", href: word_path(w)
+        expect(page).to have_content w.name
+      end
     end
     it "has link to add a new word" do
-      expect(page).to have_link "Add a new word", href: new_word_path
+      expect(page).to have_link "New word", href: new_word_path
     end
     it "has date of last update" do
       expect(page).to have_content user1.dictionary.updated_at.strftime("%Y/%m/%d")
@@ -33,20 +38,20 @@ RSpec.describe "dictionary page", type: :system do
       expect(page).to have_link "Let's test!", href: choose_dictionary_path
     end
   end
-  context "dictionary words page" do
-    before do 
-      visit words_dictionary_path
-    end
-    it "has search_field" do
-      expect(page).to have_field "q_name_or_meaning_or_tags_name_start"
-      expect(page).to have_button "Search"
-    end
-    it "has word_count in dictionary" do
-      expect(page).to have_content user1.dictionary.words.count
-    end
+  # context "dictionary words page" do
+  #   before do 
+  #     visit words_dictionary_path
+  #   end
+  #   it "has search_field" do
+  #     expect(page).to have_field "q_name_or_meaning_or_tags_name_start"
+  #     expect(page).to have_button "Search"
+  #   end
+  #   it "has word_count in dictionary" do
+  #     expect(page).to have_content user1.dictionary.words.count
+  #   end
     
-    # same as words-index
-  end
+  #   # same as words-index
+  # end
   context "on choose page" do
     before do
       visit choose_dictionary_path
@@ -78,10 +83,10 @@ RSpec.describe "dictionary page", type: :system do
       expect(page).to have_content @questions.count
     end
     it "has forms for question" do
-      @questions.each do |q|
-        expect(page).to have_css "#img-#{ q.id }"
-        expect(page).to have_css "#label-#{ q.id }"
-        expect(page).to have_field "check[answer#{ q.id }]"
+      @questions.each_with_index do |q, i|
+        expect(page).to have_css "#img-#{ i }"
+        expect(page).to have_css "#label-#{ i }"
+        expect(page).to have_field "check[answer#{ i }]"
       end
     end
     it "has button to submit" do
@@ -92,10 +97,10 @@ RSpec.describe "dictionary page", type: :system do
       select "toy", from: "category[tag]"
       click_button "Check!"
       questions = user1.dictionary.words.tagged_with("toy")[0..1]
-      questions.each do |q|
-        expect(page).to have_css "#img-#{ q.id }"
-        expect(page).to have_css "#label-#{ q.id }"
-        expect(page).to have_field "check[answer#{ q.id }]"
+      questions.each_with_index do |q, i|
+        expect(page).to have_css "#img-#{ i }"
+        expect(page).to have_css "#label-#{ i }"
+        expect(page).to have_field "check[answer#{ i }]"
       end
     end
   end
@@ -106,8 +111,8 @@ RSpec.describe "dictionary page", type: :system do
       @questions = user1.dictionary.words.all[0..1]
       @rights = 0
       @answers = []
-      @questions.each do |q|
-        fill_in "check[answer#{ q.id }]", with: q.name
+      @questions.each_with_index do |q, i|
+        fill_in "check[answer#{ i }]", with: q.name
         # ALL CORRECT
         @rights += 1
         @answers << q.name
@@ -127,19 +132,19 @@ RSpec.describe "dictionary page", type: :system do
         expect(page).to have_content question.name
       end
     end
-    it "has yellow color if answer is wrong" do
+    it "has blue color if answer is right" do
+      @questions.each do |q|
+        expect(page).to have_css "#card-#{ q.id }.bg-info"
+      end
+    end
+    it "has red color if answer is wrong" do
       visit choose_dictionary_path
       click_link "Check!", href: question_dictionary_path
       questions = user1.dictionary.words.all[0..1]
       click_button "Finish!"
       expect(current_path).to eq check_dictionary_path
       questions.each do |q|
-        expect(page).to have_css "#card-#{ q.id }"
-      end
-    end
-    it "has blue color if answer is right" do
-      @questions.each do |question|
-        expect(page).to have_css "#card-#{ question.id }.bg-info"
+        expect(page).to have_css "#card-#{ q.id }.bg-danger"
       end
     end
   end

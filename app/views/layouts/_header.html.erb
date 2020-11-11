@@ -13,13 +13,13 @@
         <ul class="nav navbar-nav navbar-right">
           <% if user_signed_in? %>
             <li>
-              <%= link_to root_path, data: { turbolinks: false } do %>
-                <i class="fas fa-home"></i>&nbsp;Home
+              <%= link_to user_path(current_user), data: { turbolinks: false } do %>
+                <i class="fas fa-home"></i>&nbsp;MyPage
               <% end %>
             </li>
             <li>
               <%= link_to users_path do %>
-                <i class="fas fa-users"></i>&nbsp;User
+                <i class="fas fa-users"></i>&nbsp;Users
               <% end %>
             </li>
             <li>

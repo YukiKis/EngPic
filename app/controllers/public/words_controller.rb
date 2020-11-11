@@ -16,6 +16,13 @@ class Public::WordsController < ApplicationController
   end
   
   def show
+    @related_words = []
+    Word.by_same_name(@word.name).sample(5).each do |w|
+      if w == @word
+      else
+        @related_words << w
+      end
+    end.sample(4)
   end
   
   def new

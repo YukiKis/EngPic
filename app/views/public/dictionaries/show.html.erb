@@ -1,18 +1,22 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
-    <h3 class="heading">Your Dictionary</h3>
-    <h4 class="text-right">has <%= pluralize(@dictionary.words.count, "word") %></h4>
-    <%# @dictionary.words.tag_list.each do |tag| %>
-    
-    <!--get 5 tags which have most words-->
-    <h4><%= link_to "Check my dictionary", words_dictionary_path %></h4>
-    <h4><%= link_to "Add a new word", new_word_path, data: { turbolinks: false } %></h4>
-    <span class="label label-primary"><%#= tag %></span>
-      <!--get number of how many words each tag has-->
+    <section style="border: 5px solid #ccc; padding: 10px 40px; margin-top: 30px; margin-bottom: 30px;">
+      <h3 class="heading">Your Dictionary</h3>
+      <h4 class="text-right">
+        has <%= pluralize(@dictionary.words.count, "word") %>&emsp;
+        <%= link_to "New word", new_word_path, data: { turbolinks: false }, class: "btn btn-primary" %>
+      </h4>
+    </section>
+    <div style="margin-bottom: 30px;">
+      <%= render "public/words/index", words: @words %>
+    </div>
+    <!--<h4><%#= link_to "Check my dictionary", words_dictionary_path %></h4>-->
+    <!--get number of how many words each tag has-->
     <%# end %>
     <h4>Last updated: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
-    <h4>Do you want to check your words?</h4>
-    <h4 class="text-right"><%= link_to "Let's test!", choose_dictionary_path %></h4>
+    <h4>Do you want to check your words?
+      <p class="text-right"><%= link_to "Let's test!", choose_dictionary_path, class: "btn btn-default" %></p>
+    </h4>
     <!--<p>label which changes color depending on how many words user registered so far.</p>-->
   </div>
 </div>
