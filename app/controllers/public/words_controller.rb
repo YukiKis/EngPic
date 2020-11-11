@@ -38,6 +38,8 @@ class Public::WordsController < ApplicationController
       current_user.dictionary.add(@word)
       redirect_to word_path(@word)
     else
+      @title = "New"
+      @btn = "Create!"
       render "edit"
     end
   end
