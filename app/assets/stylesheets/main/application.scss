@@ -16,13 +16,9 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
-// @import "./variable";
-// .card{
-//  &:hover{
-//   border: 3px solid #dddddd;
-//  }
-// }
-
+ 
+ @import "./variable"; // scssによる変数（ページの背景、メイン色のrgba）
+ 
 *{
   margin: 0;
   padding: 0;
@@ -30,7 +26,7 @@
 }
 
 .navbar{
-  background-color: rgba(66, 139, 242, 0.9);
+  background-color: $main-color-strong;
   .navbar-nav{
     li{
       overflow: hidden;
@@ -54,7 +50,7 @@
   margin-top: 30px;
   padding: 0 15px;
   border-radius: 5px;
-  background-color: rgba(66, 139, 242, 0.9);
+  background-color: $main-color-strong;
 }
 
 .row{
@@ -83,4 +79,11 @@
 
 .z-index-1{
   z-index: 1;
+}
+
+.page-back{
+ padding: 35px 0 15px;
+ background: $page-image;
+ background-size: contain;
+ z-index: -1;
 }
