@@ -80,9 +80,27 @@
 
 
 // HowTo page
-.howto-image{
- height: 300px;
- width: 300px;
- display: block;
+.howto-section{
+  border: 5px solid #ccc;
+  border-left: 10px solid rgba(66, 139, 242, 0.9);
+  padding: 5px 20px;
+  background-color: rgba(255,255,240, 0.5);
+  box-shadow: 5px 5px 10px;
+ .howto-text{
+   border-bottom: 5px solid red;
+   display: inline-block;
+   margin-bottom: 5px;
+   font-size: 20px;
+   // transform: translateY(15px) rotaet(-15deg);
+  }
+ .howto-image{
+  float: right;
+  height: 200px;
+  width: 200px;
+ }
+ &::after{
+  clear: both;
+  content: "";
+  display: table;
+ }
 }
-
