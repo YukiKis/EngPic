@@ -1,3 +1,12 @@
 // Place all the styles related to the public/words controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// word-edit page
+.word-edit-image{
+  position: absolute;
+  right: 0;
+  bottom: 10%;
+  opacity: 0.2;
+  z-index: 0;
+}

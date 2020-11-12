@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
   
   def index
     @q = User.ransack(params[:q])
-    @users = User.all
+    @users = User.page(params[:page]).per(10)
   end
 
   def show
@@ -40,20 +40,20 @@ class Public::UsersController < ApplicationController
   end
   
   def followers
-    @users = @user.followers.all
+    @users = @user.followers.page(params[:page]).per(10)
     @q = User.ransack(params[:q])
     render "index"
   end
   
   def followings
-    @users = @user.followings.all
+    @users = @user.followings.page(params[:page]).per(10)
     @q = User.ransack(params[:q])
     render "index"
   end
   
   def search
     @q = User.ransack(params[:q])
-    @users = @q.result(distinct: true)
+    @users = @q.result(distinct: true).page(params[:page]).per(10)
     render "index"
   end
   

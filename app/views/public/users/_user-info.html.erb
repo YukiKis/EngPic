@@ -1,6 +1,6 @@
 <div id="user-info">
-  <div class="text-center" style="margin-bottom: 15px;">
-    <%= attachment_image_tag user, :image, :fill, 150, 150, class: "my-img", fallback: "noimage.jpg", size: "150x150", style: "border-radius: 50%;" %>
+  <div class="text-center margin-bottom-sm">
+    <%= attachment_image_tag user, :image, :fill, 150, 150, class: "my-img", fallback: "noimage.jpg", size: "150x150" %>
   </div>
   <table class="table table-hover">
     <tr><th>Name</th><td><%= user.name %></td></tr>

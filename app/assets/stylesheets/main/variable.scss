@@ -1,2 +1,4 @@
 $page-color: rgba(255, 240, 205, 0.5);
-$page-image: url('<%= asset_path("note2-fixed.png") %>') repeat-x;
+$page-image: image-url('note2-fixed.png') repeat-x;
+$main-color-strong: rgba(66, 139, 242, 0.9);
+$main-color-weak: rgba(66, 139, 242, 0.3);

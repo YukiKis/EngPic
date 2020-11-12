@@ -1,8 +1,28 @@
 // Place all the styles related to the public/dictionaries controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "./../variable";
+
+// show page
+.top-box{
+  border: 5px solid #ccc;
+  padding: 10px 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.card-index{
+  margin-bottom: 30px;
+}
+
+// question page
+.form-control{
+  font-family: sans-serif;
+}
+
 .answer-card{
-  border: 3px solid rgba(66, 139, 242, 0.3);
+  border: 3px solid $main-color-weak;
   height: 220px !important;
   img{
     min-width: 100%;
@@ -26,5 +46,6 @@
   }
   .result-content{
     margin: 15px auto;
+    font-family: sans-serif;
   }
 }

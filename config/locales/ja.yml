@@ -76,6 +76,8 @@ ja:
       timeout: "セッションがタイムアウトしました。もう一度ログインしてください。"
       unauthenticated: "アカウント登録もしくはログインしてください。"
     registrations:
+      user:
+        signed_up: "登録出来ました。"
       edit:
         are_you_sure: "本当によろしいですか？"
       new:
