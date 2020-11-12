@@ -42,7 +42,7 @@
         </div>
         <div class="col-sm-7 form-group">
           <% if @minimum_password_length %>
-            <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <em>(<%= @minimum_password_length %>文字以上)</em>
           <% end %><br />
           <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
         </div>
@@ -65,5 +65,5 @@
     <% end %>
     <%#= render "public/users/shared/links" %>
   </div>
-  <img src="<%= asset_path('writing.png')%>" alt="" style="position: absolute; left: 10%; bottom: 0; opacity: 0.3;">
+  <%= image_tag("writing.png", class: "new-registration-image") %>
 </div>

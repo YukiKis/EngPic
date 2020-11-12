@@ -3,7 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // Top page
-
 #container{
  height: 300px;
  #theTarget{
@@ -83,5 +82,7 @@
 // HowTo page
 .howto-image{
  height: 300px;
- background-repeat: no-repeat;
+ width: 300px;
+ display: block;
 }
+

@@ -18,7 +18,7 @@
     <table class="table">
       <% if Word.all.present? %>
       <tr class="row">
-        <th class="col-sm-5 text-center table-heading" style="font-size: 26px;">Tag</th>
+        <th class="col-sm-5 text-center table-heading">Tag</th>
         <td class="col-sm-7">
           <% @tags.sample(4).each do |t| %>
             <%= link_to t, tagged_words_path(t), class: "table-data" %>

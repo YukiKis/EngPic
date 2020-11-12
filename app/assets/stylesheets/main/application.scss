@@ -84,6 +84,10 @@
 .page-back{
  padding: 35px 0 15px;
  background: $page-image;
- background-size: contain;
+ background-size: cover;
  z-index: -1;
+}
+
+.margin-bottom-sm{
+  margin-bottom: 15px;
 }

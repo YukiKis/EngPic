@@ -2,7 +2,7 @@
   <div class="col-sm-10 col-sm-offset-1">
     <h3>Tag list</h3>
     <h3 class="text-right"><%= @tag_count %> in Total</h3>
-    <h3 class="text-right"><%= link_to "+", new_word_path %></h3>
+    <h3 class="text-right"><%= link_to "New Word", new_word_path, class: "btn btn-primary" %></h3>
     <table class="table table-hover">
       <thead class="row">
         <th class="col-sm-4">Tag name</th><th class="col-sm-3">Word counts</th><th class="col-sm-5"></th>
