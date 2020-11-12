@@ -101,7 +101,6 @@ class Public::WordsController < ApplicationController
   private
     def word_params
       params.require(:word).permit(:name, :meaning, :image, :sentence, :tag_list)
-      # params: :status
     end
     
     def get_word

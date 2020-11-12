@@ -1,6 +1,6 @@
 if Rails.env.production?
   ActionMailer::Base.delivery_method = :smtp;
-  ActionMailer::Base.smtip_settings = {
+  ActionMailer::Base.smtp_settings = {
     address: "smtp.gmail.com",
     domain: "gmail.com",
     port: 587,

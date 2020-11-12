@@ -1,42 +1,41 @@
 <%= form_with model: @user, url: session_path(resource), local: true do |f| %>
-<div class="row relative-class">
-  <div class="col-sm-6 col-sm-offset-3">
-    <h1 class="heading">Log in</h2>
-    <div class="row">
-      <div class="col-sm-5">
-        <%= f.label :email, class: "control-label" %>
+  <div class="row relative-class">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h1 class="heading">Log in</h2>
+      <div class="row">
+        <div class="col-sm-5">
+          <%= f.label :email, class: "control-label" %>
+        </div>
+        <div class="col-sm-7 form-group">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+        </div>
       </div>
-      <div class="col-sm-7 form-group">
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="col-sm-5">
-        <%= f.label :password, class: "control-label" %>
-      </div>
-      <div class="col-sm-7 form-group">
-        <%= f.password_field :password, class: "form-control" %>
-      </div>
-    </div>
 
-    <%# if devise_mapping.rememberable? %>
-      <!--<div class="field">-->
-        <%#= f.check_box :remember_me %>
-        <%#= f.label :remember_me %>
-      <!--</div>-->
-    <%# end %>
-    <div class="row">
-      <div class="col-sm-12 text-center">
-        <%= f.submit "Sign in", class: "btn btn-primary" %>
+      <div class="row">
+        <div class="col-sm-5">
+          <%= f.label :password, class: "control-label" %>
+        </div>
+        <div class="col-sm-7 form-group">
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+      </div>
+      <%# if devise_mapping.rememberable? %>
+        <!--<div class="field">-->
+          <%#= f.check_box :remember_me %>
+          <%#= f.label :remember_me %>
+        <!--</div>-->
+      <%# end %>
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <%= f.submit "Sign in", class: "btn btn-primary" %>
+        </div>
+      </div>
+      <div class="row">
+        <h4 class="text-right"><%= link_to "or Sign up!", new_user_registration_path %></h4>
       </div>
     </div>
-    <div class="row">
-      <h4 class="text-right"><%= link_to "or Sign up!", new_user_registration_path %></h4>
-    </div>
+    <%= image_tag("pen2.png", class: "new-session-image") %>
   </div>
-  <img src="<%= asset_path('pen2.png') %>" alt="" width: style="position: absolute; opacity: 0.1;">
-</div>
 <% end %>
 
 <%#= render "public/users/shared/links" %>

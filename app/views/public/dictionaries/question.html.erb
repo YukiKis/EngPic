@@ -10,7 +10,7 @@
               <%= attachment_image_tag question, :image, fallback: "noimage.jpg", id: "img-#{ i }" %><br>
               <div class="answer-form">
                 <%= f.label :"answer#{ i }", "Answer", class: "control-label", id: "label-#{ i }" %>
-                <%= f.text_field :"answer#{ i }", class: "form-control", style: "font-family: sans-serif" %>
+                <%= f.text_field :"answer#{ i }", class: "form-control" %>
                 <%= f.hidden_field :"question#{ i }", value: question.id %>
               </div>
             </div>

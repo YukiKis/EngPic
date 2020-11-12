@@ -1,22 +1,18 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
-    <section style="border: 5px solid #ccc; padding: 10px 40px; margin-top: 30px; margin-bottom: 30px;">
+    <section class="top-box">
       <h3 class="heading">Your Dictionary</h3>
       <h4 class="text-right">
         has <%= pluralize(@dictionary.words.count, "word") %>&emsp;
         <%= link_to "New word", new_word_path, data: { turbolinks: false }, class: "btn btn-primary" %>
       </h4>
     </section>
-    <div style="margin-bottom: 30px;">
+    <div class="card-index">
       <%= render "public/words/index", words: @words %>
     </div>
-    <!--<h4><%#= link_to "Check my dictionary", words_dictionary_path %></h4>-->
-    <!--get number of how many words each tag has-->
-    <%# end %>
     <h4>Last updated: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
     <h4>Do you want to check your words?
       <p class="text-right"><%= link_to "Let's test!", choose_dictionary_path, class: "btn btn-default" %></p>
     </h4>
-    <!--<p>label which changes color depending on how many words user registered so far.</p>-->
   </div>
 </div>
