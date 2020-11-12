@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <div class="row">
+      <!--<div class="col-sm-3">-->
+        <%#= render "public/users/user-info", user: current_user %>
+      <!--</div>-->
+      <div class="col-sm-12">
+        <%= search_form_for @q, url: search_words_path, local: true do |f| %>
+          <%= f.label :name_or_meaning_or_tags_name_start, "Tag or Word" %>
+          <%= f.search_field :name_or_meaning_or_tags_name_start %>
+          <%= f.submit %>
+        <% end %>
+        <h3 class="heading"><%= pluralize(@words.count, "word") %> in Total</h3>
+                <p>
+          In <span class="bg-warning">YELLOW</span>, your word IN your dictionary<br>
+          In <span class="bg-info">BLUE</span>, your word NOT in yours
+        </p>
+
+        <h3 class="text-right"><%= link_to "New word", new_word_path, data: { turbolinks: false }, class: "btn btn-primary" %></h3>
+        <div class="row">
+          <% @words.each do |word| %>
+            <div class="col-sm-2">
+              <%= render "layouts/card", word: word %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--paginate text-center-->
+</div>

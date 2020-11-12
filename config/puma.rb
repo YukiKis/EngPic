@@ -35,7 +35,6 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
-
 bind "unix://#{ Rails.root }/tmp/sockets/puma.sock"
 rails_root = Dir.pwd
 if Rails.env.production?
@@ -43,7 +42,7 @@ if Rails.env.production?
   state_path File.join(rails_root, "tmp", "pids", "puma.state")
   stdout_redirect(
     File.join(rails_root, "log", "puma.log"),
-    File.join(rails.root, "log", "puma-error.log"),
+    File.join(rails_root, "log", "puma-error.log"),
     true
     )
   daemonize

@@ -1,0 +1,52 @@
+              <% if current_user.dictionary.words.include?(word) %>
+                <div class="card bg-warning" id="card-<%= word.id %>">
+                  <%= link_to word_path(word), data: { turbulinks: false } do %>
+                    <div class="card-image-box">
+                      <%= attachment_image_tag word, :image, fallback: "noimage.jpg", class: "card-image image-#{ word.id }", id: "word-image-#{ word.id }" %>
+                    </div>
+                    <div class="card-content bg-warning text-left">
+                      <%= word.name %>
+                    </div>
+                  <% end %>
+                  <%= link_to user_path(word.user), data: { turbulinks: false } do %>
+                    <div class="card-author-name text-right">
+                      by <%= word.user.name %>
+                      <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
+                    </div>
+                  <% end %>
+                </div>
+              <% elsif current_user.words.include?(word) %>
+                <div class="card bg-info" id="card-<%= word.id %>">
+                  <%= link_to word_path(word), data: { turbulinks: false } do %>
+                    <div class="card-image-box">
+                      <%= attachment_image_tag word, :image, fallback: "noimage.jpg", class: "card-image image-#{ word.id }", id: "word-image-#{ word.id }" %>
+                    </div>
+                    <div class="card-content text-left">
+                      <%= word.name %>
+                    </div>
+                  <% end %>
+                  <%= link_to user_path(word.user), data: { turbulinks: false } do %>
+                    <div class="card-author-name text-right">
+                      by <%= word.user.name %>
+                      <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
+                    </div>
+                  <% end %>
+                </div>
+              <% else %>
+                <div class="card">
+                  <%= link_to word_path(word), data: { turbulinks: false } do %>
+                    <div class="card-image-box">
+                      <%= attachment_image_tag word, :image, fallback: "noimage.jpg", class: "card-image image-#{ word.id }", id: "word-image-#{ word.id }" %>
+                    </div>
+                    <div class="card-content">
+                      <%= word.name %>
+                    </div>
+                  <% end %>
+                  <%= link_to user_path(word.user), data: { turbulinks: false } do %>
+                    <div class="card-author-name text-right">
+                      by <%= word.user.name %>
+                      <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>

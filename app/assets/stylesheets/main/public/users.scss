@@ -1,0 +1,67 @@
+// Place all the styles related to the public/users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "./../variable";
+
+.card{
+  font-family: 'Caveat', cursive;
+  height: 200px;
+  // border: 2px inset rgb(66, 139, 242);
+  border-radius: 10px;
+  box-shadow: 2px 2px #ccc;
+  text-align: center;
+  margin-bottom: 15px;
+  transition: 0.3s;
+  // &:hover{
+  //   border: 3px solid rgba(66, 139, 242, 0.9);
+  //   box-shadow: 0 0;
+  // }
+  
+  .card-image-box{
+    overflow: hidden;
+    .card-image{
+      min-width: 100%;
+      max-width: 100%;
+      min-height: 120px;
+      max-height: 120px;
+      transition: 0.3s;
+    };
+  }
+  .card-content{
+    font-size: 25px;
+    padding: 5px;
+    text-align: center;
+    border-bottom: 1px dotted rgb(66, 139, 242);
+    transition: 0.3s;
+  }
+  
+  .card-author-name{
+    padding: 5px;
+    font-size: 15px;
+  }
+
+  &:hover{
+    box-shadow: 5px 5px 10px 5px #ccc;
+    // border: 8px outset #ccc
+    .card-image{
+      transform: scale(1.1, 1.1);
+    }
+    .card-content{
+      font-size: 22px;
+    }
+  }
+}
+
+
+// .answer-card{
+//   .answer-form{
+//     display: none;
+//     transition: 0.3;
+//   }
+//   &:hover{
+//     .answer-form{
+//       display: block;
+//     }
+//   }
+// }

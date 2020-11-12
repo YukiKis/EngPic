@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div id="container">
+      <div id="theTarget">
+        <div class="slide-image" style="background-image: url('<%= asset_path("screen1.png") %>');"></div>
+        <div class="slide-image" style="background-image: url('<%= asset_path("screen2.png") %>');"></div>
+        <div class="slide-image" style="background-image: url('<%= asset_path("screen3.png") %>');"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-sm-10 col-sm-offset-1 top-heading">
+    <div class="text-center">
+      <h1 class="heading"><b>EngPic</b>, <br>Dictionary<br>ONLY for YOU,<br> but WITH EVERYBODY</h1>
+    </div>
+    <table class="table" style="vertical-align: middle">
+      <% if Word.all.present? %>
+      <tr class="row">
+        <th class="col-sm-5 text-center" style="font-size: 26px;">Tag</th>
+        <td class="col-sm-7">
+          <% @tags.sample(4).each do |t| %>
+            <%= link_to t, tagged_words_path(t), style: "font-size: 26px; margin-right: 5px;" %>
+          <% end %><br><%= link_to "See more tags", tags_words_path %>
+        </td>
+      </tr>
+    
+      <tr class="row">
+        <th class="col-sm-5 text-center" style="font-size: 26px;">Word</th>
+        <td class="col-sm-7">
+          <% @words.sample(4).each do |w| %>
+            <%= link_to w, same_name_words_path(w), style: "font-size: 26px; margin-right: 5px;"%>
+          <% end %>
+        </td>
+      </tr>
+    
+      <tr class="row">
+        <th class="col-sm-5 text-center" style="font-size: 26px;">Meaning</th>
+        <td class="col-sm-7">
+          <% @meanings.sample(4).each do |w| %>
+            <%= link_to w, same_meaning_words_path(w), style: "font-size: 26px; margin-right: 5px;" %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+    <img src="<%= asset_path('note2.png') %>" alt="" class="absolute-fixed-img">
+  </div>
+</div>

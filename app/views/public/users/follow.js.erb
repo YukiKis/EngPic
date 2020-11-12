@@ -1,0 +1,4 @@
+$("#follow-btn-<%= @user.id %>").html(`<%= j(render("follow-btn", user: @user)) %>`);
+if($("#user-info").size()){
+  $("#user-info").html(`<%= j(render "user-info", user: @user) %>`);
+};
