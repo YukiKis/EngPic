@@ -4,16 +4,9 @@ class Public::DictionariesController < ApplicationController
   
   def show    
     @q = Word.ransack(params[:q])
-    @words = @dictionary.words.all
+    @words = @dictionary.words.page(params[:page]).per(12)
     @word_count = @words.count
   end
-  
-  # def words
-  #   @q = Word.ransack(params[:q])
-  #   @words = @dictionary.words.all
-  #   @word_count = @words.count
-  #   render "public/words/index"
-  # end
   
   def choose
     @tags = current_user.dictionary.words.tag_counts_on(:tags).map { |tag| tag.name }
@@ -50,7 +43,6 @@ class Public::DictionariesController < ApplicationController
   def add
     @word = Word.find(params[:id])
     @dictionary.add(@word)
-    render "add.js.erb"
   end
   
   def remove

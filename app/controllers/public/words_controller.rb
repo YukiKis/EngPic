@@ -4,13 +4,13 @@ class Public::WordsController < ApplicationController
 
   def index
     @q = Word.ransack(params[:q])
-    @words = Word.all
+    @words = Word.page(params[:page]).per(18)
     @word_count = @words.count
   end
   
   def tagged_words
     @q = Word.ransack(params[:q])
-    @words = Word.tagged_with(params[:tag])
+    @words = Word.tagged_with(params[:tag]).page(params[:page]).per(18)
     @word_count = @words.count
     render "index"
   end
@@ -73,21 +73,21 @@ class Public::WordsController < ApplicationController
   
   def search
     @q = Word.ransack(params[:q])
-    @words = @q.result(distinct: true)
+    @words = @q.result(distinct: true).page(params[:page]).per(18)
     @word_count = @words.count
     render "index"
   end
   
   def same_name
     @q = Word.ransack(params[:q])
-    @words = Word.by_same_name(params[:name])
+    @words = Word.by_same_name(params[:name]).page(params[:page]).per(18)
     @word_count = @words.count
     render "index"
   end
   
   def same_meaning
     @q = Word.ransack(params[:q])
-    @words = Word.by_same_meaning(params[:meaning])
+    @words = Word.by_same_meaning(params[:meaning]).page(params[:page]).per(18)
     @word_count = @words.count
     render "index"
     debugger
