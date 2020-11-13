@@ -27,7 +27,10 @@
           </div>
           <div class="row">
             <div class="col-sm-12 text-right">
-              <%= f.submit "#{ @btn }", class: "btn btn-primary btn-lg" %>
+              <%= f.submit "#{ @btn }", class: "btn btn-primary btn-lg" %>&emsp;
+              <% if @btn == "Update!" %>
+                <%= link_to "Delete", word_path(@word), data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-lg", method: :delete %>
+              <% end %>
             </div>
           </div>
         </div>

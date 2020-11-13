@@ -1,6 +1,7 @@
 class Public::WordsController < ApplicationController
   before_action :authenticate_user!, except: :index
   before_action :get_word, only: [:show, :edit, :update, :destroy]
+  before_action :ready_table, only: [:index, :tagged_words, :search, :same_name, :same_meaning]
 
   def index
     @q = Word.ransack(params[:q])
@@ -45,8 +46,12 @@ class Public::WordsController < ApplicationController
   end
   
   def edit
-    @title = "Edit"
-    @btn = "Update!"
+    if current_user == @word.user
+      @title = "Edit"
+      @btn = "Update!"
+    else
+      redirect_to word_path(@word)
+    end
   end
   
   def update
@@ -56,6 +61,8 @@ class Public::WordsController < ApplicationController
       if @word.update(word_params)
         redirect_to word_path(@word)
       else
+        @title = "Edit"
+        @btn = "Update!"
         render "edit"
       end
     end
@@ -90,7 +97,6 @@ class Public::WordsController < ApplicationController
     @words = Word.by_same_meaning(params[:meaning]).page(params[:page]).per(18)
     @word_count = @words.count
     render "index"
-    debugger
   end
   
   def tags
@@ -109,5 +115,19 @@ class Public::WordsController < ApplicationController
     
     def word_new
       @word = Word.new
+    end
+    
+    def ready_table
+      @listed_words = []
+      @tags = []
+      @meanings = []
+      Word.all.each do |w|
+        @listed_words << w.name
+        @tags << w.tag_list
+        @meanings << w.meaning
+      end
+      @listed_words.uniq!
+      @tags.uniq
+      @meanings.uniq!
     end
 end

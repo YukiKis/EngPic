@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "words page", type: :system do
+RSpec.describe "words page", js: true, type: :system do
   let(:user1){ create(:user1) }
   let(:user2){ create(:user2) }
   let(:word1){ create(:word1, user: user1) }
@@ -43,21 +43,21 @@ RSpec.describe "words page", type: :system do
     end
     it "has search_form" do
       expect(page).to have_field "q_name_or_meaning_or_tags_name_start"
-      expect(page).to have_button "Search"
+      expect(page).to have_button "検索"
     end
     it "can search by word_name" do
       fill_in "q_name_or_meaning_or_tags_name_start", with: word1.name
-      click_button "Search"
+      click_button "検索"
       expect(page).to have_link "", href: word_path(word1)
     end
     it "can search by word_meaning" do
       fill_in "q_name_or_meaning_or_tags_name_start", with: word1.meaning
-      click_button "Search"
+      click_button "検索"
       expect(page).to have_link "", href: word_path(word1)
     end
     it "can search by word_tag_name" do
       fill_in "q_name_or_meaning_or_tags_name_start", with: word1.tags.first.name
-      click_button "Search"
+      click_button "検索"
       expect(page).to have_link "", href: word_path(word1)
     end
   end
@@ -109,6 +109,13 @@ RSpec.describe "words page", type: :system do
     before do
       visit edit_word_path(word1)
     end
+    it "is edit_page if the word is current_user's" do
+      expect(current_path).to eq edit_word_path(word1)
+    end
+    it "fails to visit edit page if the word is other's" do
+      visit edit_word_path(word2)
+      expect(current_path).to eq word_path(word2)
+    end
     it "has image" do
       expect(page).to have_css ".image" 
     end
@@ -137,6 +144,9 @@ RSpec.describe "words page", type: :system do
     it "has button to update a word" do
       expect(page).to have_button "Update!"
     end
+    it "has button to delete a word" do
+      expect(page).to have_link "Delete", href: word_path(word1)
+    end
     it "succeeds to update a word" do
       attach_file "word[image]", "#{ Rails.root }/spec/factories/noimage.jpg"
       fill_in "word[name]", with: "juice"
@@ -164,6 +174,14 @@ RSpec.describe "words page", type: :system do
       fill_in "word[name]", with: ""
       click_button "Update!"
       expect(page).to have_content "エラー"
+    end
+    it "succeeds to delete" do
+      # expect{ page.accept_confirm do
+      #   click_on "Delete"
+      # end }.to change{ user1.words.count }.by(-1)
+      click_on "Delete"
+      expect(current_path).to eq user_path(user1)
+      expect(page).to have_no_content word1.name
     end
   end
   context "on new page" do
@@ -232,21 +250,21 @@ RSpec.describe "words page", type: :system do
       expect(page).to have_content "エラー"
     end
   end
-  context "on tags_page" do
-    before do 
-      visit tags_words_path
-    end
-    it "has tag count" do
-      expect(page).to have_content Word.tag_counts.count
-    end
-    it "has path for word-new page" do
-      expect(page).to have_link "+", href: new_word_path
-    end
-    it "has tag info" do
-      Word.tag_counts.each do |t|
-        expect(page).to have_link t.name, herf: tagged_words_path(t)
-        expect(page).to have_content Word.tagged_with(t).count
-      end
-    end
-  end
+  # context "on tags_page" do
+  #   before do 
+  #     visit tags_words_path
+  #   end
+  #   it "has tag count" do
+  #     expect(page).to have_content Word.tag_counts.count
+  #   end
+  #   it "has path for word-new page" do
+  #     expect(page).to have_link "+", href: new_word_path
+  #   end
+  #   it "has tag info" do
+  #     Word.tag_counts.each do |t|
+  #       expect(page).to have_link t.name, herf: tagged_words_path(t)
+  #       expect(page).to have_content Word.tagged_with(t).count
+  #     end
+  #   end
+  # end
 end

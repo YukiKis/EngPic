@@ -7,16 +7,13 @@ RSpec.describe "header", type: :system do
       visit root_path
     end
     it "has 'LOGO' for top page" do
-      expect(page).to have_link "LOGO", href: root_path
+      expect(page).to have_link "EngPic", href: root_path
     end
     it "has 'HOME' for top page" do
       expect(page).to have_link "Home", href: root_path
     end
     it "has 'About' for about page" do
       expect(page).to have_link "About", href: about_path
-    end
-    it "has 'How' for howto page" do
-      expect(page).to have_link "How", href: howto_path
     end
     it "has 'Register' for new_user_registration page" do
       expect(page).to have_link "Register", href: new_user_registration_path
@@ -33,7 +30,7 @@ RSpec.describe "header", type: :system do
       click_button "Sign in"
     end
     it "has 'LOGO' for top page" do
-      expect(page).to have_link "LOGO", href: root_path
+      expect(page).to have_link "EngPic", href: root_path
     end
     it "has 'MyPage' for own show page" do
       expect(page).to have_link "MyPage", href: user_path(user1) 

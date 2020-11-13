@@ -42,7 +42,7 @@ RSpec.describe "users page", type: :system do
     end
     it "has search_field" do
       expect(page).to have_field "q_name_start"
-      expect(page).to have_button "Search"
+      expect(page).to have_button "検索"
     end
     it "can search by user_name" do
       fill_in "q_name_start", with: user1.name
