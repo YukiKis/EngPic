@@ -10,8 +10,8 @@
     <div class="card-index">
       <%= render "public/words/index", words: @words %>
     </div>
-    <h4>Last updated: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
-    <h4>Do you want to check your words?
+    <h4>辞書の最終更新日: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
+    <h4>辞書を使ってテストする
       <p class="text-right"><%= link_to "Let's test!", choose_dictionary_path, class: "btn btn-default" %></p>
     </h4>
   </div>

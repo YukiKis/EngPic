@@ -38,7 +38,6 @@
  }
 }
 
-// About page
 .about-heading{
  display: block !important;
  position: relative;
@@ -86,12 +85,14 @@
   padding: 5px 20px;
   background-color: rgba(255,255,240, 0.5);
   box-shadow: 5px 5px 10px;
- .howto-text{
+ .howto-heading{
    border-bottom: 5px solid red;
    display: inline-block;
    margin-bottom: 5px;
    font-size: 20px;
-   // transform: translateY(15px) rotaet(-15deg);
+  }
+  .howto-content{
+   display: inline-block;
   }
  .howto-image{
   float: right;

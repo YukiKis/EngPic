@@ -63,15 +63,53 @@ $(function(){
   $("#user_email").on("change", function(){
     var pattern =  /.+@.+/i
     var value = $(this).val();
-    if($(this).hasClass("invalid")){ $(this).removeClass("invalid"); }
-    if( !value.match(pattern) && value !== "" ){
+    if( !value.match(pattern) ){
       $(this).addClass("invalid");
-    }
-    if($(this).hasClass("invalid")){
-      $(this).css("background-color", "#f08080");
       // $(this).parent().append(`<span class="wrong">WRONG</span>`);
     }else{
-      $(this).css("background-color", "white");
+      $(this).removeClass("invalid");
     };
   });
+  
+  // when name is too short / long, change color
+  $("#user_name").on("change", function(){
+    var value = $(this).val()
+    if(value.length < 2){
+      $(this).addClass("invalid");
+    }else if(value.length > 20){
+      $(this).addClass("invalid");
+    }
+    else{
+      $(this).removeClass("invalid");
+    }
+  })
+  
+  // when password is too short, change color
+  $("#user_password").on("change", function(){
+    var value = $(this).val();
+    if(value.length < 6){
+      $(this).addClass("invalid");
+    }
+    else{
+      $(this).removeClass("invalid");
+    }
+  })
+  
+  // when password_confirmation is wrong, change color
+  $("#user_password_confirmation").on("change", function(){
+    var value = $(this).val();
+    if(value.length >= 6 && value !== $("#user_password").val()){
+      $(this).addClass("invalid");
+    }else{
+      $(this).removeClass("invalid");
+    }
+  })
+  
+  $("#word_name, #word_meaning").on("change", function(){
+    if($(this).val() === ""){
+      $(this).addClass("invalid");
+    }else{
+      $(this).removeClass("invalid");
+    }
+  })
 });
