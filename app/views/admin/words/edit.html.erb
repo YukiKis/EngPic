@@ -1,41 +1,37 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
-    <h3 class="heading"><%= @title %> word</h3>
+    <h3 class="heading">編集</h3>
     <%= render "layouts/error", resource: @word %>
-    <div class="row relative-class">
-      <%= form_with model: @word, local: true do |f| %>
+    <div class="row">
+      <%= form_with model: @word, url: admin_word_path(@word), local: true do |f| %>
         <div class="col-sm-4">
           <%= attachment_image_tag @word, :image, :fill, 150, 150, fallback: "noimage.jpg", size: "300x300" %>
           <%= f.attachment_field :image %>
         </div>
-        <div class="z-index-1 col-sm-5 col-sm-offset-3">
+        <div class="col-sm-5 col-sm-offset-3">
           <div class="form-group"> 
-            <%= f.label :name, "Name", class: "control-label" %>
+            <%= f.label :name, "名前", class: "control-label" %>
             <%= f.text_field :name, class: "form-control" %>
           </div>
           <div class="form-group">
-            <%= f.label :meaning, "Meaning", class: "control-label" %>
+            <%= f.label :meaning, "意味", class: "control-label" %>
             <%= f.text_field :meaning, class: "form-control" %>
           </div>
           <div class="form-group">
-            <%= f.label :sentence, "Sentence", class: "control-label" %>
+            <%= f.label :sentence, "例文", class: "control-label" %>
             <%= f.text_area :sentence, class: "form-control" %>
           </div>
           <div class="form-group">
-            <%= f.label :tag_list, "Tags(カンマ区切りで入力)", class: "control-label" %>
+            <%= f.label :tag_list, "(カンマ区切りで入力)", class: "control-label" %>
             <%= f.text_area :tag_list, class: "form-control" %>
           </div>
           <div class="row">
             <div class="col-sm-12 text-right">
-              <%= f.submit "#{ @btn }", class: "btn btn-primary btn-lg" %>&emsp;
-              <% if @btn == "Update!" %>
-                <%= link_to "Delete", word_path(@word), data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-lg", method: :delete %>
-              <% end %>
+              <%= f.submit "Update", class: "btn btn-primary" %>
             </div>
           </div>
         </div>
       <% end %>
-      <%= image_tag("pen2.png", class: "word-edit-image") %>
     </div>
   </div>
 </div>

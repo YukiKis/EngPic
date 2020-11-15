@@ -1,0 +1,25 @@
+<div class="row margin-bottom-md text-center">
+  <div class="col-sm-5">
+    <h1>本日の登録者数</h1>
+  </div>
+  <div class="col-sm-7">
+    <h1>
+      <%= link_to today_admin_users_path do %>
+        <%= @users_today.to_s(:delimited) %>人
+      <% end %>
+    </h1>
+  </div>
+</div>
+
+<div class="row text-center">
+  <div class="col-sm-5">
+    <h1>本日の登録単語数</h1>
+  </div>
+  <div class="col-sm-7">
+    <h1>
+      <%= link_to today_admin_words_path do %>
+        <%= @words_today.to_s(:delimited) %>個
+      <% end %>
+    </h1>
+  </div>
+</div>
