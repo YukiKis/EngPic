@@ -17,6 +17,9 @@ RSpec.describe "admin-users page", type: :system do
     before do 
       visit admin_users_path 
     end
+    it "has search_field for user" do
+      expect(page).to have_field "q[name_start]"
+    end
     it "has total count of users" do
       expect(page).to have_content User.all.count
     end
@@ -32,6 +35,15 @@ RSpec.describe "admin-users page", type: :system do
         user.words.sample(5).each do |word|
           expect(page).to have_css "#word-image-#{ word.id }"
         end
+      end
+    end
+    it "can search by name" do
+      fill_in "q[name_start]", with: user1.name
+      click_button "検索"
+      expect(current_path).to eq search_admin_users_path
+      users = User.where("name = ?", "%#{ user1.name }")
+      users.each do |user| 
+        expect(page).to have_link user.name, href: admin_user_path
       end
     end
   end
@@ -53,7 +65,7 @@ RSpec.describe "admin-users page", type: :system do
       expect(page).to have_content user1.email
     end
     it "has user-words" do
-      user1.words[0..20] do |word|
+      user1.words[0..19] do |word|
         expect(page).to have_link "", href: admin_word_path(word)
         expect(page).to have_css "#word-image-#{ word.id }"
         expect(page).to have_content word.name

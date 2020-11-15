@@ -1,2 +1,26 @@
-<h1>Admin::Words#index</h1>
-<p>Find me in app/views/admin/words/index.html.erb</p>
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <h3>単語</h3>
+    <%= search_form_for @q, url: search_admin_words_path, class: "form-group", local: true do |f|  %>
+      <%= f.label :name_or_meaning_or_tags_name_start, "単語名 / 意味 / タグ", class: "control-label" %>
+      <%= f.text_field :name_or_meaning_or_tags_name_start, class: "control-form" %>
+      <%= f.submit "検索", class: "btn btn-default" %>
+    <% end %>
+    <table class="table table-hover">
+      <thead class="row">
+        <th class="col-sm-3">イメージ</th><th class="col-sm-3">単語名</th><th class="col-sm-3">意味</th><th>ユーザー</th>
+      </thead>
+      <tbody>
+        <% @words.each do |word| %>
+            <tr>
+              <td><%= attachment_image_tag word, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", id: "word-image-#{ word.id }" %></td>
+              <td><%= link_to word.name, admin_word_path(word) %></td>
+              <td><%= word.meaning %> </td>
+              <td><%= word.user.name %></td>
+            </tr>
+        <% end %>
+      </tbody>
+      <%= paginate @words %>
+    </table>
+  </div>
+</div>

@@ -12,8 +12,15 @@ Rails.application.routes.draw do
       member do
         resource :dictionary
       end
+      collection do
+        match "search", to: "words#search", via: [:get, :post], as: "search" 
+      end
     end
-    resources :words
+    resources :words do
+      collection do
+        match "search", to: "words#search", via: [:get, :post], as: "search" 
+      end
+    end
   end
   
   scope module: :public do  

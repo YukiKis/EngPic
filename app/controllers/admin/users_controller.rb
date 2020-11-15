@@ -1,9 +1,10 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
-  before_action :setup, except: :index
+  before_action :setup, except: [:index, :search]
   
   def index
     @users = User.page(params[:page]).per(20)
+    @q = User.ransack(params[:q])
   end
 
   def show
@@ -19,6 +20,12 @@ class Admin::UsersController < ApplicationController
     else
       render "edit"
     end
+  end
+  
+  def search
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true).page(params[:page]).per(20)
+    render "index"
   end
 
   private

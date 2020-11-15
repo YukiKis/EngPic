@@ -5,7 +5,7 @@
     <div class="row relative-class">
       <%= form_with model: @word, local: true do |f| %>
         <div class="col-sm-4">
-          <%= attachment_image_tag @word, :image, :fill, 300, 300, fallback: "noimage.jpg", size: "300x300" %>
+          <%= attachment_image_tag @word, :image, :fill, 150, 150, fallback: "noimage.jpg", size: "300x300" %>
           <%= f.attachment_field :image %>
         </div>
         <div class="z-index-1 col-sm-5 col-sm-offset-3">
