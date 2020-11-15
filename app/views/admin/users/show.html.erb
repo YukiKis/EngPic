@@ -1,2 +1,49 @@
-<h1>Admin::Users#show</h1>
-<p>Find me in app/views/admin/users/show.html.erb</p>
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <h3><%= @user.name %></h3>
+    <div class="row">
+      <div class="col-sm-4">
+        <%= attachment_image_tag @user, :image, :fill, 150, 150, fallback: "noimage.jpg", size: "150x150" %>
+      </div>
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-4">
+            <h4>紹介文</h4>  
+          </div>
+          <div class="col-sm-8">
+            <h4><%= @user.introduction %></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h4>メールアドレス</h4>
+          </div>
+          <div class="col-sm-8">
+            <h4><%= @user.email %></h4>
+          </div>
+          <div class="text-right">
+            <%= link_to "Edit", edit_admin_user_path(@user), class: "btn btn-default btn-lg", data: { turbolinks: false } %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-12">
+          <h3>単語</h3>
+          <% if @words.present? %>
+            <% @words.each do |word| %>
+              <%= link_to admin_word_path(word) do %>
+                <div class="col-sm-2" style="border: 1px solid #ccc">
+                  <%= attachment_image_tag word, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", id: "word-image-#{ word.id }" %><br>
+                  <%= word.name %>
+                </div>
+              <% end %>
+            <% end %>
+          <% else %>
+            <h4>まだ単語は登録されておりません。</h4>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
