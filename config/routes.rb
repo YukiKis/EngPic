@@ -1,12 +1,22 @@
 Rails.application.routes.draw do
-
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
-  scope module: :public do 
-    devise_for :users, controllers: {
-      sessions: "public/users/sessions",
-      registrations: "public/users/registrations"
-    }
+  devise_for :admins, controllers: {
+    sessions: "admin/admins/sessions"
+  }
+  devise_for :users, controllers: {
+    sessions: "public/users/sessions",
+    registrations: "public/users/registrations"
+  }
+  namespace :admin do
+    get "/", to: "homes#top", as: "top"
+    resources :users do
+      member do
+        resource :dictionary
+      end
+    end
+    resources :words
+  end
+  
+  scope module: :public do  
     resources :users do
       collection do
         match 'search' => "users#search", via: [:get, :post], as: :search
@@ -40,11 +50,8 @@ Rails.application.routes.draw do
         delete "words/:id", to: "dictionaries#remove", as: "remove"
       end
     end
-    # post "dictionary/words/:id", to: "dictionaries#add", as: "dictionary_add"
-    # delete "dictionary/words/:id", to: "dictionaries#remove", as: "dictionary_remove"
-    
   end
-  
+
   root "homes#top"
   get "/about", to: "homes#about"
   get "/howto", to: "homes#howto"

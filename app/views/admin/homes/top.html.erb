@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-5">
+    <h1>本日の登録者数</h1>
+  </div>
+  <div class="col-sm-7">
+    <h1><%= @users_today.to_s(:delimited) %>人</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-5">
+    <h1>本日の登録単語数</h1>
+  </div>
+  <div class="col-sm-7">
+    <h1><%= @words_today.to_s(:delimited) %>個</h1>
+  </div>
+</div>
