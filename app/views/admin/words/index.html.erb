@@ -16,7 +16,7 @@
               <td><%= attachment_image_tag word, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", id: "word-image-#{ word.id }" %></td>
               <td><%= link_to word.name, admin_word_path(word) %></td>
               <td><%= word.meaning %> </td>
-              <td><%= word.user.name %></td>
+              <td><%= link_to word.user.name, admin_user_path(word.user) %></td>
             </tr>
         <% end %>
       </tbody>

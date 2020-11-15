@@ -72,7 +72,10 @@ RSpec.describe "admin-users page", type: :system do
       end
     end
     it "has button to edit" do
-      expect(page).to have_link "Edit", href: edit_admin_user_path(user1)
+      expect(page).to have_link "編集", href: edit_admin_user_path(user1)
+    end
+    it "has button to dictionary_page" do
+      expect(page).to have_link "辞書", href: admin_user_dictionary_path(user1)
     end
   end
   

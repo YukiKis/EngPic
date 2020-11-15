@@ -21,11 +21,11 @@ RSpec.describe "admin top page", type: :system do
       word_count = Word.today.count
       expect(page).to have_content word_count
     end
-    it "cannnot access if not log in as admin" do
-      sign_out admin1
-      sign_in user1
-      visit admin_top_path
-      expect(page).to have_content "ログインしてください"
+    it "has link to see today's registererd users" do
+      expect(page).to have_link "", href: "today_admin_users_path"
+    end
+    it "has link to see today's registererd words" do
+      expect(page).to have_link "", href: "today_admin_words_path"
     end
   end
 end

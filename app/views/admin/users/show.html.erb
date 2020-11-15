@@ -22,7 +22,8 @@
             <h4><%= @user.email %></h4>
           </div>
           <div class="text-right">
-            <%= link_to "Edit", edit_admin_user_path(@user), class: "btn btn-default btn-lg", data: { turbolinks: false } %>
+            <%= link_to "辞書", admin_user_dictionary_path(@user), class: "btn btn-info btn-lg" %>
+            <%= link_to "編集", edit_admin_user_path(@user), class: "btn btn-default btn-lg", data: { turbolinks: false } %>
           </div>
         </div>
       </div>

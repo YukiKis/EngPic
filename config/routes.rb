@@ -10,15 +10,17 @@ Rails.application.routes.draw do
     get "/", to: "homes#top", as: "top"
     resources :users do
       member do
-        resource :dictionary
+        resource :dictionary, only: :show, as: "user_dictionary"
       end
       collection do
-        match "search", to: "words#search", via: [:get, :post], as: "search" 
+        match "search", to: "users#search", via: [:get, :post], as: "search" 
+        get "today"
       end
     end
     resources :words do
       collection do
         match "search", to: "words#search", via: [:get, :post], as: "search" 
+        get "today"
       end
     end
   end

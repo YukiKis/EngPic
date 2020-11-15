@@ -1,6 +1,6 @@
 class Admin::WordsController < ApplicationController
   before_action :authenticate_admin!
-  before_action :setup, except: [:index, :search]
+  before_action :setup, except: [:index, :search, :today]
   
   def index
     @words = Word.page(params[:page]).per(20)
@@ -27,6 +27,12 @@ class Admin::WordsController < ApplicationController
   def search
     @q = Word.ransack(params[:q])
     @words = @q.result(distinct: true).page(params[:page]).per(20)
+    render "index"
+  end
+  
+  def today
+    @q = Word.ransack(params[[:q]])
+    @words = Word.today.page(params[:page]).per(20)
     render "index"
   end
   

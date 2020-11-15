@@ -22,6 +22,7 @@ RSpec.describe "admin-words page", type: :system do
         expect(page).to have_css "#word-image-#{ word.id }"
         expect(page).to have_content word.name
         expect(page).to have_content word.user.name
+        expect(page).to have_link word.user.name, href: admin_user_path(word.user)
       end
     end
     it "has search field for word" do
