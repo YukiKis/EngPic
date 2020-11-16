@@ -25,6 +25,22 @@
   box-sizing: border-box;
 }
 
+// html, body{
+//   min-height: 100% !important;
+//   .container{
+//     min-height: 100% !important;
+//   }
+// }
+
+
+.container{
+  position: relative;
+}
+
+.main{
+  padding: 0 0 70px;
+}
+
 .navbar{
   background-color: $main-color-strong;
   .navbar-nav{
@@ -43,14 +59,19 @@
   }
 }
 
-.footer {
-  height: 50px;
-  line-height: 50px;
-  color: white;
-  margin-top: 30px;
-  padding: 0 15px;
-  border-radius: 5px;
-  background-color: $main-color-strong;
+.footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  .footer-text {
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    margin-top: 30px;
+    padding: 0 15px;
+    border-radius: 5px;
+    background-color: $main-color-strong;
+  }
 }
 
 .row{
@@ -82,7 +103,8 @@
 }
 
 .page-back{
- padding: 35px 0 15px;
+ min-height: 100%;
+ padding: 40px 0 0;
  background: $page-image;
  background-size: cover;
  z-index: -1;

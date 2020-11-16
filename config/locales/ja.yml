@@ -72,7 +72,7 @@ ja:
   devise:
     failure:
       user:
-        already_authenticatd: "既にログイン"
+        already_authenticatd: "既にログインしております。"
       invalid: "%{authentication_keys}またはパスワードが違います。"
       not_found_in_database: "%{authentication_keys}またはパスワードが違います。"
       timeout: "セッションがタイムアウトしました。もう一度ログインしてください。"

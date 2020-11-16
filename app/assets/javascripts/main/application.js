@@ -18,7 +18,15 @@
 //= require_tree .
 
 
-$(function(){
+$(document).on("turbolinks:load", function(){
+  var ch = $(".container").outerHeight();
+  var wh = $(window).height();
+  if(ch > wh){
+    $(".container").outerHeight(ch);
+  }else{
+    $(".container").outerHeight(wh); 
+  }
+  
   $("#user_image").on("change", function(e){
     var reader = new FileReader();
     reader.onload = function(e){
