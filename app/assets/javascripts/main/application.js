@@ -27,6 +27,14 @@ $(document).on("turbolinks:load", function(){
     $(".container").outerHeight(wh); 
   }
   
+  $(window).resize(function(){
+    if(ch > wh){
+      $(".container").outerHeight(ch);
+    }else{
+      $(".container").outerHeight(wh); 
+    }
+  });
+  
   $("#user_image").on("change", function(e){
     var reader = new FileReader();
     reader.onload = function(e){

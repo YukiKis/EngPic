@@ -8,7 +8,7 @@
     <h3 class="heading"><%= pluralize(words.count, "word") %> in Total</h3>
     <div class="row">
       <% words.each do |word| %>
-        <div class="col-sm-2">
+        <div class="col-xs-3 col-sm-2">
           <%= render "layouts/card", word: word %>
         </div>
       <% end %>

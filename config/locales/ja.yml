@@ -57,6 +57,7 @@ ja:
             name:
               blank: "は必須項目です。"
               too_short: "が短すぎます。"
+              too_long: "が長すぎます。"
         word:
           attributes:
             name:

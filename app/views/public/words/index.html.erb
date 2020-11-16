@@ -60,7 +60,7 @@
         <h3 class="text-right"><%= link_to "New word", new_word_path, data: { turbolinks: false }, class: "btn btn-primary" %></h3>
         <div class="row">
           <% @words.each do |word| %>
-            <div class="col-sm-2">
+            <div class="col-xs-3 col-sm-2">
               <%= render "layouts/card", word: word %>
             </div>
           <% end %>

@@ -6,7 +6,10 @@
 
 // user-info-sidebar
 .my-img{
+  width: 80%;
+  height: 80%;
   border-radius: 50%;
+  margin-top: 15px;
 }
 
 .card{
@@ -22,7 +25,6 @@
   //   border: 3px solid rgba(66, 139, 242, 0.9);
   //   box-shadow: 0 0;
   // }
-  
   .card-image-box{
     overflow: hidden;
     .card-image{
@@ -34,7 +36,7 @@
     };
   }
   .card-content{
-    font-size: 25px;
+    font-size: 1.5rem;
     padding: 5px;
     text-align: center;
     border-bottom: 1px dotted rgb(66, 139, 242);
@@ -44,6 +46,11 @@
   .card-author-name{
     padding: 5px;
     font-size: 15px;
+    &::after{
+      content: "";
+      clear: both;
+      display: table;
+    }
   }
 
   &:hover{

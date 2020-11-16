@@ -9,8 +9,8 @@
           <div class="card result-card bg-info" id="card-<%= question.id %>">
             <%= attachment_image_tag question, :image, fallback: "noimage.jpg", id: "img-#{ question.id }" %><br>
             <p class="result-content">
-              Your answer: <%= @answers[ i ] %><br>
-              In your dictionary: <%= question.name %>
+              Answer: <%= @answers[ i ] %><br>
+            Dictionary: <%= question.name %>
             </p>
           </div>
         </div>

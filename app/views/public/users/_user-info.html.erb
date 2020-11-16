@@ -1,10 +1,13 @@
 <div id="user-info">
   <div class="text-center margin-bottom-sm">
-    <%= attachment_image_tag user, :image, :fill, 150, 150, class: "my-img", fallback: "noimage.jpg", size: "150x150" %>
+    <%= attachment_image_tag user, :image, class: "my-img", fallback: "noimage.jpg" %>
   </div>
-  <table class="table table-hover">
+  <table class="table table-hover ellipsis-table">
     <tr><th>Name</th><td><%= user.name %></td></tr>
-    <tr><th>Introduction</th><td><%= user.introduction %></td></tr>
+    <tr>
+      <th>Introduction</th>
+      <td><%= user.introduction %></td>
+    </tr>
     <tr><th><%= link_to "Followers", followers_user_path(user) %></th><td id="followers-number"><%= user.followers.count %></td></tr>
     <tr><th><%= link_to "Followings", followings_user_path(user) %></th><td id="followers-number"><%= user.followings.count %></td></tr>
   </table>

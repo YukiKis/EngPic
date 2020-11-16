@@ -11,8 +11,7 @@
       <%= render "public/words/index", q: @q, words: @words %>
     </div>
     <h4>辞書の最終更新日: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
-    <h4>辞書を使ってテストする
-      <p class="text-right"><%= link_to "Let's test!", choose_dictionary_path, class: "btn btn-default" %></p>
+    <h4 class="text-right">辞書を使ってテストする&emsp;<%= link_to "Let's test!", choose_dictionary_path, class: "btn btn-default" %></h4>
     </h4>
   </div>
 </div>

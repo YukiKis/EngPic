@@ -9,9 +9,9 @@
       </div>
     <% end %>
     <%= link_to user_path(word.user), data: { turbulinks: false } do %>
-      <div class="card-author-name text-right">
-        by <%= word.user.name %>
-        <%= attachment_image_tag word.user, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %>
+      <div class="card-author-name">
+        <span style="float: left;"><%= word.user.name %></span>
+        <span style="float: right"><%= attachment_image_tag word.user, :image, :fill, 15, 20, fallback: "noimage.jpg", size: "30x30", class: "img-circle", id: "user-image-#{ word.user.id }" %></span>
       </div>
     <% end %>
   </div>
