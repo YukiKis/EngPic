@@ -31,4 +31,13 @@ every 1.day, :at => "9:00 pm" do
   end
 end
 
+every :month, :at => "9:00 pm" do
+  begin
+    runner "Batch::SendMonthlyEmail.send_monthly_mail"
+  rescue => e
+    Rails.logger.error("Aborted rails runner")
+    raise e
+  end
+end
+
 # Learn more: http://github.com/javan/whenever

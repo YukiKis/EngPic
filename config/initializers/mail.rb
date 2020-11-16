@@ -1,4 +1,5 @@
 if Rails.env.production?
+  ActionMailer::Base.raise_delivery_errors = true
   ActionMailer::Base.delivery_method = :smtp;
   ActionMailer::Base.smtp_settings = {
     address: "smtp.gmail.com",
@@ -7,7 +8,7 @@ if Rails.env.production?
     user_name: ENV["EMAIL_ADDRESS"],
     password: ENV["EMAIL_PASSWORD"],
     authentication: "plain",
-    enable_startles_auto: true
+    enable_starttls_auto: true
   }
 elsif Rails.env.development?
   ActionMailer::Base.delivery_method = :letter_opener
