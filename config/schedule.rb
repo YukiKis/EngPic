@@ -22,7 +22,9 @@ rails_env = Rails.env.to_sym
 set :envirnment, rails_env
 set :output, "log/cron.log"
 
+set :environment, :production
 every 1.day, :at => "9:00 pm" do
+# every 1.minute do
   begin
     runner "Batch::SendNotifyEmail.send_notify_mail"
   rescue => e
@@ -31,7 +33,9 @@ every 1.day, :at => "9:00 pm" do
   end
 end
 
+set :environment, :production
 every :month, :at => "9:00 pm" do
+# every 2.minute do
   begin
     runner "Batch::SendMonthlyEmail.send_monthly_mail"
   rescue => e
