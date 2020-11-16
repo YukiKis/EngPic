@@ -1,16 +1,27 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "public/users/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <h3>パスワードを変更する</h3>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= render "public/users/shared/error_messages", resource: resource %>
+    <div class="row">
+      <div class="col-sm-3">
+        <%= f.label :email, "メールアドレス", class: "control-label" %>
+      </div>
+      <div class="col-sm-5">
+        <div class="form-group">
+           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-inline" %>
+         </div>
+      </div>
+      <div class="col-sm-4"></div>
+      <div class="actions text-right">
+        <%= f.submit "パスワード変更のメールを送信", class: "btn btn-default" %>
+      </div>
+    </div>
+    <% end %>
+    <!--<%#= render "public/users/shared/links" %>-->
+    <div class="text-right margin-top-sm">
+      <%= link_to "or Log in", href: new_user_session_path %>
+    </div>
   </div>
+</div>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "public/users/shared/links" %>
