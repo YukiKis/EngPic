@@ -8,7 +8,7 @@
       </h4>
     </section>
     <div class="card-index">
-      <%= render "public/words/index", words: @words %>
+      <%= render "public/words/index", q: @q, words: @words %>
     </div>
     <h4>辞書の最終更新日: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
     <h4>辞書を使ってテストする

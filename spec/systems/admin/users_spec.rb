@@ -95,6 +95,9 @@ RSpec.describe "admin-users page", type: :system do
     it "has button to update" do
       expect(page).to have_button "Update"
     end
+    it "has button to back" do
+      expect(page).to have_link "Back", href: admin_user_path(user1)
+    end
     it "succeeds to update" do
       fill_in "user[name]", with: "kiyu"
       fill_in "user[introduction]", with: "Good morning!"

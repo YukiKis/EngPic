@@ -8,7 +8,7 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @words = Word.where(user_id: current_user.id).or(Word.where(user_id: current_user.followings.ids))
+    @words = Word.where(user_id: current_user.id).or(Word.where(user_id: current_user.followings.ids)).page(params[:page]).per(18)
   end
 
   def edit
@@ -33,10 +33,12 @@ class Public::UsersController < ApplicationController
   
   def follow
     current_user.follow(@user)
+    render "follow.js.erb"
   end
   
   def unfollow
     current_user.unfollow(@user)
+    render "unfollow.js.erb"
   end
   
   def followers

@@ -3,7 +3,7 @@ class Public::DictionariesController < ApplicationController
   before_action :setup
   
   def show    
-    @q = Word.ransack(params[:q])
+    @q = @dictionary.words.ransack(params[:q])
     @words = @dictionary.words.page(params[:page]).per(12)
     @word_count = @words.count
   end
@@ -39,15 +39,24 @@ class Public::DictionariesController < ApplicationController
     end
     render "result"
   end
+  
+  def search
+    @q = @dictionary.words.ransack(params[:q])
+    @words = @q.result.page(params[:page]).per(12)
+    render "show"
+  end
+    
 
   def add
     @word = Word.find(params[:id])
     @dictionary.add(@word)
+    render "add.js.erb"
   end
   
   def remove
     @word = Word.find(params[:id])
     @dictionary.remove(@word)
+    render "remove.js.erb"
   end
   
   private

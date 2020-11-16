@@ -48,8 +48,8 @@
       <div class="col-sm-12">
         <h3 class="heading"><%= pluralize(@words.count, "word") %> in Total</h3>
         <%= search_form_for @q, url: search_words_path, local: true, class: "text-right form-inline", style: "display: inline-block;" do |f| %>
-          <%= f.label :name_or_meaning_or_tags_name_start, "タグ名 / 単語名" %>
-          <%= f.search_field :name_or_meaning_or_tags_name_start, class: "form-control" %>
+          <%= f.label :name_or_meaning_start, "タグ名 / 単語名" %>
+          <%= f.search_field :name_or_meaning_start, class: "form-control" %>
           <%= f.submit "検索", class: "btn btn-default" %>
         <% end %>
         <p>

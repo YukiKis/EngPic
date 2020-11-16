@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     sessions: "public/users/sessions",
     registrations: "public/users/registrations"
   }
+  
   namespace :admin do
     get "/", to: "homes#top", as: "top"
     resources :users do
@@ -56,6 +57,7 @@ Rails.application.routes.draw do
         post "check"
         get "result"
         post "words/:id", to: "dictionaries#add", as: "add"
+        match 'search' => 'dictionaries#search', via: [:get, :post], as: :search
         delete "words/:id", to: "dictionaries#remove", as: "remove"
       end
     end
