@@ -21,6 +21,7 @@
 $(document).on("turbolinks:load", function(){
   var ch = $(".container").outerHeight();
   var wh = $(window).height();
+  var ww = parseInt($(window).width());
   if(ch > wh){
     $(".container").outerHeight(ch);
   }else{
@@ -34,6 +35,8 @@ $(document).on("turbolinks:load", function(){
       $(".container").outerHeight(wh); 
     }
   });
+
+  $(window).trigger("resize");
   
   $("#user_image").on("change", function(e){
     var reader = new FileReader();
@@ -80,7 +83,7 @@ $(document).on("turbolinks:load", function(){
     var pattern =  /.+@.+/i
     var value = $(this).val();
     if( !value.match(pattern) ){
-      $(this).addClass("invalid");
+      $(this).addClass("invalid").attr("title", "メールアドレスが不適切です");
       // $(this).parent().append(`<span class="wrong">WRONG</span>`);
     }else{
       $(this).removeClass("invalid");
@@ -91,9 +94,9 @@ $(document).on("turbolinks:load", function(){
   $("#user_name").on("change", function(){
     var value = $(this).val()
     if(value.length < 2){
-      $(this).addClass("invalid");
+      $(this).addClass("invalid").attr("title", "名前が短すぎます。");
     }else if(value.length > 20){
-      $(this).addClass("invalid");
+      $(this).addClass("invalid").attr("title", "名前が長すぎます");
     }
     else{
       $(this).removeClass("invalid");
@@ -104,7 +107,7 @@ $(document).on("turbolinks:load", function(){
   $("#user_password").on("change", function(){
     var value = $(this).val();
     if(value.length < 6){
-      $(this).addClass("invalid");
+      $(this).addClass("invalid").attr("title", "パスワードが短すぎます。");
     }
     else{
       $(this).removeClass("invalid");
@@ -112,18 +115,19 @@ $(document).on("turbolinks:load", function(){
   })
   
   // when password_confirmation is wrong, change color
-  $("#user_password_confirmation").on("change", function(){
-    var value = $(this).val();
-    if(value.length >= 6 && value !== $("#user_password").val()){
-      $(this).addClass("invalid");
-    }else{
-      $(this).removeClass("invalid");
-    }
-  })
+  // $("#user_password_confirmation").on("change", function(){
+  //   var value = $(this).val();
+  //   if(value.length >= 6 && value !== $("#user_password").val()){
+  //     $(this).addClass("invalid").attr("title", "パスワードが上記と合致しません。");
+  //   }else{
+  //     $(this).removeClass("invalid");
+  //   }
+  // })
   
   $("#word_name, #word_meaning").on("change", function(){
-    if($(this).val() === ""){
-      $(this).addClass("invalid");
+    var val = $(this).val();
+    if(val === ""){
+      $(this).addClass("invalid").attr("title", val + "が空欄です。");
     }else{
       $(this).removeClass("invalid");
     }
