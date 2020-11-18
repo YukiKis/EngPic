@@ -2,6 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+//word-show page
+.card-show{
+  text-align: center;
+  padding: 10px 5px;
+  border-radius: 20px;
+  outline: 5px solid #ccc;
+  box-shadow: 5px 5px #ccc;
+  font-family: "Caveat", cursive;
+  font-size: 1.5em;
+  overflow: hidden;
+  .card-show-image{
+    width: 80%;
+    height: 80%;
+  }
+}
+
 // word-edit page
 .word-edit-image{
   position: absolute;

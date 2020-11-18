@@ -1,17 +1,28 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <section class="top-box">
-      <h3 class="heading">Your Dictionary</h3>
-      <h4 class="text-right">
-        has <%= pluralize(@dictionary.words.count, "word") %>&emsp;
-        <%= link_to "New word", new_word_path, data: { turbolinks: false }, class: "btn btn-primary" %>
-      </h4>
+      <h3 class="heading" style="text-shadow: none;">
+        Your Dictionary has <%= @dictionary.words.count %> <%= "word".pluralize(@dictionary.words.count) %>
+      </h3>
+
+      <div class="row">
+        <div class="col-sm10 col-sm-offset-1">
+          Tag index: <br>
+          <% @dictionary.words.tag_counts.each do |tag| %>
+            &emsp;<%= link_to tag.name, tagged_dictionary_path(tag.name) %>: <%= tag.taggings_count %>件<br>
+          <% end %>
+          <%= link_to "Reset", dictionary_path %>
+          <div class="text-right">
+            <%= link_to "New word", new_word_path, data: { turbolinks: false }, class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
     </section>
     <div class="card-index">
       <%= render "public/words/index", q: @q, words: @words %>
     </div>
-    <h4>辞書の最終更新日: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
-    <h4 class="text-right">辞書を使ってテストする&emsp;<%= link_to "Let's test!", choose_dictionary_path, class: "btn btn-default" %></h4>
+    <h4>最終更新日: on <%= @dictionary.updated_at.strftime("%Y/%m/%d") %></h4>
+    <h4 class="text-right"><%= link_to "Test!", choose_dictionary_path, class: "btn btn-primary" %></h4>
     </h4>
   </div>
 </div>

@@ -5,7 +5,12 @@ class Public::DictionariesController < ApplicationController
   def show    
     @q = @dictionary.words.ransack(params[:q])
     @words = @dictionary.words.page(params[:page]).per(12)
-    @word_count = @words.count
+  end
+  
+  def tagged_words
+    @q = @dictionary.words.ransack(params[:q])
+    @words = @dictionary.words.tagged_with(params[:tag]).page(params[:page]).per(12)
+    render "show"
   end
   
   def choose

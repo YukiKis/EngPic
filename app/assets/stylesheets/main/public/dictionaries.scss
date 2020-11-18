@@ -6,10 +6,15 @@
 
 // show page
 .top-box{
-  border: 5px solid #ccc;
+  border: 5px solid $sub-color-strong;
+  background-color: $sub-color-weak;
   padding: 10px 40px;
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.dictionary-show-heading{
+  text-shadow: none ;
 }
 
 .card-index{
@@ -37,7 +42,7 @@
 }
 
 .result-card{
-  height: 220px !important;
+  height: 250px !important;
   img{
     min-width: 100%;
     max-width: 100%;
@@ -45,7 +50,7 @@
     max-height: 150px;
   }
   .result-content{
-    margin: 15px auto;
-    font-family: sans-serif;
+    padding: 30px 0;
   }
 }
+

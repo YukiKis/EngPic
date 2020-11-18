@@ -21,7 +21,7 @@
 $(document).on("turbolinks:load", function(){
   var ch = $(".container").outerHeight();
   var wh = $(window).height();
-  var ww = parseInt($(window).width());
+
   if(ch > wh){
     $(".container").outerHeight(ch);
   }else{

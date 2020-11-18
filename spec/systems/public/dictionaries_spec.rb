@@ -20,6 +20,12 @@ RSpec.describe "dictionary page", type: :system do
     it "has number of words in dictionary" do
       expect(page).to have_content user1.dictionary.words.count
     end
+    it "has tags-index" do
+      user1.dictionary.words.tag_counts.each do |t|
+        expect(page).to have_link t.name, href: tagged_dictionary_path(t.name)
+        expect(page).to have_content t.taggings_count
+      end
+    end
     it "has words-index" do
       words = [word1, word1]
       visit current_path
@@ -35,23 +41,10 @@ RSpec.describe "dictionary page", type: :system do
       expect(page).to have_content user1.dictionary.updated_at.strftime("%Y/%m/%d")
     end
     it "has link to choose how to test" do
-      expect(page).to have_link "Let's test!", href: choose_dictionary_path
+      expect(page).to have_link "Test!", href: choose_dictionary_path
     end
   end
-  # context "dictionary words page" do
-  #   before do 
-  #     visit words_dictionary_path
-  #   end
-  #   it "has search_field" do
-  #     expect(page).to have_field "q_name_or_meaning_or_tags_name_start"
-  #     expect(page).to have_button "Search"
-  #   end
-  #   it "has word_count in dictionary" do
-  #     expect(page).to have_content user1.dictionary.words.count
-  #   end
-    
-  #   # same as words-index
-  # end
+
   context "on choose page" do
     before do
       visit choose_dictionary_path
@@ -77,7 +70,7 @@ RSpec.describe "dictionary page", type: :system do
     before do
       visit choose_dictionary_path
       click_link "Check!", href: question_dictionary_path
-      @questions = user1.dictionary.words.all[0..1]
+      @questions = user1.dictionary.words.all
     end
     it "has number of questions" do
       expect(page).to have_content @questions.count
@@ -96,7 +89,7 @@ RSpec.describe "dictionary page", type: :system do
       visit choose_dictionary_path
       select "toy", from: "category[tag]"
       click_button "Check!"
-      questions = user1.dictionary.words.tagged_with("toy")[0..1]
+      questions = user1.dictionary.words.tagged_with("toy")
       questions.each_with_index do |q, i|
         expect(page).to have_css "#img-#{ i }"
         expect(page).to have_css "#label-#{ i }"
@@ -108,12 +101,12 @@ RSpec.describe "dictionary page", type: :system do
     before do
       visit choose_dictionary_path
       click_link "Check!", href: question_dictionary_path
-      @questions = user1.dictionary.words.all[0..1]
+      @questions = user1.dictionary.words.all
       @rights = 0
       @answers = []
       @questions.each_with_index do |q, i|
-        fill_in "check[answer#{ i }]", with: q.name
         # ALL CORRECT
+        fill_in "check[answer#{ i }]", with: q.name
         @rights += 1
         @answers << q.name
       end
@@ -140,7 +133,7 @@ RSpec.describe "dictionary page", type: :system do
     it "has red color if answer is wrong" do
       visit choose_dictionary_path
       click_link "Check!", href: question_dictionary_path
-      questions = user1.dictionary.words.all[0..1]
+      questions = user1.dictionary.words.all
       click_button "Finish!"
       expect(current_path).to eq check_dictionary_path
       questions.each do |q|

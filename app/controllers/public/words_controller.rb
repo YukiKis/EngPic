@@ -18,12 +18,17 @@ class Public::WordsController < ApplicationController
   
   def show
     @related_words = []
-    Word.by_same_name(@word.name).sample(5).each do |w|
-      if w == @word
-      else
-        @related_words << w
+    @word.tag_list.each do |tag|
+      Word.tagged_with(tag).sample(5).each do |w|
+        if w == @word
+        else
+          @related_words << w
+        end
       end
-    end.sample(4)
+    end
+    if @related_words.any?
+      @related_words.uniq!.sample(4)
+    end
   end
   
   def new

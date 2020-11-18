@@ -10,8 +10,8 @@
       <div class="col-sm-8">
         <h3 class="heading">Words</h3>
         <p>
-          In <span class="bg-warning">YELLOW</span>, 投稿単語で、辞書に登録されております。<br>
-          In <span class="bg-info">BLUE</span>, 投稿単語ですが、辞書からは外されております。
+          <span class="bg-warning">YELLOW</span>, 投稿単語で、辞書に登録されております。<br>
+          <span class="bg-info">BLUE</span>, 投稿単語ですが、辞書からは外されております。
         </p>
         <% if current_user == @user %>
           <p class="text-right"><%= link_to "New word", new_word_path, class: "btn btn-primary" %></p>
