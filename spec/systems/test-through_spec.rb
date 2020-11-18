@@ -47,13 +47,24 @@ RSpec.describe "test-through", type: :system, js: true do
       click_link "Dictionary", href: dictionary_path
       expect(current_path).to eq dictionary_path
       
-      # check the registererd word is in dictionary first
+      # check the registererd word is in dictionary
       expect(page).to have_content "has 1 word" # total of dictioanry words
       expect(page).to have_content "1 word in Total" #total of dictionary words
       expect(page).to have_link "", href: word_path(@word1)
       
+      # check it has tag-index 
+      @user1.dictionary.words.tag_counts.each do |t|
+        expect(page).to have_link t.name, href: tagged_dictionary_path(t.name)
+        expect(page).to have_content t.taggings_count
+      end
+      
+      # click tag-index
+      tag = @user1.dictionary.words.first.tag_list.first
+      click_link tag, href: tagged_dictionary_path(tag)
+      expect(current_path).to eq tagged_dictionary_path(tag)
+      
       # check dictionary word
-      click_link "Let's test!", href: choose_dictionary_path
+      click_link "Test!", href: choose_dictionary_path
       expect(current_path).to eq choose_dictionary_path
       
       # choose from a tag and visit question_dictionary_page

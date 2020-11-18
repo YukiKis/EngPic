@@ -41,7 +41,7 @@
       <div class="card-image-box">
           <%= attachment_image_tag word, :image, fallback: "noimage.jpg", class: "card-image image-#{ word.id }", id: "word-image-#{ word.id }" %>
       </div>
-      <div class="card-name bg-warning">
+      <div class="card-name">
         <%= word.name %>
       </div>
     <% end %>

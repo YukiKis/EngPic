@@ -7,16 +7,14 @@
 // user-info-sidebar
 
 .my-img{
-  width: 80%;
-  height: 80%;
+  width: 60%;
+  height: 60%;
   border-radius: 50%;
   margin-top: 15px;
 }
 
-.ellipsis-table{
-  width: 100%;
-  table-layout: fixed;
-  overflow: hidden;
+.user-info-table tr td{
+  word-break: break-word;
 }
 
 .card{
@@ -39,8 +37,8 @@
     height: 20px;
   }
   .card-name{
-    font-size: 20px;
-    padding: 5px;
+    font-size: 15px;
+    padding: 10px;
     text-align: center;
     transition: 0.3s;
     width: 100%;

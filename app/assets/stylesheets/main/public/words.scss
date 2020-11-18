@@ -2,6 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "./../variable";
+
+//word-index page
+.word-table{
+  font-size: 16px;
+}
+
 
 //word-show page
 .card-show{
@@ -11,11 +18,17 @@
   outline: 5px solid #ccc;
   box-shadow: 5px 5px #ccc;
   font-family: "Caveat", cursive;
-  font-size: 1.5em;
+  font-size: 16px;
   overflow: hidden;
   .card-show-image{
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 70%;
+  }
+  .card-show-table tr th, td{
+    text-align: left;
+    overflow: none !important;
+    white-space: none !important;
+    text-overflow: none !important;
   }
 }
 
@@ -26,4 +39,8 @@
   bottom: 10%;
   opacity: 0.2;
   z-index: 0;
+}
+.label-info{
+  padding: 1px 2px;
+  color: white;
 }

@@ -23,7 +23,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-font-family: 'Caveat Brush', cursive;}
+  font-family: 'Caveat Brush', cursive;}
 
 h1, h2, h3, h4, h5, h6, nav{
   font-family: "Yu Gothic", sans-serif !important;
@@ -134,4 +134,10 @@ body{
 
 .invalid{
   background-color: #f08080;
+}
+
+.top-row{
+  border: 3px solid $sub-color-strong;
+  background-color: $sub-color-weak;
+  padding: 20px 10px;
 }

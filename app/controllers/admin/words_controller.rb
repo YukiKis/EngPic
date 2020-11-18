@@ -3,7 +3,7 @@ class Admin::WordsController < ApplicationController
   before_action :setup, except: [:index, :search, :today]
   
   def index
-    @words = Word.page(params[:page]).per(20)
+    @words = Word.order("name").page(params[:page]).per(20)
     @q = Word.ransack(params[:q])
   end
 

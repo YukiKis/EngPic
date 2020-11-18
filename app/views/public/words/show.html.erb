@@ -1,14 +1,14 @@
 <div class="row">
-  <div class="col-sm-5 col-sm-offset-1">
+  <div class="col-sm-6 col-sm-offset-1">
     <div class="card-show">
       <%= attachment_image_tag @word, :image, fallback: "noimage.jpg", id: "word-image-#{ @word.id }", class: "card-show-image", style: "border-radius: 25px; margin-bottom: 15px;" %>
-      <table class="table">
+      <table class="table card-show-table">
         <tr>
-          <th>Tags</th>
-          <td>
+          <th class="col-sm-3">Tags</th>
+          <td class="col-sm-9">
             <div class="tag-lists">
               <% @word.tags.each do |tag| %>
-                <%= link_to tag.name, tagged_words_path(tag.name), class: "label-info", style: "color: black; padding: 1px 3px;" %>
+                <%= link_to tag.name, tagged_words_path(tag.name), class: "label-info" %>
               <% end %>
             </div>
           </td>
@@ -46,7 +46,7 @@
     </div>
   </div>
 
-  <div class="col-sm-5">
+  <div class="col-sm-4">
     <h3 class="heading">Related words</h3>
     <div class="row">
       <% @related_words.each do |word| %>

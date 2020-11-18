@@ -30,7 +30,7 @@ RSpec.describe "devise-user", type: :system do
       expect(page).to have_field "user[password_confirmation]" 
     end
     it "has a button to submit" do
-      expect(page).to have_button "Sign up"
+      expect(page).to have_button "登録"
     end
     it "succeeds to make a new user" do
       fill_in "user[name]", with: user1.name
@@ -38,12 +38,12 @@ RSpec.describe "devise-user", type: :system do
       fill_in "user[email]", with: user1.email
       fill_in "user[password]", with: user1.password
       fill_in "user[password_confirmation]", with: user1.password_confirmation
-      click_button "Sign up"
+      click_button "登録"
       expect(current_path).to eq user_path(User.find_by(email: "yuki@com"))
       expect(page).to have_content "登録出来ました"
     end
     it "fails to make a new user" do
-      click_button "Sign up"
+      click_button "登録"
       expect(page).to have_content "エラー"
     end
   end

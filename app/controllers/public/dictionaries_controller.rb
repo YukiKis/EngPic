@@ -19,12 +19,11 @@ class Public::DictionariesController < ApplicationController
   
   def question
     if request.post?
-      category = category_params[:tag]
-      @questions = current_user.dictionary.words.tagged_with(category).sample(4)
+      @questions = current_user.dictionary.words.tagged_with(category_params[:tag]).sample(4)
     else
       @questions = current_user.dictionary.words.all.sample(4)
     end
-    render "question"
+    debugger
   end
   
   def check

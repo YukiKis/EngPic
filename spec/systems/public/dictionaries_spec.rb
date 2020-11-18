@@ -26,6 +26,9 @@ RSpec.describe "dictionary page", type: :system do
         expect(page).to have_content t.taggings_count
       end
     end
+    it "has reset button for tagging" do
+      expetct(page).to have_link "Reset", href: dictionary_path
+    end
     it "has words-index" do
       words = [word1, word1]
       visit current_path
@@ -42,6 +45,49 @@ RSpec.describe "dictionary page", type: :system do
     end
     it "has link to choose how to test" do
       expect(page).to have_link "Test!", href: choose_dictionary_path
+    end
+  end
+  
+  context "on tagged page" do
+    before do
+      @tag = word1.tag_list.first
+      visit dictionary_path
+      click_link @tag, href: tagged_dictionary_path(@tag)
+    end
+    it "has 'Your dictionary'" do
+      expect(page).to have_content "Your Dictionary"
+    end
+    it "has number of words in dictionary" do
+      expect(page).to have_content user1.dictionary.words.count
+    end
+    it "has tags-index" do
+      user1.dictionary.words.tag_counts.each do |t|
+        expect(page).to have_link t.name, href: tagged_dictionary_path(t.name)
+        expect(page).to have_content t.taggings_count
+      end
+    end
+    it "has words-index" do
+      words = [word1, word1]
+      visit current_path
+      words.each do |w|
+        expect(page).to have_link "", href: word_path(w)
+        expect(page).to have_content w.name
+      end
+    end
+    it "has link to add a new word" do
+      expect(page).to have_link "New word", href: new_word_path
+    end
+    it "has date of last update" do
+      expect(page).to have_content user1.dictionary.updated_at.strftime("%Y/%m/%d")
+    end
+    it "has link to choose how to test" do
+      expect(page).to have_link "Test!", href: choose_dictionary_path
+    end    
+    it "has words with the same tag" do
+      words = user1.dictionary.words.tagged_with(@tag)
+      words.each do |word|
+        expect(page).to have_link "", href: word_path(word)
+      end
     end
   end
 
@@ -97,6 +143,7 @@ RSpec.describe "dictionary page", type: :system do
       end
     end
   end
+  
   context "on dictionary-result-page" do
     before do
       visit choose_dictionary_path
@@ -110,7 +157,7 @@ RSpec.describe "dictionary page", type: :system do
         @rights += 1
         @answers << q.name
       end
-      click_button "Finish!"
+      click_on "Finish!"
     end
     it "has count of questions" do
       expect(page).to have_content @questions.count

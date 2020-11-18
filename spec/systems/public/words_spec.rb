@@ -42,21 +42,16 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_css "#card-1.bg-warning"
     end
     it "has search_form" do
-      expect(page).to have_field "q_name_or_meaning_or_tags_name_start"
+      expect(page).to have_field "q_name_or_meaning_start"
       expect(page).to have_button "検索"
     end
     it "can search by word_name" do
-      fill_in "q_name_or_meaning_or_tags_name_start", with: word1.name
+      fill_in "q_name_or_meaning_start", with: word1.name
       click_button "検索"
       expect(page).to have_link "", href: word_path(word1)
     end
     it "can search by word_meaning" do
-      fill_in "q_name_or_meaning_or_tags_name_start", with: word1.meaning
-      click_button "検索"
-      expect(page).to have_link "", href: word_path(word1)
-    end
-    it "can search by word_tag_name" do
-      fill_in "q_name_or_meaning_or_tags_name_start", with: word1.tags.first.name
+      fill_in "q_name_or_meaning_start", with: word1.meaning
       click_button "検索"
       expect(page).to have_link "", href: word_path(word1)
     end
@@ -91,20 +86,24 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_no_link "Edit", href: edit_word_path(word2)
     end
     it "has related words" do
-    # related_words = []
-    # Word.by_same_name(word1.name).sample(5).each do |w|
-    #   if w == word1
-    #   else
-    #     related_words << w
-    #   end
-    # end.sample(4)
-      related_words = [word3, word4, word5]
-      visit current_path  # 同名の配列を作成し、再度読み込み
+      related_words = []
+      word1.tag_list.each do |tag|
+        Word.tagged_with(tag).sample(5).each do |w|
+          if w == word1
+          else
+            related_words << w
+          end
+        end
+      end
+      if related_words.any?
+        related_words.uniq!.sample(4)
+      end
       related_words.each do |w|
         expect(page).to have_link "", href: word_path(w)
       end
     end
   end
+  
   context "on edit page" do
     before do
       visit edit_word_path(word1)
