@@ -47,6 +47,7 @@ Rails.application.routes.draw do
         get "/by_name/:name", to: "words#same_name", as: "same_name"
         get "/by_meaning/:meaning", to: "words#same_meaning", as: "same_meaning"
         get "tags", to: "words#tags", as: "tags"
+        match "search" => "words#tag_search", via: [:get, :post], as: "tag_search"
       end
     end
 

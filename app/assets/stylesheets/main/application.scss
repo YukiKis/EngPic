@@ -141,3 +141,7 @@ body{
   background-color: $sub-color-weak;
   padding: 20px 10px;
 }
+
+table tr th, td{
+  vertical-align: middle !important;
+}

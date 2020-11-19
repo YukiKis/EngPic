@@ -16,9 +16,9 @@
             <th class="col-sm-4 text-center table-heading">タグ</th>
             <td class="col-sm-8">
               <% @tags.sample(4).each do |t| %>
-                <%= link_to t, tagged_words_path(t), class: "table-data" %>
+                <%= link_to t, tagged_words_path(t), class: "table-data" %>, 
               <% end %>
-              <br><%= link_to "See more tags", tags_words_path, style: "text-decoratiion;" %>
+              <br><%= link_to "全てのタグを見る", tags_words_path, style: "text-decoration: underline !important; display: inline-block; margin: 2px 0" %>
             </td>
           </tr>
     
@@ -26,7 +26,7 @@
             <th class="col-sm-2 text-center table-heading">単語</th>
             <td class="col-sm-7">
               <% @listed_words.sample(4).each do |w| %>
-                <%= link_to w, same_name_words_path(w), class: "table-data"%>
+                <%= link_to w, same_name_words_path(w), class: "table-data"%>, 
               <% end %>
             </td>
           </tr>
@@ -35,7 +35,7 @@
             <th class="col-sm-5 text-center table-heading">意味</th>
             <td class="col-sm-7">
               <% @meanings.sample(4).each do |w| %>
-                <%= link_to w, same_meaning_words_path(w), class: "table-data" %>
+                <%= link_to w, same_meaning_words_path(w), class: "table-data" %>, 
               <% end %>
             </td>
           </tr>
@@ -47,7 +47,7 @@
     <div class="row">
       <div class="col-sm-12">
         <h3 class="heading"><%= @word_count %> <%= "word".pluralize(@word_count) %> in Total</h3>
-        <%= search_form_for @q, url: search_words_path, local: true, class: "text-right form-inline", style: "display: inline-block;" do |f| %>
+        <%= search_form_for @q, url: search_words_path, local: true, class: "text-right form-inline" do |f| %>
           <%= f.label :name_or_meaning_start, "単語 / 意味" %>
           <%= f.search_field :name_or_meaning_start, class: "form-control" %>
           <%= f.submit "検索", class: "btn btn-default" %>
@@ -66,7 +66,7 @@
           <% end %>
         </div>
         <div class="paginate">
-          <%= paginate @words %>
+          <%= paginate @words, window: 1 %>
         </div>
       </div>
     </div>

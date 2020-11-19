@@ -109,8 +109,16 @@ class Public::WordsController < ApplicationController
   end
   
   def tags
+    @q = Word.tag_counts.ransack(params[:q])
     @tags = Word.tag_counts.page(params[:page]).per(12)
     @tag_count = Word.tag_counts.all.count
+  end
+  
+  def tag_search
+    @q = Word.tag_counts.ransack(params[:q])
+    @tags = @q.result(distinct: true).page(params[:page]).per(12)
+    @tag_count = @tags.count
+    render "tags"
   end
   
   private
