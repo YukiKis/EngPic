@@ -13,7 +13,7 @@
         <div class="col-sm-5 z-index-1">
           <%= f.label :name, class: "control-label" %>※必須、2～20文字
         </div>
-        <div class="col-sm-7 form-group">
+        <div class="col-sm-7 form-group z-index-1">
           <%= f.text_field :name,autofocus: true, class: "form-control" %>
         </div>
       </div>
@@ -22,7 +22,7 @@
         <div class="col-sm-5 z-index-1">
           <%= f.label :introduction, class: "control-label" %>
         </div>
-        <div class="col-sm-7 form-group">
+        <div class="col-sm-7 form-group z-index-1">
           <%= f.text_area :introduction, class: "form-control" %>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-sm-5 z-index-1">
           <%= f.label :email, class: "control-label" %>※必須
         </div>
-        <div class="col-sm-7 form-group">
+        <div class="col-sm-7 form-group z-index-1">
           <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
         </div>
       </div>
@@ -41,7 +41,7 @@
         <div class="col-sm-5 z-index-1">
           <%= f.label :password, class: "control-label" %>※必須
         </div>
-        <div class="col-sm-7 form-group">
+        <div class="col-sm-7 form-group z-index-1">
           <% if @minimum_password_length %>
             <em>(<%= @minimum_password_length %>文字以上)</em>
           <% end %><br />
@@ -53,13 +53,13 @@
         <div class="col-sm-5 z-index-1">
           <%= f.label :password_confirmation, class: "control-label" %>※必須
         </div>
-        <div class="col-sm-7 form-group">
+        <div class="col-sm-7 form-group z-index-1">
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
         </div>
       </div>
   
       <div class="row">
-        <div class="col-sm-12 text-center">
+        <div class="col-sm-12 text-center z-index-1">
           <%= f.submit "登録", class: "btn btn-primary" %>
         </div>
       </div>  

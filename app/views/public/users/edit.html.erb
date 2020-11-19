@@ -5,7 +5,7 @@
     <div class="row">
       <%= form_with model: @user, url: user_path(@user), local: true do |f| %>
         <div class="col-sm-4 col-sm-offset-1 text-center">
-          <%= attachment_image_tag @user, :image, class: "my-img", style="border-radius: 0;" fallback: "noimage.jpg" %>
+          <%= attachment_image_tag @user, :image, class: "edit-img", fallback: "noimage.jpg" %>
           <%= f.attachment_field :image %>
         </div>
         
@@ -19,10 +19,6 @@
             <%= f.text_area :introduction, rows: 4, class: "form-control" %>
           </div>
           <%= f.submit "Update", class: "btn btn-primary" %>
-        </div>
-        <div class="row">
-          <div class="col-sm-12 text-center">
-          </div>
         </div>
       <% end %>
     </div>

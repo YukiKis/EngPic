@@ -5,10 +5,10 @@
     <div class="row relative-class">
       <%= form_with model: @word, local: true do |f| %>
         <div class="col-sm-4 col-sm-offset-1 text-center">
-          <%= attachment_image_tag @word, :image, class: "my-img", fallback: "noimage.jpg" %>
+          <%= attachment_image_tag @word, :image, class: "edit-img", fallback: "noimage.jpg" %>
           <%= f.attachment_field :image %>
         </div>
-        <div class="z-index-1 col-sm-4 col-sm-offset-3">
+        <div class="z-index-1 col-sm-5 col-sm-offset-2">
           <div class="form-group"> 
             <%= f.label :name, "Name", class: "control-label" %>
             <%= f.text_field :name, class: "form-control" %>

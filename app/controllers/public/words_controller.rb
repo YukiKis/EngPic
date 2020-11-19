@@ -13,6 +13,7 @@ class Public::WordsController < ApplicationController
     @q = Word.ransack(params[:q])
     @words = Word.tagged_with(params[:tag]).page(params[:page]).per(12)
     @word_count = @words.count
+    @tag = "'#{ params[:tag] }' "
     render "index"
   end
   

@@ -46,11 +46,15 @@
   img{
     min-width: 100%;
     max-width: 100%;
-    min-height: 150px;
-    max-height: 150px;
+    min-height: 130px;
+    max-height: 130px;
   }
   .result-content{
-    padding: 30px 0;
+    overflow: scroll;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
   }
 }
 

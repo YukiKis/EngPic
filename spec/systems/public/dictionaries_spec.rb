@@ -10,7 +10,7 @@ RSpec.describe "dictionary page", type: :system do
     user1.dictionary.add(word1)
     user1.dictionary.add(word2)
   end
-  context "on show-pabe" do
+  context "on show-page" do
     before do
       visit dictionary_path
     end
@@ -22,12 +22,15 @@ RSpec.describe "dictionary page", type: :system do
     end
     it "has tags-index" do
       user1.dictionary.words.tag_counts.each do |t|
-        expect(page).to have_link t.name, href: tagged_dictionary_path(t.name)
-        expect(page).to have_content t.taggings_count
+        expect(page).to have_link t.name, href: tagged_words_dictionary_path(t.name)
+        expect(page).to have_content user1.dictionary.words.tagged_with(t).count
       end
     end
     it "has reset button for tagging" do
-      expetct(page).to have_link "Reset", href: dictionary_path
+      expect(page).to have_link "All words", href: dictionary_path
+    end
+    it "has all-tags-in dictionary button" do
+      expect(page).to have_link "All tags", href: tags_dictionary_path
     end
     it "has words-index" do
       words = [word1, word1]
@@ -47,6 +50,33 @@ RSpec.describe "dictionary page", type: :system do
       expect(page).to have_link "Test!", href: choose_dictionary_path
     end
   end
+  
+  context "on tags page" do
+    before do 
+      visit tags_dictionary_path
+    end
+    it "has tag_list" do
+      user1.dictionary.words.tag_counts.each do |t|
+        expect(page).to have_link t.name, href: tagged_words_dictionary_path(t.name)
+        expect(page).to have_content user1.dictionary.words.tagged_with(t.name).count
+        # expect(page).to have_link "", href: word_path has images, randomly selected, which have link for word_path
+      end
+    end
+  end
+  
+  context "on tagged_words_dictionary page" do
+    before do
+      @tag = user1.dictionary.words.tag_counts.first
+      visit tagged_words_dictionary_path(@tag.name)
+    end
+    it "has tag_name heading" do
+      expect(page).to have_content "'#{@tag.name}'"
+    end
+    it "has word counts tagged with the tag" do
+      expect(page).to have_content "#{ user1.dictionary.words.tagged_with(@tag).count}"
+    end
+  end
+    
   
   context "on tagged page" do
     before do

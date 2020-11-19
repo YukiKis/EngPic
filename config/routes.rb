@@ -47,18 +47,20 @@ Rails.application.routes.draw do
         get "/by_name/:name", to: "words#same_name", as: "same_name"
         get "/by_meaning/:meaning", to: "words#same_meaning", as: "same_meaning"
         get "tags", to: "words#tags", as: "tags"
-        match "search" => "words#tag_search", via: [:get, :post], as: "tag_search"
+        match "tags/search" => "words#tag_search", via: [:get, :post], as: "tag_search"
       end
     end
 
     resource :dictionary, only: [:show, :create] do
       collection do
         get "words"
+        get "tags"
+        match "tags/search" => "dictionaries#tag_search", via: [:get, :post], as: "tag_search"
         get "choose"
         match "question", to: "dictionaries#question", via: [:get, :post], as: "question"
         post "check"
         get "result"
-        get "tagged_words/:tag", to: "dictionaries#tagged_words", as: "tagged"
+        get "tagged_words/:tag", to: "dictionaries#tagged_words", as: "tagged_words"
         post "words/:id", to: "dictionaries#add", as: "add"
         match 'search' => 'dictionaries#search', via: [:get, :post], as: :search
         delete "words/:id", to: "dictionaries#remove", as: "remove"

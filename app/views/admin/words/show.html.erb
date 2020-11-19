@@ -1,17 +1,24 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
-    <h3><%= @word.name %></h3>
+    <h3 class="heading">単語詳細</h3>
     <div class="row">
       <div class="col-sm-4">
         <%= attachment_image_tag @word, :image, :fill, 150, 150, fallback: "noimage.jpg", size: "150x150", id: "word-image-#{ @word.id }" %>
       </div>
       <div class="col-sm-8">
-        
+        <div class="row">
+          <div class="col-sm-4">
+            <h4>単語</h4>
+          </div>
+          <div class="col-sm-8 word-break">
+            <h4><%= @word.name %></h4>
+          </div>
+        </div>
         <div class="row">
           <div class="col-sm-4">
             <h4>意味</h4>
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-8 word-break">
             <h4><%= @word.meaning %></h4>
           </div>
         </div>
@@ -20,7 +27,7 @@
           <div class="col-sm-4">
             <h4>例文</h4>
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-8 word-break">
             <h4><%= @word.sentence %></h4>
           </div>
         </div>
@@ -29,7 +36,7 @@
           <div class="col-sm-4">
             <h4>タグ</h4>
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-8 word-break">
             <h4>
               <% @word.tag_list.each do |t| %>
                 <%= t %>

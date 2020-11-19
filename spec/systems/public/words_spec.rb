@@ -249,21 +249,31 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_content "エラー"
     end
   end
-  # context "on tags_page" do
-  #   before do 
-  #     visit tags_words_path
-  #   end
-  #   it "has tag count" do
-  #     expect(page).to have_content Word.tag_counts.count
-  #   end
-  #   it "has path for word-new page" do
-  #     expect(page).to have_link "+", href: new_word_path
-  #   end
-  #   it "has tag info" do
-  #     Word.tag_counts.each do |t|
-  #       expect(page).to have_link t.name, herf: tagged_words_path(t)
-  #       expect(page).to have_content Word.tagged_with(t).count
-  #     end
-  #   end
-  # end
+  context "on tags_page" do
+    before do 
+      visit tags_words_path
+    end
+    it "has tag count" do
+      expect(page).to have_content Word.tag_counts.count
+    end
+    it "has tag info" do
+      Word.tag_counts.each do |t|
+        expect(page).to have_link t.name, herf: tagged_words_path(t)
+        expect(page).to have_content Word.tagged_with(t).count
+      end
+    end
+    it "has tag-search form" do
+      expect(page).to have_field "q[name_start]"
+      expect(page).to have_button "検索"
+    end
+    it "can search by tag" do
+      tag = word1.tag_list.first
+      fill_in "q[name_start]", with: tag
+      click_button "検索"
+      expect(page).to have_link tag, href: tagged_words_path(tag)
+      Word.tagged_with(tag).sample(4).each do |w|
+        expect(page).to have_link "", href: word_path(w)
+      end
+    end
+  end
 end

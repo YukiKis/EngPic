@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   before_action :setup, except: [:index, :search, :today]
   
   def index
-    @users = User.order("name").page(params[:page]).per(20)
+    @users = User.order(:id).page(params[:page]).per(20)
     @q = User.ransack(params[:q])
   end
 

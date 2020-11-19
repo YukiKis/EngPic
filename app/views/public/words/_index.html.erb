@@ -1,10 +1,17 @@
 <div class="row">
   <div class="col-sm-12">
+    <div class="text-left">
+      <% if word_count.present? && tag.present? %>
+        <h3 class="heading"><%= word_count %> <%= "word".pluralize(word_count) %> <%= tag if tag.present? %>in Total</h3>
+      <% end %>
+    </div>
+    <div class="text-right">
     <%= search_form_for q, url: search_dictionary_path, local: true do |f| %>
       <%= f.label :name_or_meaning_or_start, "タグ / 単語" %>&emsp;
       <%= f.search_field :name_or_meaning_start %>
       <%= f.submit "検索", class: "btn btn-default" %>
     <% end %>
+    </div>
     
     <div class="row margin-top-sm">
       <% words.each do |word| %>
@@ -13,8 +20,6 @@
         </div>
       <% end %>
     </div>
-    <div class="paginate">
-      <%= paginate words %>
-    </div>
+    <%= paginate words, window: 1 %>
   </div>
 </div>

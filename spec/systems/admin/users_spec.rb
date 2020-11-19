@@ -34,6 +34,7 @@ RSpec.describe "admin-users page", type: :system do
       User.all.each do |user|
         user.words.sample(5).each do |word|
           expect(page).to have_css "#word-image-#{ word.id }"
+          expect(page).to have_link "", href: admin_word_path(word)
         end
       end
     end

@@ -49,7 +49,7 @@
   <div class="col-sm-4">
     <h3 class="heading">Related words</h3>
     <div class="row">
-      <% @related_words.each do |word| %>
+      <% @related_words[0..3].each do |word| %>
         <div class="col-xs-6">
           <%= render "layouts/card", word: word %>
         </div>
