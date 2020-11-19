@@ -4,11 +4,11 @@ class Public::UsersController < ApplicationController
   
   def index
     @q = User.ransack(params[:q])
-    @users = User.all
+    @users = User.page(params[:page]).per(10)
   end
 
   def show
-    @words = Word.where(user_id: current_user.id).or(Word.where(user_id: current_user.followings.ids))
+    @words = Word.where(user_id: @user.id).or(Word.where(user_id: @user.followings.ids)).page(params[:page]).per(12)
   end
 
   def edit
@@ -33,27 +33,29 @@ class Public::UsersController < ApplicationController
   
   def follow
     current_user.follow(@user)
+    render "follow.js.erb"
   end
   
   def unfollow
     current_user.unfollow(@user)
+    render "unfollow.js.erb"
   end
   
   def followers
-    @users = @user.followers.all
+    @users = @user.followers.page(params[:page]).per(10)
     @q = User.ransack(params[:q])
     render "index"
   end
   
   def followings
-    @users = @user.followings.all
+    @users = @user.followings.page(params[:page]).per(10)
     @q = User.ransack(params[:q])
     render "index"
   end
   
   def search
     @q = User.ransack(params[:q])
-    @users = @q.result(distinct: true)
+    @users = @q.result(distinct: true).page(params[:page]).per(10)
     render "index"
   end
   

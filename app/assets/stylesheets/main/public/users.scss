@@ -5,68 +5,78 @@
 @import "./../variable";
 
 // user-info-sidebar
+
 .my-img{
+  width: 60%;
+  height: 60%;
   border-radius: 50%;
+  margin-top: 15px;
+}
+
+.user-info-table tr td{
+  word-break: break-word;
 }
 
 .card{
-  font-family: 'Caveat', cursive;
   height: 200px;
-  // border: 2px inset rgb(66, 139, 242);
+  font-family: 'Caveat', cursive;
   border-radius: 10px;
+  outline: 3px solid #ccc;
   box-shadow: 2px 2px #ccc;
   text-align: center;
   margin-bottom: 15px;
   transition: 0.3s;
+  overflow: hidden;
   // &:hover{
   //   border: 3px solid rgba(66, 139, 242, 0.9);
   //   box-shadow: 0 0;
   // }
-  
+  .user-image{
+    margin: 3px;
+    width: 20px;
+    height: 20px;
+  }
+  .card-name{
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+    transition: 0.3s;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .card-image-box{
+    border-top:  1px dotted rgb(66, 139, 242);
+    border-bottom:  1px dotted rgb(66, 139, 242);
     overflow: hidden;
     .card-image{
       min-width: 100%;
       max-width: 100%;
-      min-height: 120px;
-      max-height: 120px;
+      min-height: 130px;
+      max-height: 130px;
       transition: 0.3s;
     };
-  }
-  .card-content{
-    font-size: 25px;
-    padding: 5px;
-    text-align: center;
-    border-bottom: 1px dotted rgb(66, 139, 242);
-    transition: 0.3s;
-  }
-  
-  .card-author-name{
-    padding: 5px;
-    font-size: 15px;
   }
 
   &:hover{
     box-shadow: 5px 5px 10px 5px #ccc;
     // border: 8px outset #ccc
     .card-image{
-      transform: scale(1.1, 1.1);
+      transform: scale(1.2, 1.2);
     }
-    .card-content{
-      font-size: 22px;
+    .card-name{
+      font-weight: bold;
     }
   }
 }
 
-
-// .answer-card{
-//   .answer-form{
-//     display: none;
-//     transition: 0.3;
+// .col-xs-6-card{
+//   .card-name{
+//     font-size: 20px !important;
 //   }
-//   &:hover{
-//     .answer-form{
-//       display: block;
-//     }
+//   .user-image{
+//     width: 25px !important;
+//     height: 25px !important;
 //   }
 // }

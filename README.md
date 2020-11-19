@@ -1,24 +1,33 @@
-# README
+# EngPic
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サイト概要
+英単語学習のサポートサイトです。<br>
+英単語を単語の意味だけでなく、実際の写真と一緒に覚えていくことで、 単語を「意味」と「イメージ」をセットにして覚えていきます。始めてすぐは中々実感が湧かないかもしれません。 <br>しかし一週間、一か月と続けていけば、あなただけの「英単語帳」が「イメージ」つきで作られていきます。 数が少しずつ増えていくにつれ、単語の種類や、一つの意味に対するイメージが増えていき、 成長と、マイ単語帳が出来ていく楽しみが出てきます。 更に他の人と共有することで、多角的に単語を覚えていくことが出来ます。
 
-Things you may want to cover:
+### サイトテーマ
+英語を単語と写真と合わせて覚えることで、より印象的に、効率的に英語学習を行うサイトです。文章・単語を左脳で、イメージを右脳に訴え、効率的に記憶をしていきます。また一つの単語に一つの意味、イメージとするのでなく、多様なイメージをアップすることで単語を多角的に理解していきます。これまでに英単語を勉強されてきて、それでもくじけてしまった方、今英語を勉強されている方のサポートをするサイトです。
 
-* Ruby version
+### テーマを選んだ理由
+前職では英会話スクールの運営に携わっておりましたが、その際に多くの生徒様から「英単語を覚えるにはどうしたらいいか」という質問
 
-* System dependencies
+### ターゲットユーザ
+これから英語を勉強される方、また学生の方、写真が好きな方 写真利用やSNSを含むインターネットコンテンツの利用が多い10代から20代までをメインターゲットとする。
 
-* Configuration
+### 主な利用シーン
+「これって英語でなんていうんだろう」のとき、写真を撮ったついでに、映えた写真が撮れた時に、英単語と一緒に記憶します。 また空き時間にほかの投稿を見たり、イメージから英単語が思い浮かばなかったら調べるなど、英単語の勉強としても使います。
 
-* Database creation
+## 設計書
 
-* Database initialization
+### 機能一覧
+<https://docs.google.com/spreadsheets/d/1TjfdGo3V3xzQ5OuOoANzeLcGtRvXFnzreOWvGmREnD8/edit?usp=sharing>
 
-* How to run the test suite
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- 仮想環境：Cloud9
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 使用素材
+- 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名とURLを明記してください。
+- 使用しない場合は、使用素材の項目をREADMEから削除してください。

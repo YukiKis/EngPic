@@ -52,6 +52,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "letter_opener"
   gem "letter_opener_web"
+  gem "faker"
 end
 
 group :test do
@@ -77,9 +78,9 @@ gem "devise"
 gem "refile", require: "refile/rails", github: "manfe/refile"
 gem "refile-mini_magick"
 gem "acts-as-taggable-on", "~>6.0"
-gem "activeadmin"
 gem "ransack"
 gem "bootstrap-sass"
 gem "jquery-rails"
 gem "dotenv-rails"
 gem "whenever", require: false;
+gem "kaminari"

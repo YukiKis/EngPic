@@ -1,7 +1,13 @@
-<div class="row">
+<div class="row footer">
   <div class="col-sm-12">
-    <div class="footer">
-      <p class="text-center" >EngPic</p>
-    </div>
+    <% if admin_signed_in? %>
+      <div class="footer-text" style="background: blue">
+        <p class="text-center" >EngPic</p>
+      </div>
+    <% else %>
+      <div class="footer-text">
+        <p class="text-center" >EngPic</p>
+      </div>
+    <% end %>
   </div>
 </div>

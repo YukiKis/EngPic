@@ -12,10 +12,9 @@ class User < ApplicationRecord
   has_many :followings, through: :active_relationships, source: :followed
   attachment :image
 
-  accepts_nested_attributes_for :words, allow_destroy: true
-
-  
   validates :name, presence: true, length: { in: 2..20 }
+  validates :introduction, length: { maximum: 100 }
+  scope :today, ->(){ where("created_at >= ?", Date.today) }
   
   def follow(user)
     self.active_relationships.create(followed: user)
