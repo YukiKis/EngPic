@@ -17,4 +17,28 @@
 # 	password: "testtest",
 # }]
 # )
-AdminUser.create!(email: 'admin@example.com', password: 'testtest', password_confirmation: 'testtest') if Rails.env.development?
+Admin.create({
+  email: 'yuki@.com',
+  password: 'testtest',
+  password_confirmation: 'testtest'
+})
+
+100.times do |n|
+  User.create({
+  name: Faker::Name.name,
+  email: Faker::Internet.email + "#{ n }",
+  password: "testtest",
+  password_confirmation: "testtest"
+})
+end
+
+250.times do |n|
+  Word.create({
+    image: open("#{ Rails.root }/app/assets/images/logo.jpg"),
+    user_id: (1..100).to_a.shuffle[0],
+    name: Faker::Game.title,
+    meaning: Faker::JapaneseMedia::OnePiece.character,
+    sentence: Faker::Game.genre,
+    tag_list: Faker::Game.platform
+})
+end

@@ -1,15 +1,15 @@
 <tr>
-  <td><%= attachment_image_tag user, :image, :fill, 50, 40, fallback: "noimage.jpg", size: "50x40" %></td>
-  <td><%= link_to user.name, user_path(user), data: { turbulinks: false } %></td>
-  <td><%= pluralize(user.words.count, "word") %></td>
-  <td>
+  <td class="col-xs-3 col-sm-2"><%= attachment_image_tag user, :image, :fill, 50, 50, fallback: "noimage.jpg", size: "50x50" %></td>
+  <td class="col-xs-5 col-sm-4"><%= link_to user.name, user_path(user), data: { turbulinks: false } %></td>
+  <td class="col-xs-4 col-sm-2"><%= user.words.count %> <%= "word".pluralize(user.words.count) %></td>
+  <td class="hidden-xs col-sm-2">
     <% if user.words.present? %>
-      <% user.words.tag_counts.map { |t| t.name }.uniq.sample(4).each do |t| %> <!-- Userの持っているタグの名前を4つランダムにかぶりなく取り出す  -->
-         <%= t %>
+      <% user.words.tag_counts.map { |t| t.name }.uniq.sample(2).each do |t| %> <!-- Userの持っているタグの名前を4つランダムにかぶりなく取り出す  -->
+         <%= t %>,<br>
       <% end %>
     <% else %>
-      NO TAGS YET
+      NO TAGS
     <% end %>
   </td>
-  <td id="follow-btn-<%= user.id %>"><%= render "follow-btn", user: user %></td>
+  <td id="follow-btn-<%= user.id %>" class="hidden-xs col-sm-2"><%= render "follow-btn", user: user %></td>
 </tr>

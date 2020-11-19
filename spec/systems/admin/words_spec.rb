@@ -104,6 +104,7 @@ RSpec.describe "admin-words page", type: :system do
     end
     it "has button to back" do
       expect(page).to have_link "Back", href: admin_word_path
+    end
     it "succeeds to update" do
       fill_in "word[name]", with: "model"
       fill_in "word[meaning]", with: "模型"

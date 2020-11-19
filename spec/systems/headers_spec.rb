@@ -28,7 +28,7 @@ RSpec.describe "header", type: :system do
       visit new_user_session_path
       fill_in "user[email]", with: user1.email
       fill_in "user[password]", with: user1.password
-      click_button "Sign in"
+      click_button "Log in"
     end
     it "has 'EngPic' for top page" do
       expect(page).to have_link "EngPic", href: root_path

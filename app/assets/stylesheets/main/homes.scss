@@ -24,19 +24,6 @@
  background-repeat: no-repeat;
 }
 
-.top-row{
- margin-top: 30px;
- .top-heading{
-  border: 5px solid #111111;
- }
- .table-heading{
-  font-size: 26px;
- }
- .table-data{
-  font-size: 26px;
-  margin-right: 5px;
- }
-}
 
 .about-heading{
  display: block !important;
@@ -78,13 +65,16 @@
 }
 
 
-// HowTo page
+// About page
 .howto-section{
   border: 5px solid #ccc;
   border-left: 10px solid rgba(66, 139, 242, 0.9);
   padding: 5px 20px;
   background-color: rgba(255,255,240, 0.5);
   box-shadow: 5px 5px 10px;
+  &:hover{
+   
+  }
  .howto-heading{
    border-bottom: 5px solid red;
    display: inline-block;

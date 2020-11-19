@@ -1,55 +1,56 @@
 <div class="row">
-  <div class="col-sm-5 col-sm-offset-1">
-    <div class="text-center">
-      <%= attachment_image_tag @word, :image, :fill, 300, 300, fallback: "noimage.jpg", size: "300x300", id: "word-image-#{ @word.id }", style: "border-radius: 25px; margin-bottom: 15px;" %>
-    </div>
-    <table class="table">
-      <tr>
-        <th>Tags</th>
-        <td>
-          <div class="tag-lists">
-            <% @word.tags.each do |tag| %>
-              <%= link_to tag.name, tagged_words_path(tag.name), class: "label-info", style: "color: black; padding: 5px 10px;" %>
+  <div class="col-sm-5 col-sm-offset-1 col-md-4 col-md-offset-1">
+    <div class="card-show">
+      <%= attachment_image_tag @word, :image, fallback: "noimage.jpg", id: "word-image-#{ @word.id }", class: "card-show-image", style: "border-radius: 25px; margin-bottom: 15px;" %>
+      <table class="table card-show-table">
+        <tr>
+          <th class="col-sm-3">Tags</th>
+          <td class="col-sm-9">
+            <div class="tag-lists">
+              <% @word.tags.each do |tag| %>
+                <%= link_to tag.name, tagged_words_path(tag.name), class: "label-info" %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>Word</th>
+          <td><%= @word.name %></td>
+        </tr>
+        <tr>
+          <th>Meaning</th>
+          <td><%= @word.meaning %></td>
+        </tr>
+        <tr>
+          <th>Example</th>
+          <td><%= @word.sentence %></td>
+        </tr>
+      </table>
+    
+      <div class="row">
+        <% if @word.user == current_user %>
+          <div class="col-sm-5 margin-bottom-sm text-center" id="add-btn-<%= @word.id %>">
+            <%= render "public/dictionaries/add-btn", word: @word %> 
+          </div>
+          <div class="col-sm-5 col-sm-offset-2">    
+            <%= link_to edit_word_path(@word), data: { turbolinks: false }, class: "btn btn-default btn-block" do %>
+              <i class="fas fa-wrench"></i> Edit
             <% end %>
           </div>
-        </td>
-      </tr>
-      <tr>
-        <th>Word</th>
-        <td><%= @word.name %></td>
-      </tr>
-      <tr>
-        <th>Meaning</th>
-        <td><%= @word.meaning %></td>
-      </tr>
-      <tr>
-        <th>Example</th>
-        <td><%= @word.sentence %></td>
-      </tr>
-    </table>
-
-    <div class="row">
-      <% if @word.user == current_user %>
-        <div class="col-sm-5 text-center" id="add-btn-<%= @word.id %>">
-          <%= render "public/dictionaries/add-btn", word: @word %> 
-        </div>
-        <div class="col-sm-5 col-sm-offset-2">    
-          <%= link_to edit_word_path(@word), data: { turbolinks: false }, class: "btn btn-default btn-block" do %>
-            <i class="fas fa-wrench"></i> Edit
-          <% end %>
-        </div>
-      <% else %>
-        <div class="col-sm-6 col-sm-offset-3 text-ceter" id="add-btn-<%= @word.id %>">
-          <%= render "public/dictionaries/add-btn", word: @word %>
-        </div>
-      <% end %>
+        <% else %>
+          <div class="col-sm-6 col-sm-offset-3 text-ceter" id="add-btn-<%= @word.id %>">
+            <%= render "public/dictionaries/add-btn", word: @word %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-  <div class="col-sm-5">
-    <h3>Related words</h3>
+
+  <div class="col-sm-5 col-md- col-md-offset-1">
+    <h3 class="heading">Related words</h3>
     <div class="row">
-      <% @related_words.each do |word| %>
-        <div class="col-sm-6">
+      <% @related_words[0..3].each do |word| %>
+        <div class="col-xs-6 col-sm-6 col-md-6">
           <%= render "layouts/card", word: word %>
         </div>
       <% end %>

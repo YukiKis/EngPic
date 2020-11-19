@@ -8,7 +8,7 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @words = Word.where(user_id: current_user.id).or(Word.where(user_id: current_user.followings.ids)).page(params[:page]).per(18)
+    @words = Word.where(user_id: @user.id).or(Word.where(user_id: @user.followings.ids)).page(params[:page]).per(12)
   end
 
   def edit

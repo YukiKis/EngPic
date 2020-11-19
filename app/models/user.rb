@@ -13,7 +13,7 @@ class User < ApplicationRecord
   attachment :image
 
   validates :name, presence: true, length: { in: 2..20 }
-  
+  validates :introduction, length: { maximum: 100 }
   scope :today, ->(){ where("created_at >= ?", Date.today) }
   
   def follow(user)

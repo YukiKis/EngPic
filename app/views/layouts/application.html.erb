@@ -4,6 +4,7 @@
     <title>EngPic</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <script src="https://kit.fontawesome.com/6d2f46eeba.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">    
     <%= stylesheet_link_tag    'main/application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -11,10 +12,14 @@
   </head>
 
   <body>
-    <div class="container page-back">
-      <%= render "layouts/header" %>
-      <%= yield %>
-      <%= render "layouts/footer" %>
+    <div class="container" style="position: relative; z-index: 1" >
+      <div class="page-back" style="position: relative">
+        <%= render "layouts/header" %>
+        <div class="main">
+          <%= yield %>
+        </div>
+        <%= render "layouts/footer" %>
+      </div>
     </div>
   </body>
 </html>

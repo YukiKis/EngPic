@@ -57,6 +57,9 @@ ja:
             name:
               blank: "は必須項目です。"
               too_short: "が短すぎます。"
+              too_long: "が長すぎます。"
+            introduction:
+              too_long: "が長すぎます。"
         word:
           attributes:
             name:
@@ -72,7 +75,7 @@ ja:
   devise:
     failure:
       user:
-        already_authenticatd: "既にログイン"
+        already_authenticatd: "既にログインしております。"
       invalid: "%{authentication_keys}またはパスワードが違います。"
       not_found_in_database: "%{authentication_keys}またはパスワードが違います。"
       timeout: "セッションがタイムアウトしました。もう一度ログインしてください。"
@@ -152,3 +155,19 @@ ja:
       block: "リスト"
       grid: "グリッド"
       blog: "ブログ"
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "..."
+    helpers:
+      page_entries_info:
+        one_page:
+          display_entries:
+            zero: ""
+            one: "<strong>1-1</strong>/1件中"
+            other: "<strong>1-%{count}</strong>/%{count}件中"
+        more_pages:
+          display_entries: "<strong>%{first}-%{last}</strong>/%{total}件中"

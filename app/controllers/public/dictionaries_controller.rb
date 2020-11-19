@@ -5,7 +5,30 @@ class Public::DictionariesController < ApplicationController
   def show    
     @q = @dictionary.words.ransack(params[:q])
     @words = @dictionary.words.page(params[:page]).per(12)
-    @word_count = @words.count
+    @tags = @dictionary.words.tag_counts.sort_by { |t| t.name }[0..9]
+  end
+  
+  def tags
+    @q = @dictionary.words.tag_counts.ransack(params[:q])
+    @tags = @dictionary.words.tag_counts.page(params[:page]).per(12)
+    @tag_count = @dictionary.words.tag_counts.count
+  end
+  
+  def tag_search
+    @q = @dictionary.words.tag_counts.ransack(params[:q])
+    @tags = @q.result(distinct: true).page(params[:page]).per(12)
+    @tag_count = @tags.count
+    render "tags"
+  end
+    
+  
+  def tagged_words
+    @q = @dictionary.words.ransack(params[:q])
+    @words = @dictionary.words.tagged_with(params[:tag]).page(params[:page]).per(12)
+    @tags = @dictionary.words.tag_counts.sort_by { |t| t.name }[0..9]
+    @word_count = @dictionary.words.tagged_with(params[:tag]).count
+    @tag = "'#{ params[:tag] }' "
+    render "show"
   end
   
   def choose
@@ -14,12 +37,10 @@ class Public::DictionariesController < ApplicationController
   
   def question
     if request.post?
-      category = category_params[:tag]
-      @questions = current_user.dictionary.words.tagged_with(category).sample(4)
+      @questions = current_user.dictionary.words.tagged_with(category_params[:tag]).sample(4)
     else
       @questions = current_user.dictionary.words.all.sample(4)
     end
-    render "question"
   end
   
   def check
@@ -43,6 +64,7 @@ class Public::DictionariesController < ApplicationController
   def search
     @q = @dictionary.words.ransack(params[:q])
     @words = @q.result.page(params[:page]).per(12)
+    @tags = @dictionary.words.tag_counts.sort_by { |t| t.name }[0..9]
     render "show"
   end
     
