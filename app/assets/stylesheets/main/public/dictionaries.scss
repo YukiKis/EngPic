@@ -55,6 +55,11 @@
     justify-content: center;
     align-items: center;
     height: 100px;
+    span{
+      display: inline-block;
+      width: 100%;
+      white-space: nowrap;
+    }
   }
 }
 

@@ -6,46 +6,34 @@
         <%= attachment_image_tag @word, :image, :fill, 150, 150, fallback: "noimage.jpg", size: "150x150", id: "word-image-#{ @word.id }" %>
       </div>
       <div class="col-sm-8">
-        <div class="row">
-          <div class="col-sm-4">
-            <h4>単語</h4>
-          </div>
-          <div class="col-sm-8 word-break">
-            <h4><%= @word.name %></h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4">
-            <h4>意味</h4>
-          </div>
-          <div class="col-sm-8 word-break">
-            <h4><%= @word.meaning %></h4>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-sm-4">
-            <h4>例文</h4>
-          </div>
-          <div class="col-sm-8 word-break">
-            <h4><%= @word.sentence %></h4>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-4">
-            <h4>タグ</h4>
-          </div>
-          <div class="col-sm-8 word-break">
-            <h4>
-              <% @word.tag_list.each do |t| %>
-                <%= t %>
+        <table class="table">
+          <tr class="row">
+            <th class="col-sm-4 white-space-nowrap">投稿者</th>
+            <td class="col-sm-6 col-sm-offset-2 word-break"><%= link_to @word.user.name, admin_user_path(@word.user) %></td>
+          </tr>
+          <tr class="row">
+            <th class="col-sm-4 white-space-nowrap">単語</th>
+            <td class="col-sm-6 col-sm-offset-2 word-break"><%= @word.name %></td>
+          </tr>
+          <tr class="row">
+            <th class="col-sm-4 white-space-nowrap">意味</th>
+            <td class="col-sm-6 col-sm-offset-2 word-break"><%= @word.meaning %></td>
+          </tr>
+          <tr class="row">
+            <th class="col-sm-4 white-space-nowrap">例文</th>
+            <td class="col-sm-6 col-sm-offset-2 word-break"><%= @word.sentence %></td>
+          </tr>
+          <tr class="row">
+            <th class="col-sm-4 white-space-nowrap">タグ</th>
+            <td class="col-sm-6 col-sm-offset-2 word-break">
+              <% @word.tags.each do |t| %>
+                <%= t.name %>, 
               <% end %>
-            </h4>
-          </div>
-        </div>
-        <div class="text-right">
-          <%= link_to "編集", edit_admin_word_path(@word), class: "btn btn-default btn-lg" %>
+            </td>
+          </tr>
+        </table>
+        <div class="text-right margin-top-sm">
+          <%= link_to "編集", edit_admin_word_path(@word), class: "btn btn-default btn-lg", data: { turbolinks: false } %>
         </div>
       </div>
     </div>

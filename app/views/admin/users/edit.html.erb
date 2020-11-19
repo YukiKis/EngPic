@@ -18,8 +18,10 @@
             <%= f.label :introduction, "Introduction", class: "control-label" %><br>
             <%= f.text_area :introduction, rows: 4, class: "form-control" %>
           </div>
-          <%= f.submit "Update", class: "btn btn-primary" %>
-          <%= link_to "Back", admin_users_path, class: "btn btn-default" %>
+          <div class="text-right">
+            <%= f.submit "Update", class: "btn btn-primary" %>
+            <%= link_to "Back", admin_users_path, class: "btn btn-default" %>
+          </div>
         </div> 
       </div>
     <% end %>

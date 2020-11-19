@@ -3,6 +3,6 @@ class Admin::DictionariesController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @words = @user.dictionary.words.page(params[:page]).per(20)
+    @words = @user.dictionary.words.page(params[:page]).per(15)
   end
 end

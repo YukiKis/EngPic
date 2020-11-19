@@ -64,6 +64,7 @@ class Public::DictionariesController < ApplicationController
   def search
     @q = @dictionary.words.ransack(params[:q])
     @words = @q.result.page(params[:page]).per(12)
+    @tags = @dictionary.words.tag_counts.sort_by { |t| t.name }[0..9]
     render "show"
   end
     

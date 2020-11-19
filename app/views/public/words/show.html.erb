@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-6 col-sm-offset-1">
+  <div class="col-sm-5 col-sm-offset-1 col-md-4 col-md-offset-1">
     <div class="card-show">
       <%= attachment_image_tag @word, :image, fallback: "noimage.jpg", id: "word-image-#{ @word.id }", class: "card-show-image", style: "border-radius: 25px; margin-bottom: 15px;" %>
       <table class="table card-show-table">
@@ -46,11 +46,11 @@
     </div>
   </div>
 
-  <div class="col-sm-4">
+  <div class="col-sm-5 col-md- col-md-offset-1">
     <h3 class="heading">Related words</h3>
     <div class="row">
       <% @related_words[0..3].each do |word| %>
-        <div class="col-xs-6">
+        <div class="col-xs-6 col-sm-6 col-md-6">
           <%= render "layouts/card", word: word %>
         </div>
       <% end %>
