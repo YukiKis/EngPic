@@ -10,7 +10,6 @@ class Public::Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   # def create
-  #   super
   # end
 
   # DELETE /resource/sign_out
@@ -26,6 +25,12 @@ class Public::Users::SessionsController < Devise::SessionsController
   # end
   
   def after_sign_in_path_for(resource)
-    user_path(current_user)
+    if resource.is_active
+      user_path(current_user)
+    else
+      session.clear
+      flash.notice = "退会済みでございます。"
+      new_user_session_path
+    end
   end
 end

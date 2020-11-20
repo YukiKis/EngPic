@@ -65,7 +65,9 @@ class Public::UsersController < ApplicationController
   def quit
     @user.is_active = false
     @user.save
+    session.clear
     redirect_to root_path, notice: "退会しました。またのご利用お待ちしております。"
+    debugger
   end
   
   private
