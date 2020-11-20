@@ -19,6 +19,7 @@
             <%= f.text_area :introduction, rows: 4, class: "form-control" %>
           </div>
           <%= f.submit "Update", class: "btn btn-primary" %>
+          <%= link_to "退会する", href: user_leave_path(user1), class: "btn btn-danger" %>
         </div>
       <% end %>
     </div>

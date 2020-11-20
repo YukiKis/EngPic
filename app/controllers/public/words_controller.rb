@@ -65,6 +65,8 @@ class Public::WordsController < ApplicationController
   end
   
   def update
+    session[:image] = word_params[:image]
+    debugger
     if @word.user != current_user
       redirect_to word_path(@word)
     else

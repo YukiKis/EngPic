@@ -59,6 +59,15 @@ class Public::UsersController < ApplicationController
     render "index"
   end
   
+  def leave
+  end
+  
+  def quit
+    @user.is_active = false
+    @user.save
+    redirect_to root_path, notice: "退会しました。またのご利用お待ちしております。"
+  end
+  
   private
     def setup
       @user = User.find(params[:id])

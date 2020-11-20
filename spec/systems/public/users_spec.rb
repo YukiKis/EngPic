@@ -146,10 +146,32 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_content "Yuki Kis"
       expect(page).to have_content "Nice to meet you"
     end
+    it "has button to leave" do
+      expect(page).to have_link "退会する", href: user_leave_path(user1)
+    end
     it "fails to update" do
       fill_in "user[name]", with: ""
       click_button "Update"
       expect(page).to have_content "エラー"
+    end
+  end
+  
+  context "on leave page" do
+    before do
+      visit user_leave_path(user1)
+    end
+    it "has '退会'" do
+      expect(page).to have_content "退会"
+    end
+    it "has button to quit" do
+      expect(page).to have_link "はい", href: user_quit_path(user1)
+    end
+    it "has button to NOT quit" do
+      expect(page).to have_link "いいえ", href: edit_user_path(user1)
+    end
+    it "succeeds to quit" do
+      click_link "はい", href: user_quit_path(user1)
+      expect(current_path).to eq root_path
     end
   end
 end

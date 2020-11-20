@@ -37,6 +37,8 @@ Rails.application.routes.draw do
         get "followings"
         post "follow"
         delete "unfollow"
+        get "leave"
+        get "quit"
       end
     end
 
