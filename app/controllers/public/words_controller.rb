@@ -109,6 +109,7 @@ class Public::WordsController < ApplicationController
   end
   
   def tag_search
+    @words = Word.active
     @tags = @q.result(distinct: true).page(params[:page]).per(12)
     @tag_count = @tags.count
     render "tags"

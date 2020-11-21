@@ -17,20 +17,20 @@ RSpec.describe "words page", js: true, type: :system do
       visit words_path
     end
     it "has word count" do
-      expect(page).to have_content Word.all.count
+      expect(page).to have_content Word.active.count
     end
-    it "has button to go to new page" do
+    it "has link to go to new page" do
       expect(page).to have_link "New word", href: new_word_path
     end
     it "has word-cards" do
-      Word.joins(:user).where(users: { is_active: true }).each do |word|
+      Word.active.each do |word|
         expect(page).to have_css "#word-image-#{ word.id }"
         expect(page).to have_css "#user-image-#{ word.user.id }"
         expect(page).to have_content word.user.name
         expect(page).to have_link "", href: word_path(word)
       end
     end
-    it "has blue color if out of dictionary but in words" do
+    it "has blue color if it is NOT in dictionary but in words" do
       user1.dictionary.add(word1)
       user1.dictionary.remove(word1)
       visit current_path
@@ -48,12 +48,33 @@ RSpec.describe "words page", js: true, type: :system do
     it "can search by word_name" do
       fill_in "q_name_or_meaning_start", with: word1.name
       click_button "検索"
+      expect(current_path).to eq search_words_path
       expect(page).to have_link "", href: word_path(word1)
     end
     it "can search by word_meaning" do
       fill_in "q_name_or_meaning_start", with: word1.meaning
       click_button "検索"
+      expect(current_path).to eq search_words_path
       expect(page).to have_link "", href: word_path(word1)
+    end
+    it "has example of tags" do
+      tags = []
+      Word.active.sample(4).each do |t|
+        tags << t.name
+      end
+      tags.uniq.sample(4).each do |t|
+        expect(page).to have_link t, href: tagged_words_path(t)
+      end
+    end
+    it "has example of word names" do
+      Word.active.sample(4).each do |w|
+        expect(page).to have_link w.name, href: same_name_words_path(w.name)
+      end
+    end
+    it "has example of word meanings" do
+      Word.active.sample(4).each do |w|
+        expect(page).to have_link w.meaning, href: same_meanings_words_path(w.meaning)
+      end
     end
   end
   
@@ -76,9 +97,20 @@ RSpec.describe "words page", js: true, type: :system do
     it "has button to add to dictionary" do
       expect(page).to have_link "Add", href: add_dictionary_path(word1)
     end
+    it "adds bg-warning when adding to dictionary" do
+      user1.dictionary.remove(word1)
+      user1.dictionary.add(word1)
+      visit current_path
+      expect(page).to have_css "card-show.bg-warning"
+    end
+    it "has bg-info if NOT in dictioary but in words" do
+      user1.dictionary.remove(word1)
+      visit current_path
+      expect(page).to have_css "card-show.bg-info"
+    end
     it "has button to remove from dictionary" do
       user1.dictionary.add(word1)
-      visit word_path(word1)
+      visit current_path
       # ajaxのrspecのテスト、未解決のため一度更新して対応
       expect(page).to have_link "Remove", href: remove_dictionary_path(word1)
     end
@@ -92,7 +124,7 @@ RSpec.describe "words page", js: true, type: :system do
     it "has related words" do
       related_words = []
       word1.tag_list.each do |tag|
-        Word.joins(:user).where(users: { is_active: true } ).tagged_with(tag).sample(5).each do |w|
+        Word.active.tagged_with(tag).sample(5).each do |w|
           if w == word1
           else
             related_words << w
@@ -138,12 +170,6 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_content "Tags"
       expect(page).to have_field "word[tag_list]", with: word1.tag_list
     end
-    # it "has radio_button for status" do
-    #   expect(page).to have_content "YES"
-    #   expect(page).to have_field "word_status_true"
-    #   expect(page).to have_content "NO"
-    #   expect(page).to have_field "word_status_false"
-    # end
     it "has button to update a word" do
       expect(page).to have_button "Update!"
     end
@@ -156,7 +182,6 @@ RSpec.describe "words page", js: true, type: :system do
       fill_in "word[meaning]", with: "ジュース"
       fill_in "word[sentence]", with: "I like this juice" 
       fill_in "word[tag_list]", with: "drink, juice, tomato"
-      # choose "YES"
       click_button "Update!"
       word1.reload
       expect(current_path).to eq word_path(word1)
@@ -167,12 +192,6 @@ RSpec.describe "words page", js: true, type: :system do
         expect(page).to have_content tag
       end
     end
-    # it "does not show when changed status into false" do
-    #   choose "NO"
-    #   click_button "Update"
-    #   visit words_path
-    #   expect(page).to have_no_link "", href: word_path(word1)
-    # end
     it "fails to udpate" do
       fill_in "word[name]", with: ""
       click_button "Update!"
@@ -187,6 +206,7 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_no_content word1.name
     end
   end
+  
   context "on new page" do
     before do
       visit new_word_path(word1)
@@ -210,12 +230,6 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_content "Tags"
       expect(page).to have_field "word[tag_list]"
     end
-    # it "has radio_button for status" do
-    #   expect(page).to have_content "YES"
-    #   expect(page).to have_field "word_status_true"
-    #   expect(page).to have_content "NO"
-    #   expect(page).to have_field "word_status_false"
-    # end
     it "has button to make a new word" do
       expect(page).to have_button "Create!"
     end
@@ -225,7 +239,6 @@ RSpec.describe "words page", js: true, type: :system do
       fill_in "word[meaning]", with: "薬"
       fill_in "word[sentence]", with: "This medicine is very effective"
       fill_in "word[tag_list]", with: "medicine, hospital, doctor"
-      # choose "YES"
       click_button "Create!"
       word = Word.last
       expect(current_path).to eq word_path(word)
@@ -236,34 +249,26 @@ RSpec.describe "words page", js: true, type: :system do
         expect(page).to have_content tag
       end
     end
-    it "succeeds to make a new word but not show to anybody" do
-      attach_file "word[image]", "#{ Rails.root }/spec/factories/noimage.jpg"
-      fill_in "word[name]", with: "medicine"
-      fill_in "word[meaning]", with: "薬"
-      fill_in "word[sentence]", with: "This medicine is very effective"
-      fill_in "word[tag_list]", with: "medicine, hospital, doctor"
-      # choose "NO"
-      click_button "Create!"
-      word = Word.last
-      expect(current_path).to eq word_path(word)
-      visit words_path
-    end
     it "fails to make" do
       click_button "Create!"
       expect(page).to have_content "エラー"
     end
   end
+  
   context "on tags_page" do
     before do 
       visit tags_words_path
     end
     it "has tag count" do
-      expect(page).to have_content Word.joins(:user).where(users: { is_active: true }).tag_counts.count
+      expect(page).to have_content Word.active.tag_counts.count
     end
     it "has tag info" do
-      Word.joins(:user).where(users: { is_active: true }).tag_counts.each do |t|
+      Word.active.tag_counts.each do |t|
         expect(page).to have_link t.name, herf: tagged_words_path(t)
-        expect(page).to have_content Word.tagged_with(t).count
+        expect(page).to have_content Word.active.tagged_with(t).count
+        Word.active.tagged_with(t.name).sample(4).each do |w|
+          expect(page).to have_link "", href: word_path(w)
+        end
       end
     end
     it "has tag-search form" do
@@ -275,7 +280,7 @@ RSpec.describe "words page", js: true, type: :system do
       fill_in "q[name_start]", with: tag
       click_button "検索"
       expect(page).to have_link tag, href: tagged_words_path(tag)
-      Word.joins(:user).where(users: { is_active: true }).tagged_with(tag).sample(4).each do |w|
+      Word.active.tagged_with(tag).sample(4).each do |w|
         expect(page).to have_link "", href: word_path(w)
       end
     end

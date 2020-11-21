@@ -22,7 +22,7 @@
             <td class="hidden-xs col-sm-5">
               <% @words.tagged_with(t).sample(4).each do |w| %>
                 <%= link_to word_path(w) do %>
-                  <%= attachment_image_tag w, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30" %>
+                  <%= attachment_image_tag w, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", id: "word-image-#{ w.id }" %>
                 <% end %>
               <% end %>
               <% if @words.tagged_with(t).count > 4 %>
