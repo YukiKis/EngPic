@@ -4,7 +4,7 @@
   <td class="col-xs-4 col-sm-2"><%= counter(user.words.count, "word") %></td>
   <td class="hidden-xs col-sm-2">
     <% if user.words.present? %>
-      <% user.words.tag_counts.sample(2).each do |t| %> <!-- Userの持っているタグの名前を4つランダムにかぶりなく取り出す  -->
+      <% user.words.tag_counts.sample(2).each do |t| %> <!-- Userの持っているタグの名前を2つランダムにかぶりなく取り出す  -->
          <%= t.name %>,<br>
       <% end %>
     <% else %>

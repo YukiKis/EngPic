@@ -1,8 +1,9 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :setup_user, except: [:index, :search]
-  before_action :setup_q, only: [:index, :followers, :followings, :search]
+  before_action :setup_q, only: [:index, :search]
   def index
+    @user = current_user # 検索フォームの表示非表示を
     @users = User.active.page(params[:page]).per(10)
   end
 
@@ -41,20 +42,23 @@ class Public::UsersController < ApplicationController
   end
   
   def followers
+    @q = @user.followers.active.ransack(params[:q])
     @users = @user.followers.active.page(params[:page]).per(10)
     render "index"
   end
   
   def followings
+    @q = @user.followings.active.ransack(params[:q])
     @users = @user.followings.active.page(params[:page]).per(10)
     render "index"
   end
   
   def search
+    @user = current_user # 検索フォームの表示非表示を切り替える為
     @users = @q.result(distinct: true).page(params[:page]).per(10)
     render "index"
   end
-  
+
   def leave
   end
   

@@ -19,6 +19,11 @@
             <%= f.label :introduction, "Introduction", class: "control-label" %><br>
             <%= f.text_area :introduction, rows: 4, class: "form-control" %>
           </div>
+          <div class="form-group">
+            
+            <%= f.label :email, "Email", class: "control-label" %><br>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
           <%= f.submit "Update", class: "btn btn-primary" %>
           <%= link_to "退会する", leave_user_path(@user), class: "btn btn-danger" %>
         </div>

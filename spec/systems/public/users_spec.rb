@@ -11,25 +11,22 @@ RSpec.describe "users page", type: :system do
     before do
       visit users_path
     end
-    it "has 'Authors'" do
-      expect(page).to have_content "Authors"
-    end
     it "has table-heading" do
       expect(page).to have_content "Name"
       expect(page).to have_content "Word Count"
       expect(page).to have_content "Word tags"
     end
     it "has users table" do
-      User.where(is_active: true).each do |user|
+      User.active.each do |user|
         expect(page).to have_link user.name, href: user_path(user)
         expect(page).to have_content user.words.count
-        tags = user.words.map { |w| w.tag_list }.uniq.sample(4)
+        tags = user.words.tag_counts.sample(2)
         tags.each do |tag|
           expect(page).to have_content tag
         end
       end
     end
-    it "does not have button for myself" do
+    it "does not have follow button for myself" do
       expect(page).to have_no_link "Follow", href: follow_user_path(user1)
     end
     it "has button to follow" do
@@ -46,6 +43,8 @@ RSpec.describe "users page", type: :system do
     end
     it "can search by user_name" do
       fill_in "q_name_start", with: user1.name
+      click_button "検索"
+      expect(current_path).to eq search_users_path
       expect(page).to have_link user1.name, href: user_path(user1)
     end
   end
@@ -55,23 +54,77 @@ RSpec.describe "users page", type: :system do
       user1.follow(user2)
       visit followings_user_path(user1)
     end
+    it "has table-heading" do
+      expect(page).to have_content "Name"
+      expect(page).to have_content "Word Count"
+      expect(page).to have_content "Word tags"
+    end
     it "has followings name" do
-      user1.followings.each do |user|
+      user1.followings.active.each do |user|
         expect(page).to have_link user.name, href: user_path(user)
       end
+    end
+    it "has button to unfollow" do
+      expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
+    end
+    it "has button to follow user" do
+      user1.unfollow(user2)
+      visit current_path
+      expect(page).to have_link "Follow", href: follow_user_path(user2)
+    end
+    it "has search_field" do
+      expect(page).to have_field "q_name_start"
+      expect(page).to have_button "検索"
+    end
+    it "can search followings by user_name" do
+      fill_in "q_name_start", with: user2.name
+      click_button "検索"
+      expect(current_path).to eq search_users_path
+      expect(page).to have_link user2.name, href: user_path(user2)
+    end
+    it "does not have search form in other people's followings page" do
+      visit followings_user_path(user2)
+      expect(page).to have_no_field "q_name_start"
     end
   end
   
   context "on followers page" do
     before do 
-      user1.follow(user2)
-      visit followers_user_path(user2)
+      user2.follow(user1)
+      visit followers_user_path(user1)
     end
+    it "has table-heading" do
+      expect(page).to have_content "Name"
+      expect(page).to have_content "Word Count"
+      expect(page).to have_content "Word tags"
+    end    
     it "has followres page" do
-      user2.followers.each do |user|
+      user1.followers.active.each do |user|
         expect(page).to have_link user.name, href: user_path(user)
       end
     end
+    it "has button to follow" do
+      expect(page).to have_link "Follow", href: follow_user_path(user2)
+    end
+    it "has button to unfollow user" do
+      user1.follow(user2)
+      visit current_path
+      expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
+    end
+    it "has search_field" do
+      expect(page).to have_field "q_name_start"
+      expect(page).to have_button "検索"
+    end
+    it "can search followings by user_name" do
+      fill_in "q_name_start", with: user2.name
+      click_button "検索"
+      expect(current_path).to eq search_users_path
+      expect(page).to have_link user2.name, href: user_path(user2)
+    end
+    it "does not have search form in other people's followers page" do
+      visit followers_user_path(user2)
+      expect(page).to have_no_field "q_name_start"
+    end    
   end
   
   context "on show page for own" do
@@ -91,13 +144,13 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_link "Followers", href: followers_user_path(user1)
     end
     it "has number how many followers s/he has" do
-      expect(page).to have_content user1.followers.where(is_active: true).count
+      expect(page).to have_content user1.followers.active.count
     end
     it "has link to followings" do
       expect(page).to have_link "Followings", href: followings_user_path(user1)
     end
     it "has number how many followings s/he has" do
-      expect(page).to have_content user1.followings.where(is_active: true).count
+      expect(page).to have_content user1.followings.active.count
     end
     it "has link for editing own information" do
       expect(page).to have_link "Editing", href: edit_user_path(user1)
@@ -107,8 +160,9 @@ RSpec.describe "users page", type: :system do
     end
     it "has words-img" do
       user1.words.each do |word|
+        expect(page).to have_link "", href: user_path(word.user)
         expect(page).to have_css "#word-img-#{ word.id }"
-        expect(page).to have_link "More info", href: word_path(word)
+        expect(page).to have_link "", href: word_path(word)
       end
     end
   end
@@ -117,8 +171,11 @@ RSpec.describe "users page", type: :system do
     before do 
       visit user_path(user2)
     end
-    it "does NOT have link for editing if it is not own information" do
+    it "does NOT have link for editing" do
       expect(page).to have_no_link "Editing", href: edit_user_path(user2)
+    end
+    it "does NOT have link for new word" do
+      expect(page).to have_no_link "New word", href: new_word_path
     end
     it "has follow button if not following" do
       expect(page).to have_link "Follow", href: follow_user_path(user2)
@@ -127,9 +184,6 @@ RSpec.describe "users page", type: :system do
       user1.follow(user2)
       visit current_path
       expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
-    end
-    it "does not have button if it is different user" do
-      expect(page).to have_no_link "New wordr", href: new_word_path
     end
   end
   
@@ -141,9 +195,6 @@ RSpec.describe "users page", type: :system do
       visit edit_user_path(user2)
       expect(current_path).to eq user_path(user2)
     end
-    it "has Your 'Profile'" do
-      expect(page).to have_content "Your Profile"
-    end
     it "has field for name" do
       expect(page).to have_content "Name"
       expect(page).to have_field "user[name]", with: user1.name
@@ -152,6 +203,10 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_content "Introduction"
       expect(page).to have_field "user[introduction]", with: user1.introduction
     end
+    it "has field for email" do
+      expect(page).to have_content "Email"
+      expect(page).to have_field "user[email]", with: user1.email
+    end
     it "has button to update" do
       expect(page).to have_button "Update"
     end
@@ -159,6 +214,7 @@ RSpec.describe "users page", type: :system do
       attach_file "user[image]", "#{ Rails.root }/spec/factories/noimage.jpg"
       fill_in "user[name]", with: "Yuki Kis"
       fill_in "user[introduction]", with: "Nice to meet you"
+      fill_in "user[email]", with: "kis@com"
       click_button "Update"
       expect(current_path).to eq user_path(user1)
       expect(page).to have_content "Yuki Kis"
@@ -188,7 +244,7 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_link "いいえ", href: edit_user_path(user1)
     end
     it "succeeds to quit" do
-      click_link "はい", href: quit_user_path(user1)
+      expect{ click_link "はい", href: quit_user_path(user1) }.to change{ User.active.count }.by(-1)
       expect(current_path).to eq root_path
     end
   end
