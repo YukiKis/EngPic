@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "./variable";
+
 // Top page
 #container{
  height: 300px;
@@ -25,7 +27,7 @@
 }
 
 
-.about-heading{
+.top-heading{
  display: block !important;
  position: relative;
  margin-top: 0;
@@ -33,7 +35,7 @@
   position: relative;
   z-index: 2;
  }
-  .about-heading-image{
+  .top-heading-image{
   position: absolute;
   top: 0;
   right: 5%;
@@ -42,30 +44,31 @@
  }
 }
 
-.about-heading-box{
+.top-heading-box{
  border: 5px solid #ccc;
  border-left: 30px solid blue;
  background-color: rgba(255,255,240, 0.5);
  box-shadow: 5px 5px 15px #ccc;
- .about-heading{
+ .top-heading{
   padding-left: 50px;
  }
- .about-subheading-box{
+ .top-subheading-box{
   padding: 5px 15px;
   border-bottom: 3px solid #222222;
   &:nth-first-child{
    border-top: 3px solid #222222;
   }
-  .about-subheading {
+  .top-subheading {
     span{
-      border-bottom: 2px solid red;
+      text-decoration: underline;
+      text-decoration-color: $sub-color-strong;
     }
   }
  }
 }
 
 
-// About page
+// top page
 .howto-section{
   border: 5px solid #ccc;
   border-left: 10px solid rgba(66, 139, 242, 0.9);

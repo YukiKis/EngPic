@@ -26,7 +26,7 @@ RSpec.describe "admin-words page", type: :system do
       end
     end
     it "has search field for word" do
-      expect(page).to have_field "q[name_or_meaning_or_tags_name_start]"
+      expect(page).to have_field "q[name_or_meaning_start]"
     end
     it "can search by word_name" do
       fill_in "q[name_or_meaning_or_tags_name_start]", with: word1.name
@@ -103,7 +103,7 @@ RSpec.describe "admin-words page", type: :system do
       expect(page).to have_button "Update"
     end
     it "has button to back" do
-      expect(page).to have_link "Back", href: admin_word_path
+      expect(page).to have_link "Back", href: admin_word_path(word1)
     end
     it "succeeds to update" do
       fill_in "word[name]", with: "model"

@@ -75,15 +75,15 @@ RSpec.describe "dictionary page", type: :system do
     it "has word counts tagged with the tag" do
       expect(page).to have_content "#{ user1.dictionary.words.tagged_with(@tag).count}"
     end
-  end
+  # end
     
   
-  context "on tagged page" do
-    before do
-      @tag = word1.tag_list.first
-      visit dictionary_path
-      click_link @tag, href: tagged_dictionary_path(@tag)
-    end
+  # context "on tagged page" do
+  #   before do
+  #     @tag = word1.tag_list.first
+  #     visit dictionary_path
+  #     click_link @tag, href: tagged_dictionary_path(@tag)
+  #   end
     it "has 'Your dictionary'" do
       expect(page).to have_content "Your Dictionary"
     end
@@ -92,7 +92,7 @@ RSpec.describe "dictionary page", type: :system do
     end
     it "has tags-index" do
       user1.dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.each do |t|
-        expect(page).to have_link t.name, href: tagged_dictionary_path(t.name)
+        expect(page).to have_link t.name, href: tagged_words_dictionary_path(t.name)
         expect(page).to have_content t.taggings_count
       end
     end

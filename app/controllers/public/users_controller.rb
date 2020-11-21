@@ -1,14 +1,13 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :setup, except: [:index, :search]
-  
+  before_action :setup_user, except: [:index, :search]
+  before_action :setup_q, only: [:index, :followers, :followings, :search]
   def index
-    @q = User.where(is_active: true).ransack(params[:q])
-    @users = User.where(is_active: true).page(params[:page]).per(10)
+    @users = User.active.page(params[:page]).per(10)
   end
 
   def show
-    @words = Word.where(user_id: @user.id).or(Word.where(user_id: @user.followings.where(is_active: true).ids)).page(params[:page]).per(12)
+    @words = Word.where(user_id: @user.id).or(Word.where(user_id: @user.followings.active.ids)).page(params[:page]).per(12)
   end
 
   def edit
@@ -42,19 +41,16 @@ class Public::UsersController < ApplicationController
   end
   
   def followers
-    @users = @user.followers.where(is_active: true).page(params[:page]).per(10)
-    @q = User.where(is_active: true).ransack(params[:q])
+    @users = @user.followers.active.page(params[:page]).per(10)
     render "index"
   end
   
   def followings
-    @users = @user.followings.where(is_active: true).page(params[:page]).per(10)
-    @q = User.where(is_active: true).ransack(params[:q])
+    @users = @user.followings.active.page(params[:page]).per(10)
     render "index"
   end
   
   def search
-    @q = User.where(is_active: true).ransack(params[:q])
     @users = @q.result(distinct: true).page(params[:page]).per(10)
     render "index"
   end
@@ -70,10 +66,17 @@ class Public::UsersController < ApplicationController
   end
   
   private
-    def setup
+    def setup_user
       @user = User.find(params[:id])
+      unless @user.is_active
+        redirect_to request.referer || user_path(current_user), notice: "そのユーザーはご覧いただけません。"
+      end
     end
     
+    def setup_q
+      @q = User.active.ransack(params[:q])
+    end
+
     def user_params
       params.require(:user).permit(:image, :name, :introduction)
     end
