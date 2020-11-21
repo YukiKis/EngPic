@@ -5,10 +5,10 @@
     <h4>・タグからテスト</h4>
     <%= form_with scope: :category, url: question_dictionary_path, class: "form-inline", local: true do |f| %>
       <%= f.select :tag, @tags, {}, { class: "form-control" } %>
-      <%= f.submit "Check!", data: { turbolinks: false }, class: "btn btn-default" %>
+      <%= f.submit "Check!", class: "btn btn-default" %>
     <% end %>
     <h4>・ランダムでテスト</h4>
-    <%= link_to "Check!", question_dictionary_path, data: { turbolinks: false }, class: "btn btn-default" %>
+    <%= link_to "Check!", question_dictionary_path, class: "btn btn-default" %>
     <br>
     <div class="text-right">
       <%= image_tag("books.png", width: "30%", height: "30%") %>

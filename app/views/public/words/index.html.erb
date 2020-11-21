@@ -56,7 +56,7 @@
           <span class="bg-info">BLUE</span>, 投稿単語ですが、辞書からは外されております。
         </p>
 
-        <h3 class="text-right"><%= link_to "New word", new_word_path, data: { turbolinks: false }, class: "btn btn-primary" %></h3>
+        <h3 class="text-right"><%= link_to "New word", new_word_path, class: "btn btn-primary" %></h3>
         <div class="row">
           <% @words.each do |word| %>
             <div class="col-xs-6 col-sm-4 col-md-3">
