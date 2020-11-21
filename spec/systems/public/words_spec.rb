@@ -61,6 +61,10 @@ RSpec.describe "words page", js: true, type: :system do
     before do 
       visit word_path(word1)
     end
+    it "has link with name of user who made a word" do
+      expect(page).to have_link "", href: user_path(word1.user)
+      expect(page).to have_link word1.user.name, href: user_path(word1.user)
+    end
     it "has word-image" do
       expect(page).to have_css "#word-image-#{ word1.id }"
     end

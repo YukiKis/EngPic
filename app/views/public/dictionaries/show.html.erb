@@ -1,8 +1,9 @@
+<% provide(:title, "Dictionary") %>
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <section class="top-box">
       <h3 class="heading" style="text-shadow: none;">
-        Your Dictionary has <%= @dictionary.words.count %> <%= "word".pluralize(@dictionary.words.count) %> and <%= @dictionary.words.tag_counts.count %> <%= "tag".pluralize(@dictionary.words.tag_counts.count) %>
+        Your Dictionary has <%= counter(@active_words_in_dictionary.count, "word") %> and <%= counter(@active_words_in_dictionary.tag_counts.count, "tag") %>
       </h3>
 
       <div class="row">

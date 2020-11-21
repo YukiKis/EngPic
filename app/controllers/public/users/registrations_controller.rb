@@ -11,12 +11,13 @@ class Public::Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    user = User.find_by(email: params[:user][:email])
+    if user && !(user.is_active)
+      user.update(email: "QUIT" + Time.now.to_s.gsub(" ", "") + user.email)
+    end
     super do |resource|
-      if user = User.find_by(email: resource.email)
-        user.update(email: "QUIT" + Time.now.to_s.gsub(" ", "") + user.email)
-        if resource.save
-          resource.create_dictionary
-        end
+      if resource.save
+        resource.create_dictionary
       end
     end
   end

@@ -19,10 +19,6 @@ class Public::WordsController < ApplicationController
   
   def show
     @related_words = []
-    # if @word.tag_list.any?
-    #   @word.tag_list.each do |tag|
-    #     @related_words = Word.tagged_with(tag)
-    # end
     @word.tag_list.each do |tag|
       Word.active.tagged_with(tag).sample(5).each do |w|
         if w == @word
@@ -40,7 +36,6 @@ class Public::WordsController < ApplicationController
     @title = "New"
     @word = Word.new
     @btn = "Create!"
-    render "edit"
   end
   
   def create
@@ -51,7 +46,7 @@ class Public::WordsController < ApplicationController
     else
       @title = "New"
       @btn = "Create!"
-      render "edit"
+      render "new"
     end
   end
   
@@ -108,8 +103,9 @@ class Public::WordsController < ApplicationController
   end
   
   def tags
-    @tags = Word.active.tag_counts.page(params[:page]).per(12)
-    @tag_count = Word.active.tag_counts.all.count
+    @words = Word.active
+    @tags = @words.tag_counts.page(params[:page]).per(12)
+    @tag_count = @words.tag_counts.all.count
   end
   
   def tag_search
@@ -146,13 +142,12 @@ class Public::WordsController < ApplicationController
       @listed_words = []
       @tags = []
       @meanings = []
-      Word.all.each do |w|
+      words = Word.active.sample(4)
+      words.each do |w|
         @listed_words << w.name
-        @tags << w.tag_list
+        w.tags.each { |t| @tags << t.name }
         @meanings << w.meaning
       end
-      @listed_words.uniq!
-      @tags.uniq
-      @meanings.uniq!
+      @tags.uniq.sample(4)
     end
 end

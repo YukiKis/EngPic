@@ -1,1 +1,6 @@
 $("#add-btn-<%= @word.id %>").html(`<%= j(render("add-btn", word: @word)) %>`);
+if(<%= current_user.words.include?(@word) %>){ 
+  $("div.card-show").removeClass("bg-warning").addClass("bg-info"); 
+}else{
+  $("div.card-show").removeClass("bg-warning");
+};

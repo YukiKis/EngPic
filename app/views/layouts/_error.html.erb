@@ -1,6 +1,6 @@
 <% if resource.errors.any? %>
-	<h3><%= resource.errors.count %>件のエラーが発生し、保存出来ませんでした。</h3>
-	<ul>
+	<h4 style="font-weight: bold;"><%= resource.errors.count %>件のエラーが発生し、保存出来ませんでした。</h4>
+	<ul style="list-style-position: inside;">
 		<% resource.errors.full_messages.each do |message| %>
 			<li><%= message %></li>
 		<% end %>

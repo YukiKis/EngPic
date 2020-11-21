@@ -1,3 +1,4 @@
+<% provide(:title, "Admin | Users | #{ @user.name }") %>
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <h3 class="heading">ユーザー詳細</h3>
@@ -41,7 +42,7 @@
     
     <div class="row">
       <div class="col-sm-12">
-        <h3 class="heading">投稿単語&emsp;<%= @user.words.count %> <%= "word".pluralize(@user.words.count) %></h3>
+        <h3 class="heading">投稿単語&emsp;<%= counter(@words.count, "word") %></h3>
         <table class="table table-hover no-overflow-table" style="table-layout: fixed;">
           <thead class="row">
             <th class="col-sm-6">単語</th><th class="col-sm-6">意味</th>

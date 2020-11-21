@@ -1,3 +1,4 @@
+<% provide(:title, "Words") %>
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <div class="row top-row">
@@ -8,11 +9,11 @@
       </div>
       <div class="col-sm-7">
         <table class="table word-table no-overflow-table">
-          <% if Word.joins(:user).where(users: { is_active: true }).present? %>
+          <% if Word.active.present? %>
           <tr class="row">
             <th class="col-sm-4 text-center table-heading">タグ</th>
             <td class="col-sm-8">
-              <% @tags.sample(4).each do |t| %>
+              <% @tags.each do |t| %>
                 <%= link_to t, tagged_words_path(t), class: "table-data" %>, 
               <% end %>
               <br><%= link_to "全てのタグを見る", tags_words_path, style: "text-decoration: underline !important; display: inline-block; margin: 2px 0" %>
@@ -22,7 +23,7 @@
           <tr class="row">
             <th class="col-sm-2 text-center table-heading">単語</th>
             <td class="col-sm-7">
-              <% @listed_words.sample(4).each do |w| %>
+              <% @listed_words.each do |w| %>
                 <%= link_to w, same_name_words_path(w), class: "table-data"%>, 
               <% end %>
             </td>
@@ -31,7 +32,7 @@
           <tr class="row">
             <th class="col-sm-5 text-center table-heading">意味</th>
             <td class="col-sm-7">
-              <% @meanings.sample(4).each do |w| %>
+              <% @meanings.each do |w| %>
                 <%= link_to w, same_meaning_words_path(w), class: "table-data" %>, 
               <% end %>
             </td>

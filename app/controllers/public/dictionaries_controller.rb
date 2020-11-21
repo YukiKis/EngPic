@@ -42,21 +42,24 @@ class Public::DictionariesController < ApplicationController
   end
   
   def check
-    questions = [answer_params[:question0], answer_params[:question1], answer_params[:question2], answer_params[:question3]].compact
-    @questions = questions.map do |q|
+    if request.post?
+      questions = [answer_params[:question0], answer_params[:question1], answer_params[:question2], answer_params[:question3]].compact
+      @questions = questions.map do |q|
       Word.find(q)
-    end
-    @answers =[ answer_params[:answer0], answer_params[:answer1], answer_params[:answer2], answer_params[:answer3]].compact
-    @rights = 0
-    @questions.each do |q|
-      @answers.each do |a|
-        if q.name == a
-          @rights += 1
+      end
+      @answers =[ answer_params[:answer0], answer_params[:answer1], answer_params[:answer2], answer_params[:answer3]].compact
+      @rights = 0
+      @questions.each do |q|
+        @answers.each do |a|
+          if q.name == a
+            @rights += 1
+          end
         end
       end
-
+      render "result"
+    else
+      redirect_to choose_dictionary_path, notice: "エラーが発生したため、選択画面に戻りました。"
     end
-    render "result"
   end
   
   def search

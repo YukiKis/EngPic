@@ -48,6 +48,7 @@ ja:
         user:
           attributes:
             email:
+              taken: "は既に登録済みです。"
               blank: "は必須項目です。"
             password:
               blank: "は必須項目です。"
