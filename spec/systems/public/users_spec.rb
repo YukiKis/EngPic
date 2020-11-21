@@ -20,7 +20,7 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_content "Word tags"
     end
     it "has users table" do
-      User.all.each do |user|
+      User.where(is_active: true).each do |user|
         expect(page).to have_link user.name, href: user_path(user)
         expect(page).to have_content user.words.count
         tags = user.words.map { |w| w.tag_list }.uniq.sample(4)
@@ -50,6 +50,30 @@ RSpec.describe "users page", type: :system do
     end
   end
   
+  context "on followings page" do
+    before do
+      user1.follow(user2)
+      visit followings_user_path(user1)
+    end
+    it "has followings name" do
+      user1.followings.each do |user|
+        expect(page).to have_link user.name, href: user_path(user)
+      end
+    end
+  end
+  
+  context "on followers page" do
+    before do 
+      user1.follow(user2)
+      visit followers_user_path(user2)
+    end
+    it "has followres page" do
+      user2.followers.each do |user|
+        expect(page).to have_link user.name, href: user_path(user)
+      end
+    end
+  end
+  
   context "on show page for own" do
     before do 
       visit user_path(user1)
@@ -67,24 +91,18 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_link "Followers", href: followers_user_path(user1)
     end
     it "has number how many followers s/he has" do
-      expect(page).to have_content user1.followers.count
+      expect(page).to have_content user1.followers.where(is_active: true).count
     end
     it "has link to followings" do
       expect(page).to have_link "Followings", href: followings_user_path(user1)
     end
     it "has number how many followings s/he has" do
-      expect(page).to have_content user1.followings.count
-    end
-    it "has own word count" do
-      expect(page).to have_content user1.words.count
+      expect(page).to have_content user1.followings.where(is_active: true).count
     end
     it "has link for editing own information" do
       expect(page).to have_link "Editing", href: edit_user_path(user1)
     end
-    it "has count for how many words already posted" do
-      expect(page).to have_content user1.words.count
-    end
-    it "has button if current_user == user you see" do
+    it "has button to add if current_user == user" do
       expect(page).to have_link "New word", href: new_word_path
     end
     it "has words-img" do
@@ -146,10 +164,32 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_content "Yuki Kis"
       expect(page).to have_content "Nice to meet you"
     end
+    it "has button to leave" do
+      expect(page).to have_link "退会する", href: leave_user_path(user1)
+    end
     it "fails to update" do
       fill_in "user[name]", with: ""
       click_button "Update"
       expect(page).to have_content "エラー"
+    end
+  end
+  
+  context "on leave page" do
+    before do
+      visit leave_user_path(user1)
+    end
+    it "has '退会'" do
+      expect(page).to have_content "退会"
+    end
+    it "has button to quit" do
+      expect(page).to have_link "はい", href: quit_user_path(user1)
+    end
+    it "has button to NOT quit" do
+      expect(page).to have_link "いいえ", href: edit_user_path(user1)
+    end
+    it "succeeds to quit" do
+      click_link "はい", href: quit_user_path(user1)
+      expect(current_path).to eq root_path
     end
   end
 end

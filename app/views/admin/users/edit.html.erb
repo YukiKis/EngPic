@@ -11,16 +11,28 @@
     
         <div class="col-sm-6 col-sm-offset-2">
           <div class="form-group">
-            <%= f.label :name, "Name", class: "control-label" %><br>
+            <%= f.label :name, "名前", class: "control-label" %><br>
             <%= f.text_field :name, class: "form-control" %>
           </div>
           <div class="form-group">
-            <%= f.label :introduction, "Introduction", class: "control-label" %><br>
+            <%= f.label :email, "メールアドレス", class: "control-label" %>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :introduction, "紹介文", class: "control-label" %><br>
             <%= f.text_area :introduction, rows: 4, class: "form-control" %>
+          </div>
+          <div class="form-group form-inline">
+            <%= f.radio_button :is_active, :true, class: "form-control" %>
+            <%= f.label :is_active_true, "在籍", class: "control-label" %>
+            &emsp;
+            <%= f.radio_button :is_active, :false, class: "form-control" %>
+            <%= f.label :is_active_false, "退会",  class: "control-label" %>
+          </div>
           </div>
           <div class="text-right">
             <%= f.submit "Update", class: "btn btn-primary" %>
-            <%= link_to "Back", admin_users_path, class: "btn btn-default" %>
+            <%= link_to "Back", admin_user_path(@user), class: "btn btn-default" %>
           </div>
         </div> 
       </div>

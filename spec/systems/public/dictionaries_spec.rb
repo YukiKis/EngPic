@@ -21,7 +21,7 @@ RSpec.describe "dictionary page", type: :system do
       expect(page).to have_content user1.dictionary.words.count
     end
     it "has tags-index" do
-      user1.dictionary.words.tag_counts.each do |t|
+      user1.dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.each do |t|
         expect(page).to have_link t.name, href: tagged_words_dictionary_path(t.name)
         expect(page).to have_content user1.dictionary.words.tagged_with(t).count
       end
@@ -56,7 +56,7 @@ RSpec.describe "dictionary page", type: :system do
       visit tags_dictionary_path
     end
     it "has tag_list" do
-      user1.dictionary.words.tag_counts.each do |t|
+      user1.dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.each do |t|
         expect(page).to have_link t.name, href: tagged_words_dictionary_path(t.name)
         expect(page).to have_content user1.dictionary.words.tagged_with(t.name).count
         # expect(page).to have_link "", href: word_path has images, randomly selected, which have link for word_path
@@ -66,7 +66,7 @@ RSpec.describe "dictionary page", type: :system do
   
   context "on tagged_words_dictionary page" do
     before do
-      @tag = user1.dictionary.words.tag_counts.first
+      @tag = user1.dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.first
       visit tagged_words_dictionary_path(@tag.name)
     end
     it "has tag_name heading" do
@@ -88,10 +88,10 @@ RSpec.describe "dictionary page", type: :system do
       expect(page).to have_content "Your Dictionary"
     end
     it "has number of words in dictionary" do
-      expect(page).to have_content user1.dictionary.words.count
+      expect(page).to have_content user1.dictionary.words.joins(:user).where(users: { is_active: true } ).count
     end
     it "has tags-index" do
-      user1.dictionary.words.tag_counts.each do |t|
+      user1.dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.each do |t|
         expect(page).to have_link t.name, href: tagged_dictionary_path(t.name)
         expect(page).to have_content t.taggings_count
       end
@@ -114,7 +114,7 @@ RSpec.describe "dictionary page", type: :system do
       expect(page).to have_link "Test!", href: choose_dictionary_path
     end    
     it "has words with the same tag" do
-      words = user1.dictionary.words.tagged_with(@tag)
+      words = user1.dictionary.words.joins(:user).where(users: { is_active: true }).tagged_with(@tag)
       words.each do |word|
         expect(page).to have_link "", href: word_path(word)
       end
@@ -142,11 +142,12 @@ RSpec.describe "dictionary page", type: :system do
       expect(page).to have_link "Back", href: dictionary_path
     end
   end
+  
   context "on dictionary-question-page" do
     before do
       visit choose_dictionary_path
       click_link "Check!", href: question_dictionary_path
-      @questions = user1.dictionary.words.all
+      @questions = user1.dictionary.words.joins(:user).where(users: { is_active: true })
     end
     it "has number of questions" do
       expect(page).to have_content @questions.count
@@ -165,7 +166,7 @@ RSpec.describe "dictionary page", type: :system do
       visit choose_dictionary_path
       select "toy", from: "category[tag]"
       click_button "Check!"
-      questions = user1.dictionary.words.tagged_with("toy")
+      questions = user1.dictionary.words.joins(:user).where(users: { is_active: true }).tagged_with("toy")
       questions.each_with_index do |q, i|
         expect(page).to have_css "#img-#{ i }"
         expect(page).to have_css "#label-#{ i }"
@@ -178,7 +179,7 @@ RSpec.describe "dictionary page", type: :system do
     before do
       visit choose_dictionary_path
       click_link "Check!", href: question_dictionary_path
-      @questions = user1.dictionary.words.all
+      @questions = user1.dictionary.words.joins(:user).where(users: { is_active: true })
       @rights = 0
       @answers = []
       @questions.each_with_index do |q, i|

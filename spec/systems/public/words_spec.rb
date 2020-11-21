@@ -23,7 +23,7 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_link "New word", href: new_word_path
     end
     it "has word-cards" do
-      Word.all.each do |word|
+      Word.joins(:user).where(users: { is_active: true }).each do |word|
         expect(page).to have_css "#word-image-#{ word.id }"
         expect(page).to have_css "#user-image-#{ word.user.id }"
         expect(page).to have_content word.user.name
@@ -88,7 +88,7 @@ RSpec.describe "words page", js: true, type: :system do
     it "has related words" do
       related_words = []
       word1.tag_list.each do |tag|
-        Word.tagged_with(tag).sample(5).each do |w|
+        Word.joins(:user).where(users: { is_active: true } ).tagged_with(tag).sample(5).each do |w|
           if w == word1
           else
             related_words << w
@@ -254,10 +254,10 @@ RSpec.describe "words page", js: true, type: :system do
       visit tags_words_path
     end
     it "has tag count" do
-      expect(page).to have_content Word.tag_counts.count
+      expect(page).to have_content Word.joins(:user).where(users: { is_active: true }).tag_counts.count
     end
     it "has tag info" do
-      Word.tag_counts.each do |t|
+      Word.joins(:user).where(users: { is_active: true }).tag_counts.each do |t|
         expect(page).to have_link t.name, herf: tagged_words_path(t)
         expect(page).to have_content Word.tagged_with(t).count
       end
@@ -271,7 +271,7 @@ RSpec.describe "words page", js: true, type: :system do
       fill_in "q[name_start]", with: tag
       click_button "検索"
       expect(page).to have_link tag, href: tagged_words_path(tag)
-      Word.tagged_with(tag).sample(4).each do |w|
+      Word.joins(:user).where(users: { is_active: true }).tagged_with(tag).sample(4).each do |w|
         expect(page).to have_link "", href: word_path(w)
       end
     end

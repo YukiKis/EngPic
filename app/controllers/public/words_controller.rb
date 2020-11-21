@@ -4,14 +4,14 @@ class Public::WordsController < ApplicationController
   before_action :ready_table, only: [:index, :tagged_words, :search, :same_name, :same_meaning]
 
   def index
-    @q = Word.ransack(params[:q])
-    @words = Word.page(params[:page]).per(12)
-    @word_count = Word.all.count
+    @q = Word.joins(:user).where(users: { is_active: true }).ransack(params[:q])
+    @words = Word.joins(:user).where(users: { is_active: true }).page(params[:page]).per(12)
+    @word_count = Word.joins(:user).where(users: { is_active: true }).count
   end
   
   def tagged_words
-    @q = Word.ransack(params[:q])
-    @words = Word.tagged_with(params[:tag]).page(params[:page]).per(12)
+    @q = Word.joins(:user).where(users: { is_active: true }).ransack(params[:q])
+    @words = Word.where(users: { is_active: true }).tagged_with(params[:tag]).page(params[:page]).per(12)
     @word_count = @words.count
     @tag = "'#{ params[:tag] }' "
     render "index"
@@ -24,7 +24,7 @@ class Public::WordsController < ApplicationController
     #     @related_words = Word.tagged_with(tag)
     # end
     @word.tag_list.each do |tag|
-      Word.tagged_with(tag).sample(5).each do |w|
+      Word.joins(:user).where(users: { is_active: true }).tagged_with(tag).sample(5).each do |w|
         if w == @word
         else
           @related_words << w
@@ -69,6 +69,7 @@ class Public::WordsController < ApplicationController
       redirect_to word_path(@word)
     else
       if @word.update(word_params)
+        session[:image] = @word.image_id
         redirect_to word_path(@word)
       else
         @title = "Edit"
@@ -89,34 +90,34 @@ class Public::WordsController < ApplicationController
   end
   
   def search
-    @q = Word.ransack(params[:q])
+    @q = Word.joins(:user).where(users: { is_active: true }).ransack(params[:q])
     @words = @q.result(distinct: true).page(params[:page]).per(12)
     @word_count = @words.count
     render "index"
   end
   
   def same_name
-    @q = Word.ransack(params[:q])
-    @words = Word.by_same_name(params[:name]).page(params[:page]).per(12)
+    @q = Word.joins(:user).where(users: { is_active: true }).ransack(params[:q])
+    @words = Word.joins(:user).where(users: { is_active: true }).by_same_name(params[:name]).page(params[:page]).per(12)
     @word_count = @words.count
     render "index"
   end
   
   def same_meaning
-    @q = Word.ransack(params[:q])
-    @words = Word.by_same_meaning(params[:meaning]).page(params[:page]).per(12)
+    @q = Word.joins(:user).where(users: { is_active: true }).ransack(params[:q])
+    @words = Word.joins(:user).where(users: { is_active: true }).by_same_meaning(params[:meaning]).page(params[:page]).per(12)
     @word_count = @words.count
     render "index"
   end
   
   def tags
-    @q = Word.tag_counts.ransack(params[:q])
-    @tags = Word.tag_counts.page(params[:page]).per(12)
-    @tag_count = Word.tag_counts.all.count
+    @q = Word.joins(:user).where(users: { is_active: true }).tag_counts.ransack(params[:q])
+    @tags = Word.joins(:user).where(users: { is_active: true }).tag_counts.page(params[:page]).per(12)
+    @tag_count = Word.joins(:user).where(users: { is_active: true }).tag_counts.all.count
   end
   
   def tag_search
-    @q = Word.tag_counts.ransack(params[:q])
+    @q = Word.joins(:user).where(users: { is_active: true }).tag_counts.ransack(params[:q])
     @tags = @q.result(distinct: true).page(params[:page]).per(12)
     @tag_count = @tags.count
     render "tags"
