@@ -14,9 +14,9 @@
       <tbody>
         <% @users.each do |user| %>
           <% if user.is_active %>
-            <tr id="user-info-#{ user.id }">
+            <tr id="user-info-<%= user.id %>">
           <% else %>
-            <tr id="user-info-#{ user.id }" class="inactive">
+            <tr id="user-info-<%= user.id %>" class="inactive">
           <% end %>
             <td class="col-xs-1 col-sm-1">
               <%= user.id %>

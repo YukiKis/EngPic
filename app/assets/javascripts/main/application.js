@@ -26,9 +26,9 @@ $(document).on("turbolinks:load", function(){
     $(".container").outerHeight(ch);
   }else{
     $(".container").outerHeight(wh); 
-  }
+  };
   
-  $(window).resize(function(){
+  $(window).on("resize", function(){
     if(ch > wh){
       $(".container").outerHeight(ch);
     }else{

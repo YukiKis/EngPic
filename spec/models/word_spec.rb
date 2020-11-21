@@ -28,5 +28,8 @@ RSpec.describe "word", type: :model do
       word1.image = ""
       expect(word1).to be_invalid
     end
+    it "has tags" do
+      expect(Word.reflect_on_association(:tags).macro).to eq :has_many
+    end
   end
 end

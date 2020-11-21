@@ -11,7 +11,7 @@ RSpec.describe Dictionary, type: :model do
       expect(Dictionary.reflect_on_association(:items).macro).to eq :has_many
     end
     it "has_many words through items" do
-      expect(Dictionary.reflect_on_association(:items).macro).to eq :has_many
+      expect(Dictionary.reflect_on_association(:words).macro).to eq :has_many
     end
     it "belongs_to user" do
       expect(Dictionary.reflect_on_association(:user).macro).to eq :belongs_to      
@@ -24,5 +24,4 @@ RSpec.describe Dictionary, type: :model do
       expect{ user1.dictionary.remove(word1) }.to change{ user1.dictionary.words.count }.from(1).to(0)
     end
   end
-  
 end

@@ -13,7 +13,11 @@
       </thead>
       <tbody>
         <% @words.each do |word| %>
-            <tr class>
+            <% if word.user.is_active %>
+              <tr id="word-<%= word.id %>">
+            <% else %>
+              <tr id="word-<%= word.id %>" class="inactive">
+            <% end %>
               <td class="col-xs-2 col-xs-2 col-md-1"><%= attachment_image_tag word, :image, :fill, 30, 30, fallback: "noimage.jpg", size: "30x30", id: "word-image-#{ word.id }" %></td>
               <td class="col-xs-5 col-sm-4 col-md-4"><%= link_to word.name, admin_word_path(word) %></td>
               <td class="col-xs-5 col-xs-4 col-md-4"><%= word.meaning %> </td>
