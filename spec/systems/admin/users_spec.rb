@@ -38,6 +38,13 @@ RSpec.describe "admin-users page", type: :system do
         end
       end
     end
+    it "has red label if the user is not active" do
+      User.all.each do |user|
+        unless user.is_active
+          expect(page).to have_css "#user-info-#{ user.id } .inactive"
+        end
+      end
+    end
     it "can search by name" do
       fill_in "q[name_start]", with: user1.name
       click_button "検索"
@@ -64,6 +71,15 @@ RSpec.describe "admin-users page", type: :system do
     end
     it "has email" do
       expect(page).to have_content user1.email
+    end
+    it "has '在籍' if the user is active" do
+      expect(page).to have_content "在籍"
+    end
+    it "has '退会' if the user is not active" do
+      user1.is_active = false
+      user1.save
+      visit current_path
+      expect(page).to have_content "退会"
     end
     it "has user-words" do
       user1.words[0..19] do |word|
@@ -92,6 +108,10 @@ RSpec.describe "admin-users page", type: :system do
     end
     it "has email_field" do
       expect(page).to have_field "user[email]", with: user1.email
+    end
+    it "has status button" do
+      expect(page).to have_field "在籍"
+      expect(page).to have_field "退会"
     end
     it "has button to update" do
       expect(page).to have_button "Update"

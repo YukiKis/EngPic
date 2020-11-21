@@ -20,6 +20,16 @@
             <th class="col-sm-4 white-space-nowrap">紹介文</th>
             <td class="col-sm-6 col-sm-offset-2 word-break"><%= @user.introduction %></td>
           </tr>
+          <tr class="row">
+            <th class="col-sm-4 white-space-nowrap">状態</th> 
+            <td class="col-sm-6 col-sm-offset-2 word-break">
+              <% if @user.is_active %>
+                <span class="label label-info">在籍</span>
+              <% else %>
+                <span class="label label-danger">退会</span>
+              <% end %>
+            </td>
+          </tr>
         </table>
         
         <div class="text-right margin-top-sm">

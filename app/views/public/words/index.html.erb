@@ -8,7 +8,7 @@
       </div>
       <div class="col-sm-7">
         <table class="table word-table no-overflow-table">
-          <% if Word.all.present? %>
+          <% if Word.joins(:user).where(users: { is_active: true }).present? %>
           <tr class="row">
             <th class="col-sm-4 text-center table-heading">タグ</th>
             <td class="col-sm-8">

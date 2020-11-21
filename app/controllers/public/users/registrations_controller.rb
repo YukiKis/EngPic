@@ -12,7 +12,7 @@ class Public::Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super do |resource|
-      if user = User.find_by(emailら: resource.email)
+      if user = User.find_by(email: resource.email)
         user.update(email: "QUIT" + Time.now.to_s.gsub(" ", "") + user.email)
         if resource.save
           resource.create_dictionary

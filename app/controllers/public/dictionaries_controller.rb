@@ -3,19 +3,19 @@ class Public::DictionariesController < ApplicationController
   before_action :setup
   
   def show    
-    @q = @dictionary.words.ransack(params[:q])
-    @words = @dictionary.words.page(params[:page]).per(12)
-    @tags = @dictionary.words.tag_counts.sort_by { |t| t.name }[0..9]
+    @q = @dictionary.words.joins(:user).where(users: { is_active: true }).ransack(params[:q])
+    @words = @dictionary.words.joins(:user).where(users: { is_active: true }).page(params[:page]).per(12)
+    @tags = @dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.sort_by { |t| t.name }[0..9]
   end
   
   def tags
-    @q = @dictionary.words.tag_counts.ransack(params[:q])
-    @tags = @dictionary.words.tag_counts.page(params[:page]).per(12)
-    @tag_count = @dictionary.words.tag_counts.count
+    @q = @dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.ransack(params[:q])
+    @tags = @dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.page(params[:page]).per(12)
+    @tag_count = @dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.count
   end
   
   def tag_search
-    @q = @dictionary.words.tag_counts.ransack(params[:q])
+    @q = @dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.ransack(params[:q])
     @tags = @q.result(distinct: true).page(params[:page]).per(12)
     @tag_count = @tags.count
     render "tags"
@@ -23,23 +23,23 @@ class Public::DictionariesController < ApplicationController
     
   
   def tagged_words
-    @q = @dictionary.words.ransack(params[:q])
-    @words = @dictionary.words.tagged_with(params[:tag]).page(params[:page]).per(12)
-    @tags = @dictionary.words.tag_counts.sort_by { |t| t.name }[0..9]
-    @word_count = @dictionary.words.tagged_with(params[:tag]).count
+    @q = @dictionary.words.joins(:user).where(users: { is_active: true }).ransack(params[:q])
+    @words = @dictionary.words.joins(:user).where(users: { is_active: true }).tagged_with(params[:tag]).page(params[:page]).per(12)
+    @tags = @dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.sort_by { |t| t.name }[0..9]
+    @word_count = @dictionary.words.joins(:user).where(users: { is_active: true }).tagged_with(params[:tag]).count
     @tag = "'#{ params[:tag] }' "
     render "show"
   end
   
   def choose
-    @tags = current_user.dictionary.words.tag_counts_on(:tags).map { |tag| tag.name }
+    @tags = current_user.dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts_on(:tags).map { |tag| tag.name }
   end
   
   def question
     if request.post?
-      @questions = current_user.dictionary.words.tagged_with(category_params[:tag]).sample(4)
+      @questions = current_user.dictionary.words.joins(:user).where(users: { is_active: true }).tagged_with(category_params[:tag]).sample(4)
     else
-      @questions = current_user.dictionary.words.all.sample(4)
+      @questions = current_user.dictionary.words.joins(:user).where(users: { is_active: true }).sample(4)
     end
   end
   
@@ -62,9 +62,9 @@ class Public::DictionariesController < ApplicationController
   end
   
   def search
-    @q = @dictionary.words.ransack(params[:q])
+    @q = @dictionary.words.joins(:user).where(users: { is_active: true }).ransack(params[:q])
     @words = @q.result.page(params[:page]).per(12)
-    @tags = @dictionary.words.tag_counts.sort_by { |t| t.name }[0..9]
+    @tags = @dictionary.words.joins(:user).where(users: { is_active: true }).tag_counts.sort_by { |t| t.name }[0..9]
     render "show"
   end
     

@@ -8,8 +8,8 @@
       <th>Introduction</th>
       <td><%= user.introduction %></td>
     </tr>
-    <tr><th><%= link_to "Followers", followers_user_path(user) %></th><td id="followers-number"><%= user.followers.count %></td></tr>
-    <tr><th><%= link_to "Followings", followings_user_path(user) %></th><td id="followers-number"><%= user.followings.count %></td></tr>
+    <tr><th><%= link_to "Followers", followers_user_path(user) %></th><td id="followers-number"><%= user.followers.where(is_active: true).count %></td></tr>
+    <tr><th><%= link_to "Followings", followings_user_path(user) %></th><td id="followers-number"><%= user.followings.where(is_active: true).count %></td></tr>
   </table>
   <% if user == current_user %>
     <div>

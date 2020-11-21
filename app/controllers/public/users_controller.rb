@@ -3,12 +3,12 @@ class Public::UsersController < ApplicationController
   before_action :setup, except: [:index, :search]
   
   def index
-    @q = User.ransack(params[:q])
-    @users = User.page(params[:page]).per(10)
+    @q = User.where(is_active: true).ransack(params[:q])
+    @users = User.where(is_active: true).page(params[:page]).per(10)
   end
 
   def show
-    @words = Word.where(user_id: @user.id).or(Word.where(user_id: @user.followings.ids)).page(params[:page]).per(12)
+    @words = Word.where(user_id: @user.id).or(Word.where(user_id: @user.followings.where(is_active: true).ids)).page(params[:page]).per(12)
   end
 
   def edit
@@ -42,19 +42,19 @@ class Public::UsersController < ApplicationController
   end
   
   def followers
-    @users = @user.followers.page(params[:page]).per(10)
-    @q = User.ransack(params[:q])
+    @users = @user.followers.where(is_active: true).page(params[:page]).per(10)
+    @q = User.where(is_active: true).ransack(params[:q])
     render "index"
   end
   
   def followings
-    @users = @user.followings.page(params[:page]).per(10)
-    @q = User.ransack(params[:q])
+    @users = @user.followings.where(is_active: true).page(params[:page]).per(10)
+    @q = User.where(is_active: true).ransack(params[:q])
     render "index"
   end
   
   def search
-    @q = User.ransack(params[:q])
+    @q = User.where(is_active: true).ransack(params[:q])
     @users = @q.result(distinct: true).page(params[:page]).per(10)
     render "index"
   end
@@ -67,7 +67,6 @@ class Public::UsersController < ApplicationController
     @user.save
     session.clear
     redirect_to root_path, notice: "退会しました。またのご利用お待ちしております。"
-    debugger
   end
   
   private
