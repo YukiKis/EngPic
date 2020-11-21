@@ -3,7 +3,7 @@ class Public::UsersController < ApplicationController
   before_action :setup_user, except: [:index, :search]
   before_action :setup_q, only: [:index, :search]
   def index
-    @user = current_user # 検索フォームの表示非表示を
+    @user = current_user # 検索フォームの表示非表示を切り替えるため
     @users = User.active.page(params[:page]).per(10)
   end
 
@@ -82,6 +82,6 @@ class Public::UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:image, :name, :introduction)
+      params.require(:user).permit(:image, :name, :introduction, :email)
     end
 end

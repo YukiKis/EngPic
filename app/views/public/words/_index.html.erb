@@ -7,7 +7,7 @@
     </div>
     <div class="text-right">
     <%= search_form_for q, url: search_dictionary_path, local: true do |f| %>
-      <%= f.label :name_or_meaning_or_start, "タグ / 単語" %>&emsp;
+      <%= f.label :name_or_meaning_or_start, "単語 / 意味" %>&emsp;
       <%= f.search_field :name_or_meaning_start %>
       <%= f.submit "検索", class: "btn btn-default" %>
     <% end %>

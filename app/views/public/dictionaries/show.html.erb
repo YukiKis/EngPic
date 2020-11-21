@@ -10,7 +10,7 @@
         <div class="col-sm10 col-sm-offset-1">
           Tag index: <br>
           <% @tags.each do |tag| %>
-            &emsp;<%= link_to tag.name, tagged_words_dictionary_path(tag.name) %>: <%= @dictionary.words.tagged_with(tag).count %>件<br>
+            &emsp;<%= link_to tag.name, tagged_words_dictionary_path(tag.name) %>: <%= @active_words_in_dictionary.tagged_with(tag).count %>件<br>
           <% end %>
           <div class="text-right">
             <%= link_to "All tags", tags_dictionary_path, class: "btn btn-default" %>

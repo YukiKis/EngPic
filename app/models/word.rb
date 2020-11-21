@@ -10,8 +10,8 @@ class Word < ApplicationRecord
   validates :meaning, presence: true
   validates :image, presence: true
   
-  scope :by_same_name, ->(name){ where(name: name) }
-  scope :by_same_meaning, ->(meaning){ where(meaning: meaning) }
+  scope :by_same_name, ->(name){ where("name LIKE ?", "%#{ name }") }
+  scope :by_same_meaning, ->(meaning){ where("meaning LIKE ?", "%#{ meaning }") }
   scope :today, ->(){ where("created_at >= ?", Date.today) }
   scope :active, ->(){ joins(:user).where(users: { is_active: true }) }
 end
