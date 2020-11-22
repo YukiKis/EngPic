@@ -67,11 +67,6 @@ RSpec.describe "users page", type: :system do
     it "has button to unfollow" do
       expect(page).to have_link "Unfollow", href: unfollow_user_path(user2)
     end
-    it "has button to follow user" do
-      user1.unfollow(user2)
-      visit current_path
-      expect(page).to have_link "Follow", href: follow_user_path(user2)
-    end
     it "has search_field" do
       expect(page).to have_field "q_name_start"
       expect(page).to have_button "検索"

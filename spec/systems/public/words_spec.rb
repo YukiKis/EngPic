@@ -101,12 +101,12 @@ RSpec.describe "words page", js: true, type: :system do
       user1.dictionary.remove(word1)
       user1.dictionary.add(word1)
       visit current_path
-      expect(page).to have_css "card-show.bg-warning"
+      expect(page).to have_css ".card-show.bg-warning"
     end
     it "has bg-info if NOT in dictioary but in words" do
       user1.dictionary.remove(word1)
       visit current_path
-      expect(page).to have_css "card-show.bg-info"
+      expect(page).to have_css ".card-show.bg-info"
     end
     it "has button to remove from dictionary" do
       user1.dictionary.add(word1)
