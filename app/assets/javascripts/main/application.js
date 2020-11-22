@@ -19,17 +19,9 @@
 
 
 $(document).on("turbolinks:load", function(){
-  var originalHeight = $(".container").height();
-  Object.freeze(originalHeight);
-  var windowHeight = $(window).height();
-
   $(window).on("resize", function(){
-    if(originalHeight >= windowHeight){
-      $(".container").outerHeight(originalHeight);
-    }else{
-      $(".container").outerHeight(windowHeight); 
-    }
-  });
+    $(".container").outerHeight($(window).height());
+  })
 
   $(window).trigger("resize");
   
