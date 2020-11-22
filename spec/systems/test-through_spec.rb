@@ -16,8 +16,8 @@ RSpec.describe "test-through", type: :system, js: true do
       fill_in "user[email]", with: "yuki@com"
       fill_in "user[password]", with: "testtest"
       fill_in "user[password_confirmation]", with: "testtest"
-      click_button "Sign up"
-      @user1 = User.first
+      click_button "登録"
+      @user1 = User.first # passwordが入っていないため以降"testtest"を直打ち
       expect(current_path).to eq user_path(@user1)
       expect(page).to have_content @user1.name
       
@@ -35,7 +35,7 @@ RSpec.describe "test-through", type: :system, js: true do
       @word1 = Word.first
       expect(current_path).to eq word_path(@word1)
       expect(page).to have_content "sample"
-      expect(page).to have_content @word1.name
+      expect(page).to have_content @word1.name # @word1.name = sampleか確認
       
       # fails to make new word
       click_link "MyPage", href: user_path(@user1)
@@ -48,20 +48,15 @@ RSpec.describe "test-through", type: :system, js: true do
       expect(current_path).to eq dictionary_path
       
       # check the registererd word is in dictionary
-      expect(page).to have_content "has 1 word" # total of dictioanry words
-      expect(page).to have_content "1 word in Total" #total of dictionary words
+      expect(page).to have_content @user1.dictionary.words.count # total of dictioanry words
+      expect(page).to have_content @user1.dictionary.words.tag_counts.count #total of dictionary tags
       expect(page).to have_link "", href: word_path(@word1)
       
       # check it has tag-index 
-      @user1.dictionary.words.tag_counts.each do |t|
-        expect(page).to have_link t.name, href: tagged_dictionary_path(t.name)
+      @user1.dictionary.words.active.tag_counts.each do |t|
+        expect(page).to have_link t.name, href: tagged_words_dictionary_path(t.name)
         expect(page).to have_content t.taggings_count
       end
-      
-      # click tag-index
-      tag = @user1.dictionary.words.first.tag_list.first
-      click_link tag, href: tagged_dictionary_path(tag)
-      expect(current_path).to eq tagged_dictionary_path(tag)
       
       # check dictionary word
       click_link "Test!", href: choose_dictionary_path
@@ -74,7 +69,7 @@ RSpec.describe "test-through", type: :system, js: true do
       
       # answer correctly
       fill_in "check[answer0]", with: "sample" #only one word in dictionary now
-      click_button "Finish!"
+      click_on "Finish!"
       expect(current_path).to eq check_dictionary_path
       
       # have blue color and get correct score
@@ -89,12 +84,21 @@ RSpec.describe "test-through", type: :system, js: true do
       
       # answer wrong
       fill_in "check[answer0]", with: "aaa" #only one word in dictionary still
-      click_button "Finish!"
+      click_on "Finish!"
       expect(current_path).to eq check_dictionary_path
       
       # have red color and get corrent score
       expect(page).to have_content "You made 0 / 1!"
       expect(page).to have_css "#card-1.bg-danger"
+      
+      # check whether redirect to choose path if it is on question_path
+      click_link "Test Again!"
+      click_link "Check!", href: question_dictionary_path
+      click_on "Finish!"
+      expect(current_path).to eq check_dictionary_path
+      visit current_path
+      expect(current_path).to eq choose_dictionary_path
+      expect(page).to have_content "エラーが発生"
       
       # check word has yellow color if it is in the dictionary
       click_link "MyPage", href: user_path(@user1)
@@ -191,7 +195,7 @@ RSpec.describe "test-through", type: :system, js: true do
       click_link "Back", href: admin_user_path(@user1)
       expect(current_path).to eq admin_user_path(@user1)
 
-      # has word-card
+      # has word-list
       expect(page).to have_link "", href: admin_word_path(@word1)
       
       # visit admin_word page
@@ -202,7 +206,6 @@ RSpec.describe "test-through", type: :system, js: true do
       # visit edit_admin_word page 
       click_link "編集", href: edit_admin_word_path(@word1)
       expect(current_path).to eq edit_admin_word_path(@word1)
-      expect(page).to have_content "編集"
       expect(page).to have_field "word[name]", with: @word1.name
       
       # update word by admin
@@ -213,8 +216,8 @@ RSpec.describe "test-through", type: :system, js: true do
       expect(current_path).to eq admin_word_path(@word1)
       expect(page).to have_content "SAMPLE"
       expect(page).to have_content "I love this SAMPLE"
-      expect(page).to have_content @word1.name
-      expect(page).to have_content @word1.sentence
+      expect(page).to have_content @word1.name # @word1.name = "SAMPLE"
+      expect(page).to have_content @word1.sentence # @word1.sentence = "I love this SAMPLE"
       
       # fails to update
       click_link "編集", href: edit_admin_word_path(@word1)
@@ -239,9 +242,9 @@ RSpec.describe "test-through", type: :system, js: true do
       # logout and login ad @user1
       click_link "Sign out", href: destroy_admin_session_path
       click_link "Log in", href: new_user_session_path
-      fill_in "user[email]", with: "yuka@com"
+      fill_in "user[email]", with: @user1.email
       fill_in "user[password]", with: "testtest"
-      click_button "Sign in"
+      click_button "Log in"
       expect(current_path).to eq user_path(@user1)
       
       # check the word name has been changed
@@ -267,7 +270,7 @@ RSpec.describe "test-through", type: :system, js: true do
       click_link "Dictionary", href: dictionary_path
       expect(current_path).to eq dictionary_path
       expect(page).to have_no_link "", href: word_path(@word1)
-      expect(page).to have_content "0 word in Total"
+      expect(page).to have_content "0 words and 0 tags"
       
       # make new word
       click_link "New word", href: new_word_path
@@ -291,19 +294,47 @@ RSpec.describe "test-through", type: :system, js: true do
       click_button "検索"
       expect(current_path).to eq search_dictionary_path
       expect(page).to have_no_link "", href: word_path(@word1)
-      expect(page).to have_content "0 word in Total"
+      expect(page).to have_no_content "SAMPLE"
       
       # search, and find word in dictionary
       fill_in "q[name_or_meaning_start]", with: "example"
       click_button "検索"
       expect(current_path).to eq search_dictionary_path
       expect(page).to have_link "", href: word_path(@word2)
-      expect(page).to have_content "1 word in Total"
+      expect(page).to have_content "1 word"
+      expect(page).to have_content "2 tags"
       
       # check no category of @word1 in select box of choose page
-      click_link "Let's test!"
+      click_link "Test!"
       expect(current_path).to eq choose_dictionary_path
       expect(page).to have_no_select "eg"
+    
+      # check the new category shows up
+      expect(page).to have_select "category[tag]", options: ["sample", "example"]
+      
+      # click tag-index
+      click_link "Dictionary", href: dictionary_path
+      click_link "All tags", href: tags_dictionary_path
+      tag = @user1.dictionary.words.first.tag_list.first
+      click_link tag, href: tagged_words_dictionary_path(tag)
+      expect(current_path).to eq tagged_words_dictionary_path(tag)
+      expect(page).to have_content tag
+      @user1.dictionary.words.active.tagged_with(tag).each do |w|
+        expect(page).to have_link "", href: word_path(w)
+      end
+      
+      # search with tag
+      click_link "Dictionary", href: dictionary_path
+      click_link "All tags", href: tags_dictionary_path
+      fill_in "q_name_start", with: "sample"
+      click_button "検索"
+      expect(current_path).to eq tag_search_dictionary_path
+      expect(page).to have_link "sample", href: tagged_words_dictionary_path("sample")
+      expect(page).to have_link "", href: word_path(@word2)
+      @user1.dictionary.words.active.tagged_with("example").each do |w|
+        expect(page).to have_link "", href: word_path(w)
+      end
+      
       
       # logout adn login as admin
       click_link "Sign out", href: destroy_user_session_path
@@ -326,18 +357,8 @@ RSpec.describe "test-through", type: :system, js: true do
       expect(page).to have_no_link "", href: admin_word_path(@word1)
       expect(page).to have_link "", href: admin_word_path(@word2)
       
-      #logout and login as user
-      click_link "Sign out", href: destroy_admin_session_path
-      click_link "Log in", href: new_user_session_path
-      expect(current_path).to eq new_user_session_path
-      @user1.reload
-      fill_in "user[email]", with: @user1.email
-      fill_in "user[password]", with: "testtest" #@user1.password is invalid
-      click_button "Sign in"
-      expect(current_path).to eq user_path(@user1)
-      
       # make another new user
-      click_link "Sign out", href: destroy_user_session_path
+      click_link "Sign out", href: destroy_admin_session_path
       click_link "Register", href: new_user_registration_path
       expect(current_path).to eq new_user_registration_path
       fill_in "user[name]", with: "yuta"
@@ -345,7 +366,7 @@ RSpec.describe "test-through", type: :system, js: true do
       fill_in "user[email]", with: "yuta@com"
       fill_in "user[password]", with: "testtest"
       fill_in "user[password_confirmation]", with: "testtest"
-      click_button "Sign up"
+      click_button "登録"
       @user2 = User.second
       expect(current_path).to eq user_path(@user2)
       expect(page).to have_content @user2.name
@@ -366,6 +387,7 @@ RSpec.describe "test-through", type: :system, js: true do
       expect(page).to have_link "Unfollow", href: unfollow_user_path(@user1) 
       
       # check that another user get follower
+      expect(page).to have_content @user1.followers.active.count
       click_link "Followers", href: followers_user_path(@user1)
       expect(current_path).to eq followers_user_path(@user1)
       expect(page).to have_link @user2.name, href: user_path(@user2)
@@ -373,6 +395,7 @@ RSpec.describe "test-through", type: :system, js: true do
       #check that the user get following
       click_link "MyPage", href: user_path(@user2)
       expect(current_path).to eq user_path(@user2)
+      expect(page).to have_content @user2.followings.active.count
       click_link "Followings", href: followings_user_path(@user2)
       expect(current_path).to eq followings_user_path(@user2)
       expect(page).to have_link @user1.name, href: user_path(@user1)
@@ -392,7 +415,7 @@ RSpec.describe "test-through", type: :system, js: true do
       expect(current_path).to eq new_user_session_path
       fill_in "user[email]", with: @user1.email
       fill_in "user[password]", with: "testtest"
-      click_button "Sign in"
+      click_button "Log in"
       expect(current_path).to eq user_path(@user1)
       
       # delete word
@@ -417,6 +440,72 @@ RSpec.describe "test-through", type: :system, js: true do
       click_link "Words", href: admin_words_path
       expect(current_path).to eq admin_words_path
       expect(page).to have_no_link "", href: admin_word_path(@word1)
+      
+      # Sign out
+      click_link "Sign out", href: destroy_admin_session_path
+
+      # visit new_user_password_path
+      click_link "Log in", href: new_user_session_path
+      click_link "or Forget Password?", href: new_user_password_path
+      expect(current_path).to eq new_user_password_path
+      
+      # get password_reset email
+      fill_in "user[email]", with: @user1.email
+      expect{ click_button "送信" }.to change{ ActionMailer::Base.deliveries.count }.by(1)
+      email = ActionMailer::Base.deliveries.last
+      # @path = "/users/password/edit?reset_password_token=.*/"
+      expect(email.body).to have_content @user1.email
+      # expect(email.body.raw_source).to match(/#{ @path }/)
+      
+      # Login
+      click_link "Log in", href: new_user_session_path
+      fill_in "user[email]", with: @user1.email
+      fill_in "user[password]", with: "testtest"
+      click_button "Log in"
+      expect(current_path).to eq user_path(@user1)
+      
+      # Quit
+      click_link "Edit", href: edit_user_path(@user1)
+      expect(current_path).to eq edit_user_path(@user1)
+      click_link "退会する", href: leave_user_path(@user1)
+      expect(current_path).to eq leave_user_path(@user1)
+      expect{ click_link "はい", href: quit_user_path(@user1) }.to change{ User.active.count }.by(-1)
+      expect(current_path).to eq root_path
+      expect(page).to have_content "退会しました。"
+      
+      # check not be able to login with quit user email
+      click_link "Log in", href: new_user_session_path
+      fill_in "user[email]", with: @user1.email
+      fill_in "user[password]", with: "testtest"
+      click_button "Log in"
+      expect(current_path).to eq new_user_session_path
+      expect(page).to have_content "退会済み"
+      
+      # sign up for new user using same email
+      click_link "Register", href: new_user_registration_path
+      fill_in "user[name]", with: @user1.name
+      fill_in "user[email]", with: @user1.email
+      fill_in "user[password]", with: "testtest"
+      fill_in "user[password_confirmation]", with: "testtest"
+      click_button "登録"
+      @user3 = User.last
+      expect(current_path).to eq user_path(@user3)
+      
+      # change into admin
+      click_link "Sign out", href: destroy_user_session_path
+      visit new_admin_session_path
+      fill_in "admin[email]", with: admin1.email
+      fill_in "admin[password]", with: admin1.password
+      click_button "Log in"
+      expect(current_path).to eq admin_top_path
+
+      # check the quit user
+      click_link "Users", href: admin_users_path
+      expect(page).to have_css "#user-info-1.inactive"
+      click_link "", href: admin_user_path(@user1)
+      expect(current_path).to eq admin_user_path(@user1)
+      expect(page).to have_content "退会"
+      expect(page).to have_content "quit" + Time.now.to_s.gsub(" ", "") + @user1.email
     end
   end
 end

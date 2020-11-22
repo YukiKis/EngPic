@@ -248,7 +248,7 @@ RSpec.describe "dictionary page", type: :system do
     end
     it "has blue color if answer is right" do
       @questions.each do |q|
-        expect(page).to have_css "#card-#{ q.id }.bg-info"
+        expect(page).to have_css "#card-#{ q.id }.bg-info" #テスト通る時と
       end
     end
     it "has red color if answer is wrong" do
