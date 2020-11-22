@@ -1,0 +1,14 @@
+<% provide(:title, "Users | Quit") %>
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <h3>退会</h3>
+    <p>
+      退会されるとこれまでアップロードされた情報がご覧頂けなくなります。<br>
+      本当に退会されますか？
+    </p>
+    <div class="text-center">
+      <%= link_to "はい", quit_user_path(@user), data: { confirm: "本当によろしいですか？" }, class: "btn btn-danger" %>
+      <%= link_to "いいえ", edit_user_path(@user), class: "btn btn-default" %>
+    </div>
+  </div>
+</div>

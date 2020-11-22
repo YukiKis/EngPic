@@ -37,6 +37,8 @@ Rails.application.routes.draw do
         get "followings"
         post "follow"
         delete "unfollow"
+        get "leave"
+        get "quit"
       end
     end
 
@@ -59,7 +61,7 @@ Rails.application.routes.draw do
         get "choose"
         match "question", to: "dictionaries#question", via: [:get, :post], as: "question"
         post "check"
-        get "result"
+        get "check"
         get "tagged_words/:tag", to: "dictionaries#tagged_words", as: "tagged_words"
         post "words/:id", to: "dictionaries#add", as: "add"
         match 'search' => 'dictionaries#search', via: [:get, :post], as: :search

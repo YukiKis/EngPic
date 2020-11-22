@@ -1,14 +1,14 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :setup, except: [:index, :search]
-  
+  before_action :setup_user, except: [:index, :search]
+  before_action :setup_q, only: [:index, :search]
   def index
-    @q = User.ransack(params[:q])
-    @users = User.page(params[:page]).per(10)
+    @user = current_user # 検索フォームの表示非表示を切り替えるため
+    @users = User.active.page(params[:page]).per(10)
   end
 
   def show
-    @words = Word.where(user_id: @user.id).or(Word.where(user_id: @user.followings.ids)).page(params[:page]).per(12)
+    @words = Word.where(user_id: @user.id).or(Word.where(user_id: @user.followings.active.ids)).page(params[:page]).per(12)
   end
 
   def edit
@@ -42,29 +42,46 @@ class Public::UsersController < ApplicationController
   end
   
   def followers
-    @users = @user.followers.page(params[:page]).per(10)
-    @q = User.ransack(params[:q])
+    @q = @user.followers.active.ransack(params[:q])
+    @users = @user.followers.active.page(params[:page]).per(10)
     render "index"
   end
   
   def followings
-    @users = @user.followings.page(params[:page]).per(10)
-    @q = User.ransack(params[:q])
+    @q = @user.followings.active.ransack(params[:q])
+    @users = @user.followings.active.page(params[:page]).per(10)
     render "index"
   end
   
   def search
-    @q = User.ransack(params[:q])
+    @user = current_user # 検索フォームの表示非表示を切り替える為
     @users = @q.result(distinct: true).page(params[:page]).per(10)
     render "index"
   end
+
+  def leave
+  end
+  
+  def quit
+    @user.is_active = false
+    @user.save
+    session.clear
+    redirect_to root_path, notice: "退会しました。またのご利用お待ちしております。"
+  end
   
   private
-    def setup
+    def setup_user
       @user = User.find(params[:id])
+      unless @user.is_active
+        redirect_to request.referer || user_path(current_user), notice: "そのユーザーはご覧いただけません。"
+      end
     end
     
+    def setup_q
+      @q = User.active.ransack(params[:q])
+    end
+
     def user_params
-      params.require(:user).permit(:image, :name, :introduction)
+      params.require(:user).permit(:image, :name, :introduction, :email)
     end
 end

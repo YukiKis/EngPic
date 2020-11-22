@@ -26,7 +26,7 @@ RSpec.describe "admin-users page", type: :system do
     it "has users-table" do
       User.all.each do |user|
         expect(page).to have_css "#user-image-#{ user.id }"
-        expect(page).to have_link user.name, href:admin_user_path(user)
+        expect(page).to have_link user.name, href: admin_user_path(user)
         expect(page).to have_content user.words.count
       end
     end
@@ -35,6 +35,16 @@ RSpec.describe "admin-users page", type: :system do
         user.words.sample(5).each do |word|
           expect(page).to have_css "#word-image-#{ word.id }"
           expect(page).to have_link "", href: admin_word_path(word)
+        end
+      end
+    end
+    it "has red label if the user is not active" do
+      user1.is_active = false
+      user1.save
+      visit current_path
+      User.all.each do |user|
+        unless user.is_active
+          expect(page).to have_css "#user-info-#{ user.id }.inactive"
         end
       end
     end
@@ -65,8 +75,17 @@ RSpec.describe "admin-users page", type: :system do
     it "has email" do
       expect(page).to have_content user1.email
     end
+    it "has '在籍' if the user is active" do
+      expect(page).to have_content "在籍"
+    end
+    it "has '退会' if the user is not active" do
+      user1.is_active = false
+      user1.save
+      visit current_path
+      expect(page).to have_content "退会"
+    end
     it "has user-words" do
-      user1.words[0..19] do |word|
+      user1.words[0..19].each do |word|
         expect(page).to have_link "", href: admin_word_path(word)
         expect(page).to have_css "#word-image-#{ word.id }"
         expect(page).to have_content word.name
@@ -93,6 +112,10 @@ RSpec.describe "admin-users page", type: :system do
     it "has email_field" do
       expect(page).to have_field "user[email]", with: user1.email
     end
+    it "has status button" do
+      expect(page).to have_field "在籍"
+      expect(page).to have_field "退会"
+    end
     it "has button to update" do
       expect(page).to have_button "Update"
     end
@@ -100,6 +123,7 @@ RSpec.describe "admin-users page", type: :system do
       expect(page).to have_link "Back", href: admin_user_path(user1)
     end
     it "succeeds to update" do
+      attach_file "user[image]", "#{ Rails.root }/spec/factories/noimage.jpg"
       fill_in "user[name]", with: "kiyu"
       fill_in "user[introduction]", with: "Good morning!"
       fill_in "user[email]", with: "kiyu@com"

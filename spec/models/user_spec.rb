@@ -38,6 +38,18 @@ RSpec.describe User, type: :model do
       user1.name = "a" * 100
       expect(user1).to be_invalid
     end
+    it "is invalid if introduction is too long" do
+      user1.introduction = "a" * 101
+      expect(user1).to be_invalid 
+    end
+    it "is invalid without email" do
+      user1.email = ""
+      expect(user1).to be_invalid
+    end
+    it "is invalid without password" do
+      user1.password = ""
+      expect(user1).to be_invalid
+    end
     it "can follow other user" do
       expect{ user2.follow(user3) }.to change{ user2.followings.count }.by(1)
     end

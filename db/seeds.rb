@@ -18,7 +18,7 @@
 # }]
 # )
 Admin.create({
-  email: 'yuki@.com',
+  email: 'yuki@com',
   password: 'testtest',
   password_confirmation: 'testtest'
 })

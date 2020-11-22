@@ -14,7 +14,9 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { in: 2..20 }
   validates :introduction, length: { maximum: 100 }
+  
   scope :today, ->(){ where("created_at >= ?", Date.today) }
+  scope :active, ->(){ where(is_active: true) }
   
   def follow(user)
     self.active_relationships.create(followed: user)

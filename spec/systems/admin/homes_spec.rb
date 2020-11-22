@@ -17,7 +17,7 @@ RSpec.describe "admin top page", type: :system do
       user_count = User.today.count
       expect(page).to have_content user_count
     end
-    it "has number of words whivh registered today" do
+    it "has number of words which registered today" do
       word_count = Word.today.count
       expect(page).to have_content word_count
     end
@@ -25,7 +25,7 @@ RSpec.describe "admin top page", type: :system do
       expect(page).to have_selector "a", text: /\d+人/
     end
     it "has link to see today's registererd words" do
-      expect(page).to have_selector "a", text: /\d+/
+      expect(page).to have_selector "a", text: /\d+個/
     end
   end
 end

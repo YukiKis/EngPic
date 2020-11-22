@@ -1,3 +1,4 @@
+<% provide(:title, "Admin | Words | #{ @word.name }") %>
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <h3 class="heading">単語詳細</h3>
@@ -33,7 +34,7 @@
           </tr>
         </table>
         <div class="text-right margin-top-sm">
-          <%= link_to "編集", edit_admin_word_path(@word), class: "btn btn-default btn-lg", data: { turbolinks: false } %>
+          <%= link_to "編集", edit_admin_word_path(@word), class: "btn btn-default btn-lg" %>
         </div>
       </div>
     </div>

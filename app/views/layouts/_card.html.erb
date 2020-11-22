@@ -1,4 +1,4 @@
-<% if current_user.dictionary.words.include?(word) && current_user.words.include?(word) %>
+<% if current_user.dictionary.words.include?(word) %>
   <div class="card bg-warning" id="card-<%= word.id %>">
     <div class="text-left">
       <%= link_to user_path(word.user), data: { turbolinks: false } do %>

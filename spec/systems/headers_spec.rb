@@ -23,6 +23,7 @@ RSpec.describe "header", type: :system do
       expect(page).to have_link "Log in", href: new_user_session_path
     end
   end
+  
   context "when logged in as user" do
     before do
       visit new_user_session_path
@@ -49,6 +50,7 @@ RSpec.describe "header", type: :system do
       expect(page).to have_link "Sign out", href: destroy_user_session_path
     end
   end
+  
   context "when logged in as admin" do
     before do
       visit new_admin_session_path

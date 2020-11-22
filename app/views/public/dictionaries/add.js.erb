@@ -1,1 +1,5 @@
 $("#add-btn-<%= @word.id %>").html(`<%= j(render("add-btn", word: @word)) %>`);
+if($("div.card-show").hasClass("bg-info")){
+  $("div.card-show").removeClass("bg-info")
+}
+$("div.card-show").addClass("bg-warning");

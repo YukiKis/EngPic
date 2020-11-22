@@ -1,17 +1,17 @@
 class Public::WordsController < ApplicationController
   before_action :authenticate_user!, except: :index
-  before_action :get_word, only: [:show, :edit, :update, :destroy]
+  before_action :setup_word, only: [:show, :edit, :update, :destroy]
+  before_action :setup_q_for_tag, only: [:tags, :tag_search]
+  before_action :setup_q_for_word, only: [:index, :tagged_words, :search, :same_name, :same_meaning]
   before_action :ready_table, only: [:index, :tagged_words, :search, :same_name, :same_meaning]
 
   def index
-    @q = Word.ransack(params[:q])
-    @words = Word.page(params[:page]).per(12)
-    @word_count = Word.all.count
+    @words = Word.active.page(params[:page]).per(12)
+    @word_count = Word.active.count
   end
   
   def tagged_words
-    @q = Word.ransack(params[:q])
-    @words = Word.tagged_with(params[:tag]).page(params[:page]).per(12)
+    @words = Word.active.tagged_with(params[:tag]).page(params[:page]).per(12)
     @word_count = @words.count
     @tag = "'#{ params[:tag] }' "
     render "index"
@@ -19,12 +19,8 @@ class Public::WordsController < ApplicationController
   
   def show
     @related_words = []
-    # if @word.tag_list.any?
-    #   @word.tag_list.each do |tag|
-    #     @related_words = Word.tagged_with(tag)
-    # end
     @word.tag_list.each do |tag|
-      Word.tagged_with(tag).sample(5).each do |w|
+      Word.active.tagged_with(tag).sample(5).each do |w|
         if w == @word
         else
           @related_words << w
@@ -40,7 +36,6 @@ class Public::WordsController < ApplicationController
     @title = "New"
     @word = Word.new
     @btn = "Create!"
-    render "edit"
   end
   
   def create
@@ -51,7 +46,7 @@ class Public::WordsController < ApplicationController
     else
       @title = "New"
       @btn = "Create!"
-      render "edit"
+      render "new"
     end
   end
   
@@ -69,6 +64,7 @@ class Public::WordsController < ApplicationController
       redirect_to word_path(@word)
     else
       if @word.update(word_params)
+        session[:image] = @word.image_id
         redirect_to word_path(@word)
       else
         @title = "Edit"
@@ -89,34 +85,31 @@ class Public::WordsController < ApplicationController
   end
   
   def search
-    @q = Word.ransack(params[:q])
     @words = @q.result(distinct: true).page(params[:page]).per(12)
     @word_count = @words.count
     render "index"
   end
   
   def same_name
-    @q = Word.ransack(params[:q])
-    @words = Word.by_same_name(params[:name]).page(params[:page]).per(12)
+    @words = Word.active.by_same_name(params[:name]).page(params[:page]).per(12)
     @word_count = @words.count
     render "index"
   end
   
   def same_meaning
-    @q = Word.ransack(params[:q])
-    @words = Word.by_same_meaning(params[:meaning]).page(params[:page]).per(12)
+    @words = Word.active.by_same_meaning(params[:meaning]).page(params[:page]).per(12)
     @word_count = @words.count
     render "index"
   end
   
   def tags
-    @q = Word.tag_counts.ransack(params[:q])
-    @tags = Word.tag_counts.page(params[:page]).per(12)
-    @tag_count = Word.tag_counts.all.count
+    @words = Word.active
+    @tags = @words.tag_counts.page(params[:page]).per(12)
+    @tag_count = @words.tag_counts.all.count
   end
   
   def tag_search
-    @q = Word.tag_counts.ransack(params[:q])
+    @words = Word.active
     @tags = @q.result(distinct: true).page(params[:page]).per(12)
     @tag_count = @tags.count
     render "tags"
@@ -127,8 +120,19 @@ class Public::WordsController < ApplicationController
       params.require(:word).permit(:name, :meaning, :image, :sentence, :tag_list)
     end
     
-    def get_word
+    def setup_word
       @word = Word.find(params[:id])
+      unless @word.user.is_active
+        redirect_to request.referer || user_path(current_user), notice: "その単語はご覧いただけません。"
+      end
+    end
+    
+    def setup_q_for_tag
+      @q = Word.active.tag_counts.ransack(params[:q])
+    end
+    
+    def setup_q_for_word
+      @q = Word.active.ransack(params[:q])
     end
     
     def word_new
@@ -139,13 +143,12 @@ class Public::WordsController < ApplicationController
       @listed_words = []
       @tags = []
       @meanings = []
-      Word.all.each do |w|
+      words = Word.active.sample(4)
+      words.each do |w|
         @listed_words << w.name
-        @tags << w.tag_list
+        w.tags.each { |t| @tags << t.name }
         @meanings << w.meaning
       end
-      @listed_words.uniq!
-      @tags.uniq
-      @meanings.uniq!
+      @tags.uniq.sample(4)
     end
 end
