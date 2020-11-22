@@ -22,22 +22,5 @@
     </table>
     <%= paginate @words, window: 2 %>
     <h4 class="text-right"><%= link_to "ユーザー情報へ戻る", admin_user_path(@user) %></h4>
-
   </div>
-
-    <!--<div class="row">-->
-    <!--  <%# @words.each do |word| %>-->
-    <!--    <div class="col-sm-2">-->
-    <!--      <div class="admin-word-card">-->
-    <!--        <%#= link_to admin_word_path(word) do %>-->
-    <!--          <%#= attachment_image_tag word, :image, fallback: "noimage.jpg", class: "admin-word-image", id: "#word-image-#{ word.id }" %>-->
-    <!--    　     <p class="admin-word-text">-->
-    <!--            <%#= word.name %>-->
-    <!--          </p> -->
-    <!--        <%# end %>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--  <%# end %>-->
-    <!--  <%#= paginate @words %>-->
-    <!--</div>-->
 </div>

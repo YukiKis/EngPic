@@ -25,11 +25,21 @@ RSpec.describe "admin-words page", type: :system do
         expect(page).to have_link word.user.name, href: admin_user_path(word.user)
       end
     end
+    it "has red color if the words'user is not active" do
+      user1.is_active = false
+      user1.save
+      visit current_path
+      Word.all[0..19].each do |word|
+        unless word.user.is_active
+          expect(page).to have_css "#word-#{ word.id }.inactive"
+        end
+      end
+    end
     it "has search field for word" do
-      expect(page).to have_field "q[name_or_meaning_or_tags_name_start]"
+      expect(page).to have_field "q[name_or_meaning_start]"
     end
     it "can search by word_name" do
-      fill_in "q[name_or_meaning_or_tags_name_start]", with: word1.name
+      fill_in "q[name_or_meaning_start]", with: word1.name
       click_button "検索"
       words = Word.by_same_name(word1.name)[0..19]
       expect(current_path).to eq search_admin_words_path
@@ -38,7 +48,7 @@ RSpec.describe "admin-words page", type: :system do
       end
     end
     it "can search by word_meaning" do
-      fill_in "q[name_or_meaning_or_tags_name_start]", with: word1.meaning
+      fill_in "q[name_or_meaning_start]", with: word1.meaning
       click_button "検索"
       words = Word.by_same_meaning(word1.meaning)[0..19]
       expect(current_path).to eq search_admin_words_path
@@ -46,20 +56,23 @@ RSpec.describe "admin-words page", type: :system do
         expect(page).to have_link word.name, href: admin_word_path(word1)
       end
     end
-    it "can search by tag" do
-      fill_in "q[name_or_meaning_or_tags_name_start]", with: "doll"
-      click_button "検索"
-      words = Word.tagged_with("doll")[0..19]
-      expect(current_path).to eq search_admin_words_path
-      words.each do |word|
-        expect(page).to have_link word.name, href: admin_word_path(word)
-      end
-    end
+    # it "can search by tag" do
+    #   fill_in "q[name_or_meaning_or_tags_name_start]", with: "doll"
+    #   click_button "検索"
+    #   words = Word.tagged_with("doll")[0..19]
+    #   expect(current_path).to eq search_admin_words_path
+    #   words.each do |word|
+    #     expect(page).to have_link word.name, href: admin_word_path(word)
+    #   end
+    # end
   end
   
   context "on show page" do
     before do 
       visit admin_word_path(word1)
+    end
+    it "has user_link" do
+      expect(page).to have_link word1.user.name, href: admin_user_path(word1.user)
     end
     it "has name" do
       expect(page).to have_content word1.name
@@ -103,7 +116,7 @@ RSpec.describe "admin-words page", type: :system do
       expect(page).to have_button "Update"
     end
     it "has button to back" do
-      expect(page).to have_link "Back", href: admin_word_path
+      expect(page).to have_link "Back", href: admin_word_path(word1)
     end
     it "succeeds to update" do
       fill_in "word[name]", with: "model"

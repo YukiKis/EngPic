@@ -14,9 +14,9 @@ if Rails.env.production?
     enable_starttls_auto: true
   }
 elsif Rails.env.development?
-  ActionMailer::Base.default_url_options = { protocol: "https", host: "d897b06322f248eb81db05207789bfca.vfs.cloud9.us-east-1.amazonaws.com" }
+  ActionMailer::Base.default_url_options = { protocol: "https", host: "bc93f3ed1d1d4878a70efa58838af9ed.vfs.cloud9.us-east-1.amazonaws.com" }
   ActionMailer::Base.delivery_method = :letter_opener
 else
-  ActionMailer::Base.default_url_options = { protocol: "https", host: "d897b06322f248eb81db05207789bfca.vfs.cloud9.us-east-1.amazonaws.com" }
+  ActionMailer::Base.default_url_options = { protocol: "https", host: "bc93f3ed1d1d4878a70efa58838af9ed.vfs.cloud9.us-east-1.amazonaws.com" }
   ActionMailer::Base.delivery_method = :test
 end

@@ -1,3 +1,4 @@
+<% provide(:title, "Admin | Users") %>
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <h3 class="heading">利用者</h3>
@@ -13,9 +14,9 @@
       <tbody>
         <% @users.each do |user| %>
           <% if user.is_active %>
-            <tr id="user-info-#{ user.id }">
+            <tr id="user-info-<%= user.id %>">
           <% else %>
-            <tr id="user-info-#{ user.id }" class="inactive">
+            <tr id="user-info-<%= user.id %>" class="inactive">
           <% end %>
             <td class="col-xs-1 col-sm-1">
               <%= user.id %>
@@ -26,7 +27,7 @@
                 <%= user.name %>
               <% end %>
               </td>
-            <td class="col-xs-4 col-sm-2"><%= user.words.count %>件</td>
+            <td class="col-xs-4 col-sm-2"><%= counter(user.words.count, "word") %></td>
             <td class="hidden-xs col-sm-6">
               <% user.words.sample(5).each do |word| %>
                 <%= link_to admin_word_path(word) do %>

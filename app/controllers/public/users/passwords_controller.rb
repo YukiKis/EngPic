@@ -7,9 +7,14 @@ class Public::Users::PasswordsController < Devise::PasswordsController
   # end
 
   # POST /resource/password
-  # def create
-  #   super
-  # end
+  def create
+    email = params[:user][:email]
+    if User.find_by(email: email)
+      super
+    else
+      redirect_to new_user_password_path, notice: "メールアドレスが登録されておりません。"
+    end
+  end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   # def edit

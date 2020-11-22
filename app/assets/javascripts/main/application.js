@@ -19,20 +19,15 @@
 
 
 $(document).on("turbolinks:load", function(){
-  var ch = $(".container").outerHeight();
-  var wh = $(window).height();
+  var originalHeight = $(".container").height();
+  Object.freeze(originalHeight);
+  var windowHeight = $(window).height();
 
-  if(ch > wh){
-    $(".container").outerHeight(ch);
-  }else{
-    $(".container").outerHeight(wh); 
-  }
-  
-  $(window).resize(function(){
-    if(ch > wh){
-      $(".container").outerHeight(ch);
+  $(window).on("resize", function(){
+    if(originalHeight >= windowHeight){
+      $(".container").outerHeight(originalHeight);
     }else{
-      $(".container").outerHeight(wh); 
+      $(".container").outerHeight(windowHeight); 
     }
   });
 

@@ -46,6 +46,19 @@ RSpec.describe "devise-user", type: :system do
       click_button "登録"
       expect(page).to have_content "エラー"
     end
+    it "fails to make a new user with already registered email" do
+      fill_in "user[name]", with: user1.name
+      fill_in "user[introduction]", with: user1.introduction
+      fill_in "user[email]", with: user1.email
+      fill_in "user[password]", with: user1.password
+      fill_in "user[password_confirmation]", with: user1.password_confirmation
+      click_button "登録"    
+      click_link "Sign out"
+      click_link "Register"
+      fill_in "user[email]", with: user1.email
+      click_button "登録"
+      expect(page).to have_content "既に登録済み"
+    end
   end
   context "on session_page" do
     let(:user1){ create(:user1) }
@@ -80,6 +93,16 @@ RSpec.describe "devise-user", type: :system do
       click_button "Log in"
       expect(page).to have_content "違います"
     end
+    it "fails to login if user is not active" do
+      user1.is_active = false
+      user1.save
+      visit current_path
+      fill_in "user[email]", with: user1.email
+      fill_in "user[password]", with: user1.password
+      click_button "Log in"
+      expect(current_path).to eq new_user_session_path
+      expect(page).to have_content "退会済み"
+    end
   end
   
   context "on password_page" do
@@ -102,7 +125,7 @@ RSpec.describe "devise-user", type: :system do
     end
     it "fails to send an email" do
       click_button "送信"
-      expect(page).to have_content "エラー"
+      expect(page).to have_content "登録されておりません"
     end
   end
   

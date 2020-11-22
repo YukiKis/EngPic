@@ -23,19 +23,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Caveat Brush', cursive;}
-
+  // font-family: 'Caveat Brush', cursive;}
+}
 h1, h2, h3, h4, h5, h6, nav{
   font-family: "Yu Gothic", sans-serif !important;
 }
-
-
-// html, body{
-//   min-height: 100% !important;
-//   .container{
-//     min-height: 100% !important;
-//   }
-// }
 
 body{
   background: image-url("table.jpg");
@@ -46,6 +38,13 @@ body{
 
 .main{
   padding: 0 0 70px;
+}
+
+// header
+
+.logo{
+  color: white !important;
+  text-shadow: 2px 2px #ccc;
 }
 
 .navbar{
@@ -159,4 +158,8 @@ table tr th, td{
 
 .word-break{
   word-break: break-word;
+}
+
+.field_with_errors{
+  display: inline;
 }
