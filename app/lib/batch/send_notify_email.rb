@@ -5,4 +5,4 @@ class Batch::SendNotifyEmail
     end
     p "全ユーザーにメールの送信が完了しました。"
   end
-endS
+end

@@ -78,6 +78,31 @@ RSpec.describe "words page", js: true, type: :system do
     end
   end
   
+  context "on same-name page" do
+    before do
+      visit same_name_words_path(word1.name)
+    end
+    it "has name which have same name with the word" do
+      Word.active.by_same_name(word1.name).each do |w|
+        expect(page).to have_link "", href: word_path(w)
+      end
+      expect(page).to have_content word3.name
+    end
+  end
+  
+  context "on same-meaning-page" do
+    before do
+      visit same_meaning_words_path(word1.meaning)
+    end
+    it "has name which have same name with the word" do
+      Word.active.by_same_meaning(word1.meaning).each do |w|
+        expect(page).to have_link "", href: word_path(w)
+      end
+      expect(page).to have_content word3.meaning
+    end
+
+  end
+  
   context "on show page" do
     before do 
       visit word_path(word1)
