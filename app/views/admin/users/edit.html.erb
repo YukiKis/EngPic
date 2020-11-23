@@ -23,13 +23,12 @@
             <%= f.label :introduction, "紹介文", class: "control-label" %><br>
             <%= f.text_area :introduction, rows: 4, class: "form-control" %>
           </div>
-          <div class="form-group form-inline">
-            <%= f.radio_button :is_active, :true, class: "form-control" %>
+          <div class="form-group">
+            <%= f.radio_button :is_active, :true %>
             <%= f.label :is_active_true, "在籍", class: "control-label" %>
             &emsp;
-            <%= f.radio_button :is_active, :false, class: "form-control" %>
+            <%= f.radio_button :is_active, :false %>
             <%= f.label :is_active_false, "退会",  class: "control-label" %>
-          </div>
           </div>
           <div class="text-right">
             <%= f.submit "Update", class: "btn btn-primary" %>
