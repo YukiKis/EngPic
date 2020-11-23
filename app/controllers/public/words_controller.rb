@@ -26,12 +26,11 @@ class Public::WordsController < ApplicationController
           @related_words << w
         end
       end
-    end.sample(4)
-    # if @related_words.present?
-      # if @related_words.include?(@word)
-        # @related_words.uniq.sample(4)
-    # end
-    debugger
+    end
+    if @related_words.present?
+      @related_words.uniq!
+    end
+    @related_words.sample(4)
   end
   
   def new
