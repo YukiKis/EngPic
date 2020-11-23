@@ -64,5 +64,15 @@ RSpec.describe User, type: :model do
       user2.unfollow(user3)
       expect(user2.following?(user3)).to be false
     end
+    it "can scope by active users" do
+      user2.is_active = false
+      user2.save
+      expect(User.active).to eq [user3]
+    end
+    it "can scope by those who registered today" do
+      user2.created_at = Date.yesterday
+      user2.save
+      expect(User.today).to eq [user3]
+    end
   end
 end

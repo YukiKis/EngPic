@@ -25,9 +25,9 @@
   box-sizing: border-box;
   // font-family: 'Caveat Brush', cursive;}
 }
-h1, h2, h3, h4, h5, h6, nav{
-  font-family: "Yu Gothic", sans-serif !important;
-}
+// h1, h2, h3, h4, h5, h6, nav{
+//   font-family: "Yu Gothic", sans-serif !important;
+// }
 
 body{
   background: image-url("table.jpg");
@@ -86,7 +86,7 @@ body{
 }
 
 .heading{
-  font-family: 'Caveat', cursive;
+  // font-family: 'Caveat', cursive;
   display: inline-block;
   border-bottom: 5px double #ccc;
   text-shadow: 4px 4px 5px rgb(66, 139, 242);
