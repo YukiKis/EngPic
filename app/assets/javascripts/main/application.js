@@ -19,17 +19,9 @@
 
 
 $(document).on("turbolinks:load", function(){
-  var originalHeight = $(".container").height();
-  Object.freeze(originalHeight);
-  var windowHeight = $(window).height();
-
   $(window).on("resize", function(){
-    if(originalHeight >= windowHeight){
-      $(".container").outerHeight(originalHeight);
-    }else{
-      $(".container").outerHeight(windowHeight); 
-    }
-  });
+    $(".container").outerHeight($(window).height());
+  })
 
   $(window).trigger("resize");
   
@@ -61,12 +53,6 @@ $(document).on("turbolinks:load", function(){
     hidePrevious: false
   });
   
-  // $(".card").on("mouseover", function(){
-  //   $(this).animate({ boxShadow: "5px 5px 5px #ccc"}, 0.3);
-  // }).on("mouseout", function(){
-  //   $(this).animate({ boxShadow: "2px 2px #ccc"}, 0.3);
-  // });
-  
   $(".answer-card").on("mouseover", function(){
     $(this).find(".answer-form").stop(true).animate({ opacity: 1 }, 300);
   }).on("mouseout", function(){
@@ -79,7 +65,6 @@ $(document).on("turbolinks:load", function(){
     var value = $(this).val();
     if( !value.match(pattern) ){
       $(this).addClass("invalid").attr("title", "メールアドレスが不適切です");
-      // $(this).parent().append(`<span class="wrong">WRONG</span>`);
     }else{
       $(this).removeClass("invalid");
     };
@@ -108,16 +93,6 @@ $(document).on("turbolinks:load", function(){
       $(this).removeClass("invalid");
     }
   })
-  
-  // when password_confirmation is wrong, change color
-  // $("#user_password_confirmation").on("change", function(){
-  //   var value = $(this).val();
-  //   if(value.length >= 6 && value !== $("#user_password").val()){
-  //     $(this).addClass("invalid").attr("title", "パスワードが上記と合致しません。");
-  //   }else{
-  //     $(this).removeClass("invalid");
-  //   }
-  // })
   
   $("#word_name, #word_meaning").on("change", function(){
     var val = $(this).val();
