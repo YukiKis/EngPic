@@ -31,6 +31,7 @@ class Public::WordsController < ApplicationController
       # if @related_words.include?(@word)
         # @related_words.uniq.sample(4)
     # end
+    debugger
   end
   
   def new

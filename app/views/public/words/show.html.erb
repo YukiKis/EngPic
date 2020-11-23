@@ -62,7 +62,7 @@
   <div class="col-sm-5 col-md- col-md-offset-1">
     <h3 class="heading">Related words</h3>
     <div class="row">
-      <% @related_words[0..3].each do |word| %>
+      <% @related_words.each do |word| %>
         <div class="col-xs-6 col-sm-6 col-md-6">
           <%= render "layouts/card", word: word %>
         </div>
