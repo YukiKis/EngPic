@@ -27,7 +27,7 @@ class Public::WordsController < ApplicationController
         end
       end
     end
-    @related_words = related_words.sample(4)
+    @related_words = related_words.uniq.sample(4)
   end
   
   def new
