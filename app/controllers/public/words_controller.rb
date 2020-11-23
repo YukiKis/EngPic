@@ -18,19 +18,16 @@ class Public::WordsController < ApplicationController
   end
   
   def show
-    @related_words = []
+    related_words = []
     @word.tag_list.each do |tag|
       Word.active.tagged_with(tag).sample(5).each do |w|
         if w == @word
         else
-          @related_words << w
+          related_words << w
         end
       end
     end
-    if @related_words.present?
-      @related_words.uniq!
-    end
-    @related_words.sample(4)
+    @related_words = related_words.sample(4)
   end
   
   def new
@@ -141,24 +138,23 @@ class Public::WordsController < ApplicationController
     end
     
     def ready_table
-      @listed_words = []
-      @tags = []
-      @meanings = []
+      listed_words = []
+      tags = []
+      meanings = []
       words = Word.active.sample(4)
       words.each do |w|
-        @listed_words << w.name
-        w.tags.each { |t| @tags << t.name }
-        @meanings << w.meaning
+        listed_words << w.name
+        w.tags.each { |t| tags << t.name }
+        meanings << w.meaning
       end
-      if @tags
-        @tags = @tags.uniq
-        @tags.sample(4)
+      if tags
+        @tags = tags.uniq.sample(4)
       end
-      if @meanings
-        @meaings = @meanings.uniq
+      if meanings
+        @meaings = meanings.uniq
       end
-      if @listed_words
-        @listed_words = @listed_words.uniq
+      if listed_words
+        @listed_words = listed_words.uniq
       end
     end
 end
