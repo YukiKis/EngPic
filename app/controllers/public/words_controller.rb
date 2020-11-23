@@ -139,8 +139,11 @@ class Public::WordsController < ApplicationController
     
     def ready_table
       listed_words = []
+      @listed_words = []
       tags = []
+      @tags = []
       meanings = []
+      @meanings = []
       words = Word.active.sample(4)
       words.each do |w|
         listed_words << w.name
@@ -151,7 +154,7 @@ class Public::WordsController < ApplicationController
         @tags = tags.uniq.sample(4)
       end
       if meanings
-        @meaings = meanings.uniq
+        @meanings = meanings.uniq
       end
       if listed_words
         @listed_words = listed_words.uniq
