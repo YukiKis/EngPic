@@ -22,10 +22,6 @@
 }
 
 // question page
-.form-control{
-  // font-family: sans-serif;
-}
-
 .answer-card{
   border: 3px solid $main-color-weak;
   height: 220px !important;
@@ -50,7 +46,7 @@
     max-height: 130px;
   }
   .result-content{
-    overflow: scroll;
+    overflow-x: scroll;
     display: flex;
     justify-content: center;
     align-items: center;
