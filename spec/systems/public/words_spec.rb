@@ -156,9 +156,6 @@ RSpec.describe "words page", js: true, type: :system do
           end
         end
       end
-      if related_words.any?
-        related_words.uniq!.sample(4)
-      end
       related_words.each do |w|
         expect(page).to have_link "", href: word_path(w)
       end
