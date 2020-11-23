@@ -150,6 +150,15 @@ class Public::WordsController < ApplicationController
         w.tags.each { |t| @tags << t.name }
         @meanings << w.meaning
       end
-      @tags.uniq.sample(4)
+      if @tags
+        @tags = @tags.uniq
+        @tags.sample(4)
+      end
+      if @meanings
+        @meaings = @meanings.uniq
+      end
+      if @listed_words
+        @listed_words = @listed_words.uniq
+      end
     end
 end
