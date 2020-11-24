@@ -64,7 +64,7 @@ $(document).on("turbolinks:load", function(){
     var pattern =  /^[^@\s]+@[^@\s]+$/
     var value = $(this).val();
     if(value == ""){
-      $(this).addClass("title", "メールアドレスは必須項目です。") 
+      $(this).addClass("invalid").attr("title", "メールアドレスは必須項目です。") 
     }else if( !value.match(pattern) ){
       $(this).addClass("invalid").attr("title", "メールアドレスが不適切です");
     }else{
