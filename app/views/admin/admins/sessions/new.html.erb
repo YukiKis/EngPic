@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
-    <h2>Log in for ADMIN</h2>
+    <h3>Log in for Admin</h3>
     <%= form_with model: @admin, url: session_path(resource), local: true do |f| %>
       <div class="field text-center form-inline form-group">
         <%= f.label :email, "メールアドレス", class: "control-label"  %><br>
@@ -12,19 +12,18 @@
         <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
       </div>
 
-      <% if devise_mapping.rememberable? %>
-        <div class="field text-center form-inline">
-          <%= f.check_box :remember_me, class: "form-control form-inline" %>
-          <%= f.label :remember_me, class: "control-label" %>
-        </div>
-      <% end %>
+      <!--<%# if devise_mapping.rememberable? %>-->
+      <!--  <div class="field text-center form-inline">-->
+      <!--    <%#= f.check_box :remember_me, class: "form-control form-inline" %>-->
+      <!--    <%#= f.label :remember_me, class: "control-label" %>-->
+      <!--  </div>-->
+      <!--<%# end %>-->
 
       <div class="actions text-center">
         <%= f.submit "Log in", class: "btn btn-default btn-lg" %>
       </div>
       <!--<%#= render "admin/admins/shared/links" %>-->
     <% end %>
-
   </div>
 </div>
 

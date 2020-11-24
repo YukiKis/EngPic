@@ -45,16 +45,18 @@ class Public::DictionariesController < ApplicationController
     if request.post?
       questions = [answer_params[:question0], answer_params[:question1], answer_params[:question2], answer_params[:question3]].compact
       @questions = questions.map do |q|
-       Word.find(q)
+      Word.find(q)
       end
       @answers =[ answer_params[:answer0], answer_params[:answer1], answer_params[:answer2], answer_params[:answer3]].compact
       @rights = 0
-      @questions.each do |q|
-        @answers.each do |a|
-          if a == q.name
-            @rights += 1
-            break
-          end
+      @questions.each_with_index do |q, i|
+        # @answers.each do |a|
+        #   if q.name == a
+        #     @rights += 1
+        #   end
+        # end
+        if @answers[i] == q.name
+          @rights += 1
         end
       end
       render "result"
