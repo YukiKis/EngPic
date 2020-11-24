@@ -40,12 +40,12 @@
       
       <div class="row">
         <div class="col-sm-5 z-index-1">
-          <%= f.label :password, class: "control-label" %>※必須
-        </div>
-        <div class="col-sm-7 form-group z-index-1">
+          <%= f.label :password, class: "control-label" %>※必須 
           <% if @minimum_password_length %>
             <em>(<%= @minimum_password_length %>文字以上)</em>
-          <% end %><br />
+          <% end %>
+        </div>
+        <div class="col-sm-7 form-group z-index-1">
           <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
         </div>
       </div>

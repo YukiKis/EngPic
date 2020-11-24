@@ -61,9 +61,11 @@ $(document).on("turbolinks:load", function(){
   
   // when type the wrong form in email-form, change color  
   $("#user_email").on("change", function(){
-    var pattern =  /.+@.+/i
+    var pattern =  /^[^@\s]+@[^@\s]+$/
     var value = $(this).val();
-    if( !value.match(pattern) ){
+    if(value == ""){
+      $(this).addClass("title", "メールアドレスは必須項目です。") 
+    }else if( !value.match(pattern) ){
       $(this).addClass("invalid").attr("title", "メールアドレスが不適切です");
     }else{
       $(this).removeClass("invalid");
@@ -73,7 +75,9 @@ $(document).on("turbolinks:load", function(){
   // when name is too short / long, change color
   $("#user_name").on("change", function(){
     var value = $(this).val()
-    if(value.length < 2){
+    if(value == ""){
+      $(this).addClass("invalid").attr("title", "名前は必須項目です。")
+    }else if(value.length < 2){
       $(this).addClass("invalid").attr("title", "名前が短すぎます。");
     }else if(value.length > 20){
       $(this).addClass("invalid").attr("title", "名前が長すぎます");
@@ -83,10 +87,23 @@ $(document).on("turbolinks:load", function(){
     }
   })
   
+  // when introduction is too long, change color
+  $("#user_introduction").on("change", function(){
+    var value = $(this).val();
+    if(value.length > 100){
+      $(this).addClass("invalid").attr("title", "紹介文は100文字以内にしてください。現在" + value.length + "文字");
+    }else{
+      $(this).removeClass("invalid");
+    };
+  });
+  
   // when password is too short, change color
   $("#user_password").on("change", function(){
     var value = $(this).val();
-    if(value.length < 6){
+    if(value == ""){
+      $(this).addClass("invalid").attr("title", "パスワードは必須項目です。");
+    }
+    else if(value.length < 6){
       $(this).addClass("invalid").attr("title", "パスワードが短すぎます。");
     }
     else{
