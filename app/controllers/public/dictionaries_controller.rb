@@ -45,7 +45,7 @@ class Public::DictionariesController < ApplicationController
     if request.post?
       questions = [answer_params[:question0], answer_params[:question1], answer_params[:question2], answer_params[:question3]].compact
       @questions = questions.map do |q|
-     Word.find(q)
+      Word.find(q)
       end
       @answers =[ answer_params[:answer0], answer_params[:answer1], answer_params[:answer2], answer_params[:answer3]].compact
       @rights = 0
