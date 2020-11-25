@@ -85,18 +85,21 @@ class Public::WordsController < ApplicationController
   def search
     @words = @q.result(distinct: true).page(params[:page]).per(12)
     @word_count = @words.count
+    @tag = " '#{ params[:q][:name_or_meaning_start] }' "
     render "index"
   end
   
   def same_name
     @words = Word.active.by_same_name(params[:name]).page(params[:page]).per(12)
     @word_count = @words.count
+    @tag = " '#{ params[:name] }' "
     render "index"
   end
   
   def same_meaning
     @words = Word.active.by_same_meaning(params[:meaning]).page(params[:page]).per(12)
     @word_count = @words.count
+    @tag = " '#{ params[:meaning] }' "
     render "index"
   end
   
@@ -110,6 +113,7 @@ class Public::WordsController < ApplicationController
     @words = Word.active
     @tags = @q.result(distinct: true).page(params[:page]).per(12)
     @tag_count = @tags.count
+    @tag = " '#{ params[:q][:name_start] }' "
     render "tags"
   end
   

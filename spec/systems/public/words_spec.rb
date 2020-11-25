@@ -82,6 +82,9 @@ RSpec.describe "words page", js: true, type: :system do
     before do
       visit same_name_words_path(word1.name)
     end
+    it "has name of word" do
+      expect(page).to have_content "'#{ word1.name }'"
+    end
     it "has name which have same name with the word" do
       Word.active.by_same_name(word1.name).each do |w|
         expect(page).to have_link "", href: word_path(w)
@@ -93,6 +96,9 @@ RSpec.describe "words page", js: true, type: :system do
   context "on same-meaning-page" do
     before do
       visit same_meaning_words_path(word1.meaning)
+    end
+    it "hsa meaning of the word" do
+      expect(page).to have_content "'#{ word1.meaning }'"
     end
     it "has name which have same name with the word" do
       Word.active.by_same_meaning(word1.meaning).each do |w|
@@ -221,9 +227,6 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_content "エラー"
     end
     it "succeeds to delete" do
-      # expect{ page.accept_confirm do
-      #   click_on "Delete"
-      # end }.to change{ user1.words.count }.by(-1)
       click_on "Delete"
       expect(current_path).to eq user_path(user1)
       expect(page).to have_no_content word1.name
@@ -304,6 +307,22 @@ RSpec.describe "words page", js: true, type: :system do
       click_button "検索"
       expect(page).to have_link tag, href: tagged_words_path(tag)
       Word.active.tagged_with(tag).sample(4).each do |w|
+        expect(page).to have_link "", href: word_path(w)
+      end
+    end
+  end
+  
+  context "on tags_search page" do
+    before do
+      visit tags_words_path
+      fill_in "q_name_start", with: "doll"
+      click_button "検索"
+    end
+    it "has tag name" do
+      expect(page).to have_content "'doll'"
+    end
+    it "has tags index" do
+      Word.active.tagged_with("doll").each do |w|
         expect(page).to have_link "", href: word_path(w)
       end
     end
