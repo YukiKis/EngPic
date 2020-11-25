@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         get "today"
       end
     end
-    resources :words do
+    resources :words, only: [:index, :show, :edit, :update] do
       collection do
         match "search", to: "words#search", via: [:get, :post], as: "search" 
         get "today"
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   end
   
   scope module: :public do  
-    resources :users do
+    resources :users, only: [:index, :show, :edit, :update] do
       collection do
         match 'search' => "users#search", via: [:get, :post], as: :search
       end
