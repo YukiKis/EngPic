@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-sm-12">
         <h3 class="heading">
-          <%= @word_count %> <%= "word".pluralize(@word_count) %> <%= @tag if @tag.present? %>in Total</h3>
+          <%= counter(@word_count, "word") %> <%= @tag if @tag.present? %>in Total</h3>
         <%= search_form_for @q, url: search_words_path, local: true, class: "text-right form-inline" do |f| %>
           <%= f.label :name_or_meaning_start, "単語 / 意味", class: "control-label" %>
           <%= f.search_field :name_or_meaning_start, class: "form-control" %>

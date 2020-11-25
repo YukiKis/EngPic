@@ -315,7 +315,7 @@ RSpec.describe "test-through", type: :system, js: true do
       # click tag-index
       click_link "Dictionary", href: dictionary_path
       click_link "All tags", href: tags_dictionary_path
-      tag = @user1.dictionary.words.first.tag_list.first
+      tag = @user1.dictionary.words.active.first.tag_list.first
       click_link tag, href: tagged_words_dictionary_path(tag)
       expect(current_path).to eq tagged_words_dictionary_path(tag)
       expect(page).to have_content tag
@@ -334,7 +334,6 @@ RSpec.describe "test-through", type: :system, js: true do
       @user1.dictionary.words.active.tagged_with("example").each do |w|
         expect(page).to have_link "", href: word_path(w)
       end
-      
       
       # logout adn login as admin
       click_link "Sign out", href: destroy_user_session_path
