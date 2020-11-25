@@ -21,9 +21,6 @@ class Admin::WordsController < ApplicationController
     end
   end
 
-  def new
-  end
-  
   def search
     @q = Word.ransack(params[:q])
     @words = @q.result(distinct: true).page(params[:page]).per(15)

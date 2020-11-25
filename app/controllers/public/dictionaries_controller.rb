@@ -50,11 +50,6 @@ class Public::DictionariesController < ApplicationController
       @answers =[ answer_params[:answer0], answer_params[:answer1], answer_params[:answer2], answer_params[:answer3]].compact
       @rights = 0
       @questions.each_with_index do |q, i|
-        # @answers.each do |a|
-        #   if q.name == a
-        #     @rights += 1
-        #   end
-        # end
         if @answers[i] == q.name
           @rights += 1
         end

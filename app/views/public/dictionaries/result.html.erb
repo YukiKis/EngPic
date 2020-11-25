@@ -10,8 +10,11 @@
           <div class="card result-card bg-info" id="card-<%= question.id %>">
             <%= attachment_image_tag question, :image, fallback: "noimage.jpg", id: "img-#{ question.id }" %><br>
             <p class="result-content">
-              Answer: <%= @answers[ i ] %><br>
-            Dictionary: <%= question.name %>
+              <span>Answer:<br>
+                <%= @answers[ i ] %><br>
+                Dictionary:<br>
+                <%= link_to question.name, word_path(question) %>
+              </span>
             </p>
           </div>
         </div>
