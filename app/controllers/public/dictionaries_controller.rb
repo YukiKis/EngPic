@@ -41,6 +41,16 @@ class Public::DictionariesController < ApplicationController
     end
   end
   
+  def question_image
+    @word = @active_words_in_dictionary.shuffle().first
+    questions = @active_words_in_dictionary.sample(4)
+    @questions = questions << @word
+  end
+  
+  def check_image
+    render "result_image"
+  end
+  
   def check
     if request.post?
       questions = [answer_params[:question0], answer_params[:question1], answer_params[:question2], answer_params[:question3]].compact
