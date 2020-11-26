@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <% @words.each do |word| %>
-            <% if word.user.is_active %>
+            <% if word.user.is_active? %>
               <tr id="word-<%= word.id %>">
             <% else %>
               <tr id="word-<%= word.id %>" class="inactive">
