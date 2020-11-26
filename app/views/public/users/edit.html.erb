@@ -5,9 +5,10 @@
     <%= render "layouts/error", resource: @user %>
     <div class="row">
       <%= form_with model: @user, url: user_path(@user), local: true do |f| %>
-        <div class="col-sm-4 col-sm-offset-1 text-center">
+        <div class="col-sm-4 col-sm-offset-1">
           <%= attachment_image_tag @user, :image, class: "edit-img", fallback: "noimage.jpg" %>
           <%= f.attachment_field :image %>
+          <%= link_to "Back", user_path(@user), class: "back" %>
         </div>
         
         <div class="col-sm-4 col-sm-offset-2">

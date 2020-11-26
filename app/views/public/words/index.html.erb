@@ -50,6 +50,7 @@
           <%= f.label :name_or_meaning_start, "単語 / 意味", class: "control-label" %>
           <%= f.search_field :name_or_meaning_start, class: "form-control" %>
           <%= f.submit "検索", class: "btn btn-default" %>
+          <%= link_to "All words", words_path, class: "btn btn-default" %>
         <% end %>
         <p>
           <span class="bg-warning">YELLOW</span>, 投稿単語で、辞書に登録されております。<br>

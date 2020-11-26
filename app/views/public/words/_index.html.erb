@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <div class="text-left">
       <% if word_count.present? && tag.present? %>
-        <h3 class="heading"><%= word_count %> <%= "word".pluralize(word_count) %> <%= tag if tag.present? %>in Total</h3>
+        <h3 class="heading"><%= word_count %> <%= "word".pluralize(word_count) %> <%= "'#{ tag }'" if tag.present? %> in Total</h3>
       <% end %>
     </div>
     <div class="text-right">

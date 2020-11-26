@@ -294,7 +294,6 @@ RSpec.describe "test-through", type: :system, js: true do
       click_button "検索"
       expect(current_path).to eq search_dictionary_path
       expect(page).to have_no_link "", href: word_path(@word1)
-      expect(page).to have_no_content "SAMPLE"
       
       # search, and find word in dictionary
       fill_in "q[name_or_meaning_start]", with: "example"
