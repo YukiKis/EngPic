@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   
   namespace :admin do
     get "/", to: "homes#top", as: "top"
-    resources :users do
+    resources :users, only: [:index, :show, :edit, :update] do
       member do
         resource :dictionary, only: :show, as: "user_dictionary"
       end
