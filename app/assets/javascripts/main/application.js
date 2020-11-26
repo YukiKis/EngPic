@@ -164,11 +164,17 @@ $(document).on("turbolinks:load", function(){
   
   // make selectable for question_images
   $(".selectable").selectable({
+    selected: function(){
+      $(this).parent().addClass("ui-state-highlight");
+    },
+    unselected: function(){
+      $(this).parent().removeClass("ui-state-highlight");
+    },
     stop: function(){
       $("#question-image-answer").empty();
       $(".ui-selected").each(function(){
-        var id = "#" + parseInt($(".selectable").find(".question-image-box").attr("id").replace(/question-(\d+)/, "$1"))
-        $("#question-image-answer").append(id + " ");
+        var index = $(".question-image-box").attr("id");
+        $("#question-image-answer").append(index + " ");
       })
     }
   })

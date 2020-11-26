@@ -2,19 +2,14 @@
 	<div class="col-xs-12 col-md-8">
 		<h3>Choose <%= @word.name %> !</h3>
 		<h4>Image</h4>
-		<div class="row selectable">
+		<div class="row">
 			<% @questions.each_with_index do |q, i| %>
-				<div class="col-xs-6 col-md-4">
-					<div class="question-image-box" id="question-<%= i %>" style="position: relative; height: 400px;">
-						<%= attachment_image_tag q, :image, :fill, 150, 150, fallback: "noimage.jpg", size: "150x150", style: "height: 300px; position: absolute; top: 0; left: 0; width: 100%" %>
+				<div class="col-xs-6 col-md-4" style="margin: 30px 0; padding: 15px;">
+					<div class="question-image-box selectable" id="question-<%= i %>" style="height: 400px;">
+						<%= attachment_image_tag q, :image, :fill, 150, 150, fallback: "noimage.jpg", size: "150x150", style: "height: 300px;width: 100%" %>
 					</div>
 				</div>
 			<% end %>
-		</div>
-	</div>
-	<div class="col-xs-12 col-md-4">
-		<div class="select-box" style="height: 500px;">
-			<h4>SELECTED: <span id="question-image-answer"></span></h4>
 		</div>
 	</div>
 </div>
