@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-ui
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
@@ -119,4 +120,46 @@ $(document).on("turbolinks:load", function(){
       $(this).removeClass("invalid");
     }
   })
+  
+  // make card draggable
+  $(".cards .card").draggable({
+    containment: "#containment",
+    revert: "invalid",
+    cursor: "move"
+  });
+  
+  // make a droppable box for adding word into dictionary
+  $(".add-box").droppable({
+    accept: ".cards > .card-addable",
+    over: function(event, ui){
+      $(this).addClass("ui-state-highlight")
+    },
+    out: function(event, ui){
+      $(this).removeClass("ui-state-highlight");
+    },
+    drop: function(event, ui){
+      var $dragged = $(ui.draggable)
+      var number = parseInt($dragged.attr("id").replace(/card-(\d+)/, "$1" ));
+      $dragged.fadeOut();
+      $.ajax({ type: "post", url: "/dictionary/words/" + number});
+    }
+  })
+  
+  // make a droppable box for deleting word from dictionary
+  $(".delete-box").droppable({
+    accept: ".cards > .card-deletable",
+    over: function(event, ui){
+      $(this).addClass("ui-state-highlight")
+    },
+    out: function(event, ui){
+      $(this).removeClass("ui-state-highlight");
+    },
+    drop: function(event, ui){
+      var $dragged = $(ui.draggable);
+      var number = parseInt($dragged.attr("id").replace(/card-(\d+)/, "$1"));
+      $dragged.fadeOut();
+      $.ajax({ type: "delete", url: "/dictionary/words/" + number});
+    }
+  })
+  
 });

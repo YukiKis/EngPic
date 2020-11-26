@@ -1,0 +1,52 @@
+<div class="cards">
+<% if current_user.dictionary.words.include?(word) %>
+  <div class="card bg-warning card-deletable" id="card-<%= word.id %>">
+    <div class="text-left">
+      <%= link_to user_path(word.user), data: { turbolinks: false } do %>
+        <%= attachment_image_tag word.user, :image, fallback: "noimage.jpg", class: "img-circle user-image", id: "user-image-#{ word.user.id }" %>
+      <% end %>
+    </div>
+    <%= link_to word_path(word), data: { turbulinks: false } do %>
+      <div class="card-image-box">
+          <%= attachment_image_tag word, :image, fallback: "noimage.jpg", class: "card-image image-#{ word.id }", id: "word-image-#{ word.id }" %>
+      </div>
+      <div class="card-name bg-warning">
+        <%= word.name %>
+      </div>
+    <% end %>
+  </div>
+<% elsif current_user.words.include?(word) %>
+  <div class="card bg-info card-addable" id="card-<%= word.id %>">
+    <div class="text-left">
+      <%= link_to user_path(word.user), data: { turbolinks: false } do %>
+        <%= attachment_image_tag word.user, :image, fallback: "noimage.jpg", class: "img-circle user-image", id: "user-image-#{ word.user.id }" %>
+      <% end %>
+    </div>
+    <%= link_to word_path(word), data: { turbulinks: false } do %>
+      <div class="card-image-box">
+          <%= attachment_image_tag word, :image, fallback: "noimage.jpg", class: "card-image image-#{ word.id }", id: "word-image-#{ word.id }" %>
+      </div>
+      <div class="card-name bg-info">
+        <%= word.name %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="card card-addable" id="card-<%= word.id %>">
+    <div class="text-left">
+      <%= link_to user_path(word.user), data: { turbolinks: false } do %>
+        <%= attachment_image_tag word.user, :image, fallback: "noimage.jpg", class: "img-circle user-image", id: "user-image-#{ word.user.id }" %>
+      <% end %>
+    </div>
+    <%= link_to word_path(word), data: { turbulinks: false } do %>
+      <div class="card-image-box">
+          <%= attachment_image_tag word, :image, fallback: "noimage.jpg", class: "card-image image-#{ word.id }", id: "word-image-#{ word.id }" %>
+      </div>
+      <div class="card-name">
+        <%= word.name %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+</div>
+

@@ -77,6 +77,7 @@ gem "acts-as-taggable-on", "~>6.0"
 gem "ransack"
 gem "bootstrap-sass"
 gem "jquery-rails"
+gem "jquery-ui-rails"
 gem "dotenv-rails"
 gem "whenever", require: false;
 gem "kaminari"

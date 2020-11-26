@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_tree ../../../../vender/assets/stylesheets/.
  *= require_self
+ *= require jquery-ui
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";

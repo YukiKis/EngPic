@@ -14,11 +14,20 @@
     </div>
     
     <div class="row margin-top-sm">
-      <% words.each do |word| %>
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <%= render "layouts/card", word: word %>
+      <div class="row" id="containment" style="border: 1px solid black; padding: 20px;">
+        <div class="col-xs-10">
+          <% @words.each do |word| %>
+            <div class="col-xs-6 col-sm-4 col-md-3">
+              <%= render "layouts/card-mobile", word: word %>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+        <div class="col-xs-2">
+	        <div class="delete-box" style="height: 800px; z-index: -1; border: 1px dotted black;">
+        	  <h4>DELETE WORD</h4>
+          </div>
+        </div>
+      </div>
     </div>
     <%= paginate words, window: 1 %>
   </div>

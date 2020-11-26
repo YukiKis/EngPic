@@ -1,0 +1,14 @@
+$(".cards .card").draggable({
+  containment: "#containment",
+  revert: "invalid",
+  cursor: "move"
+});
+$(".trash").droppable({
+  accept: ".cards > .card",
+  classes: {
+    "ui-droppable-active": "ui-state-highlight"
+  },
+  drop: function(event, ui){
+    $(ui.draggable).fadeOut();
+  }
+  })
