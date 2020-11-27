@@ -23,7 +23,11 @@
               <%= render "layouts/card", word: word %>
             </div>
           <% end %>
-          <%= paginate @words %>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+                      <%= paginate @words %>
+          </div>
         </div>
       </div>
     </div>
