@@ -74,6 +74,8 @@ body{
     padding: 0 15px;
     border-radius: 5px;
     background-color: $main-color-strong;
+    overflow-x: scroll;
+    white-space: nowrap;
   }
 }
 
@@ -82,7 +84,6 @@ body{
 }
 
 .heading{
-  // font-family: 'Caveat', cursive;
   display: inline-block;
   border-bottom: 5px double #ccc;
   text-shadow: 4px 4px 5px rgb(66, 139, 242);
