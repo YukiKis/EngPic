@@ -113,7 +113,7 @@ class Public::WordsController < ApplicationController
     @words = Word.active
     @tags = @q.result(distinct: true).page(params[:page]).per(12)
     @tag_count = @tags.count
-    @tag = " '#{ params[:q][:name_start] }' "
+    @tag = params[:q][:name_start]
     render "tags"
   end
   

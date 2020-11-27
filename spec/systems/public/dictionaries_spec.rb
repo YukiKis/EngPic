@@ -49,6 +49,7 @@ RSpec.describe "dictionary page", type: :system do
       fill_in "q_name_or_meaning_start", with: name
       click_button "検索"
       expect(current_path).to eq search_dictionary_path
+      expect(page).to have_content name
       user1.dictionary.words.active.where("words.name LIKE ?", "%#{ name }").each do |w|
         expect(page).to have_link "", href: word_path(w)
       end
@@ -58,6 +59,7 @@ RSpec.describe "dictionary page", type: :system do
       fill_in "q_name_or_meaning_start", with: meaning
       click_button "検索"
       expect(current_path).to eq search_dictionary_path
+      expect(page).to have_content meaning
       user1.dictionary.words.active.by_same_meaning(meaning).each do |w|
         expect(page).to have_link "", href: word_path(w)
       end
@@ -215,6 +217,9 @@ RSpec.describe "dictionary page", type: :system do
         expect(page).to have_css "#label-#{ i }"
         expect(page).to have_field "check[answer#{ i }]"
       end
+    end
+    it "has back link" do
+      expect(page).to have_link "Back", href: choose_dictionary_path
     end
   end
   

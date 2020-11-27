@@ -25,7 +25,7 @@ class Public::DictionariesController < ApplicationController
     @words = @active_words_in_dictionary.tagged_with(params[:tag]).page(params[:page]).per(12)
     @tags = @active_words_in_dictionary.tag_counts.sort_by { |t| t.name }[0..9]
     @word_count = @active_words_in_dictionary.tagged_with(params[:tag]).count
-    @tag = "'#{ params[:tag] }' "
+    @tag = params[:tag]
     render "show"
   end
   
@@ -63,9 +63,10 @@ class Public::DictionariesController < ApplicationController
   def search
     @words = @q.result.page(params[:page]).per(12)
     @tags = @active_words_in_dictionary.tag_counts.sort_by { |t| t.name }[0..9]
+    @tag = params[:q][:name_or_meaning_start]
+    @word_count = @q.result.count
     render "show"
   end
-    
 
   def add
     @word = Word.find(params[:id])

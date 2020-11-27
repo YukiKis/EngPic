@@ -45,6 +45,9 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_field "q_name_or_meaning_start"
       expect(page).to have_button "検索"
     end
+    it "has reset button for all words" do
+      expect(page).to have_link "All words", href: words_path
+    end
     it "can search by word_name" do
       fill_in "q_name_or_meaning_start", with: word1.name
       click_button "検索"
@@ -151,6 +154,9 @@ RSpec.describe "words page", js: true, type: :system do
     it "does not have edit button if not right user" do
       visit word_path(word2)
       expect(page).to have_no_link "Edit", href: edit_word_path(word2)
+    end
+    it "has back link" do
+      expect(page).to have_link "Back", href: words_path
     end
     it "has related words" do
       related_words = []
@@ -285,9 +291,6 @@ RSpec.describe "words page", js: true, type: :system do
     before do 
       visit tags_words_path
     end
-    it "has tag count" do
-      expect(page).to have_content Word.active.tag_counts.count
-    end
     it "has tag info" do
       Word.active.tag_counts.each do |t|
         expect(page).to have_link t.name, herf: tagged_words_path(t)
@@ -300,6 +303,9 @@ RSpec.describe "words page", js: true, type: :system do
     it "has tag-search form" do
       expect(page).to have_field "q[name_start]"
       expect(page).to have_button "検索"
+    end
+    it "has reset button for tags_words_path" do
+      expect(page).to have_link "All tags", href: tags_words_path
     end
     it "can search by tag" do
       tag = word1.tag_list.first

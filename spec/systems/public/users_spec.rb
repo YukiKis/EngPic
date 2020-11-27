@@ -190,6 +190,12 @@ RSpec.describe "users page", type: :system do
       visit edit_user_path(user2)
       expect(current_path).to eq user_path(user2)
     end
+    it "has image field" do
+      expect(page).to have_field "user[image]"
+    end
+    it "has back link" do
+      expect(page).to have_link "Back", href: user_path(user1)
+    end
     it "has field for name" do
       expect(page).to have_content "Name"
       expect(page).to have_field "user[name]", with: user1.name
