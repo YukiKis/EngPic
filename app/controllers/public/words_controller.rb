@@ -1,10 +1,11 @@
 class Public::WordsController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!
   before_action :setup_word, only: [:show, :edit, :update, :destroy]
   before_action :setup_q_for_tag, only: [:tags, :tag_search]
   before_action :setup_q_for_word, only: [:index, :tagged_words, :search, :same_name, :same_meaning]
   before_action :ready_table, only: [:index, :tagged_words, :search, :same_name, :same_meaning]
   before_action :clear_session_q
+  
   def index
     @words = Word.active.page(params[:page]).per(12)
     @word_count = Word.active.count

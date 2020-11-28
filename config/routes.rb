@@ -55,7 +55,6 @@ Rails.application.routes.draw do
 
     resource :dictionary, only: [:show, :create] do
       collection do
-        get "words"
         get "tags"
         match "tags/search" => "dictionaries#tag_search", via: [:get, :post], as: "tag_search"
         get "choose"
@@ -72,8 +71,7 @@ Rails.application.routes.draw do
 
   root "homes#top"
   get "/about", to: "homes#about"
-  get "/howto", to: "homes#howto"
-  
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
