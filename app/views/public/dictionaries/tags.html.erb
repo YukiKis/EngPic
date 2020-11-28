@@ -7,6 +7,7 @@
         <%= f.label :name_start, "タグ", class: "control-label", style: "font-size: 14px;" %>
         <%= f.text_field :name_start, class: "form-control" %>
         <%= f.submit "検索", class: "btn btn-default" %>
+        <%= link_to "All tags", tags_dictionary_path, class: "btn btn-default" %>
       <% end %>
       <br>
       <%= @tag_count %> tags in Total</h3>

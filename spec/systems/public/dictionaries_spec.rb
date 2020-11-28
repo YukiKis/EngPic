@@ -79,6 +79,9 @@ RSpec.describe "dictionary page", type: :system do
     it "has search field for tag" do
       expect(page).to have_field "q_name_start"
     end
+    it "has reset button for showing all tags" do
+      expect(page).to have_link "All tags", href: tags_dictionary_path
+    end
     it "can search tags by tag_name" do
       tag = word1.tag_list.first
       words = user1.dictionary.words.active.tagged_with(tag).sample(4)
