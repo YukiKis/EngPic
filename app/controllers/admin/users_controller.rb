@@ -1,8 +1,10 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
   before_action :setup, except: [:index, :search, :today]
+  before_action :clear_session_q, except: [:index, :today, :search]
   
   def index
+    session[:q] = "all"
     @users = User.order(:id).page(params[:page]).per(15)
     @q = User.ransack(params[:q])
   end
@@ -23,13 +25,19 @@ class Admin::UsersController < ApplicationController
   end
   
   def search
-    @q = User.ransack(params[:q])
+    case session[:q]
+    when "today"
+      @q = User.today.ransack(params[:q])
+    else
+      @q = User.ransack(params[:q])
+    end
     @users = @q.result(distinct: true).page(params[:page]).per(15)
     render "index"
   end
   
   def today
-    @q = User.ransack(params[:q])
+    session[:q] = "today"
+    @q = User.today.ransack(params[:q])
     @users = User.today.page(params[:page]).per(15)
     render "index"
   end

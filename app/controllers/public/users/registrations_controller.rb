@@ -13,7 +13,7 @@ class Public::Users::RegistrationsController < Devise::RegistrationsController
   def create
     user = User.find_by(email: params[:user][:email])
     if user && !(user.is_active)
-      user.update(email: "QUIT" + Time.now.to_s.gsub(" ", "") + user.email)
+      user.update(email: "quit" + Time.now.to_s.gsub(/\s|:/, "") + user.email)
     end
     super do |resource|
       if resource.save
