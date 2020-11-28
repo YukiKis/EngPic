@@ -7,6 +7,7 @@
         <%= f.label :name_start, "タグ", class: "control-label", style: "font-size: 14px;" %>
         <%= f.text_field :name_start, class: "form-control" %>
         <%= f.submit "検索", class: "btn btn-default" %>
+        <%= link_to "All tags", tags_dictionary_path, class: "btn btn-default" %>
       <% end %>
       <br>
       <%= @tag_count %> tags in Total</h3>
@@ -18,7 +19,7 @@
         <% @tags.each do |t| %>
           <tr>
             <td class="col-xs-6 col-sm-4"><%= link_to t.name, tagged_words_dictionary_path(t.name) %></td>
-            <td class="col-xs-6 col-sm-3"><%= @dictionary.words.tagged_with(t).count %> <%= "word".pluralize(@dictionary.words.tagged_with(t).count) %></td>
+            <td class="col-xs-6 col-sm-3"><%= @active_words_in_dictionary.tagged_with(t).count %> <%= "word".pluralize(@active_words_in_dictionary.tagged_with(t).count) %></td>
             <td class="hidden-xs col-sm-5">
               <% @dictionary.words.tagged_with(t).sample(4).each do |w| %>
                 <%= link_to word_path(w) do %>

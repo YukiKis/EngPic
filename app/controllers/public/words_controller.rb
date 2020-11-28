@@ -4,7 +4,7 @@ class Public::WordsController < ApplicationController
   before_action :setup_q_for_tag, only: [:tags, :tag_search]
   before_action :setup_q_for_word, only: [:index, :tagged_words, :search, :same_name, :same_meaning]
   before_action :ready_table, only: [:index, :tagged_words, :search, :same_name, :same_meaning]
-
+  before_action :clear_session_q
   def index
     @words = Word.active.page(params[:page]).per(12)
     @word_count = Word.active.count
@@ -12,8 +12,8 @@ class Public::WordsController < ApplicationController
   
   def tagged_words
     @words = Word.active.tagged_with(params[:tag]).page(params[:page]).per(12)
-    @word_count = @words.count
-    @tag = "'#{ params[:tag] }' "
+    @word_count = Word.active.tagged_with(params[:tag]).count
+    @tag = params[:tag]
     render "index"
   end
   
@@ -84,22 +84,22 @@ class Public::WordsController < ApplicationController
   
   def search
     @words = @q.result(distinct: true).page(params[:page]).per(12)
-    @word_count = @words.count
-    @tag = " '#{ params[:q][:name_or_meaning_start] }' "
+    @word_count = @q.result(distinct: true).count
+    @tag = params[:q][:name_or_meaning_start]
     render "index"
   end
   
   def same_name
     @words = Word.active.by_same_name(params[:name]).page(params[:page]).per(12)
-    @word_count = @words.count
-    @tag = " '#{ params[:name] }' "
+    @word_count = Word.active.by_same_name(params[:name]).count
+    @tag = params[:name]
     render "index"
   end
   
   def same_meaning
     @words = Word.active.by_same_meaning(params[:meaning]).page(params[:page]).per(12)
-    @word_count = @words.count
-    @tag = " '#{ params[:meaning] }' "
+    @word_count = Word.active.by_same_meaning(params[:meaning]).count
+    @tag = params[:meaning]
     render "index"
   end
   

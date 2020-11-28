@@ -2,9 +2,9 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <h3 class="heading">単語</h3>
-    <%= search_form_for @q, url: search_admin_words_path, class: "form-group", local: true do |f|  %>
+    <%= search_form_for @q, url: search_admin_words_path, class: "form-group form-inline", local: true do |f|  %>
       <%= f.label :name_or_meaning_or_start, "単語名 / 意味", class: "control-label" %>
-      <%= f.text_field :name_or_meaning_start, class: "control-form" %>
+      <%= f.text_field :name_or_meaning_start, class: "form-control" %>
       <%= f.submit "検索", class: "btn btn-default" %>
     <% end %>
     <table class="table table-hover">
