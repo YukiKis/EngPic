@@ -3,7 +3,7 @@ class Public::DictionariesController < ApplicationController
   before_action :setup
   before_action :setup_q_for_tag, only: [:tags, :tag_search]
   before_action :setup_q_for_word, only: [:show, :tagged_words, :search]
-  
+  before_action :clear_session_q
   def show    
     @words = @active_words_in_dictionary.page(params[:page]).per(12)
     @tags = @active_words_in_dictionary.tag_counts.sort_by { |t| t.name }[0..9]

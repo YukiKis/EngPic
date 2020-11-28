@@ -1,8 +1,10 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :clear_session_q, except: [:index, :followers, :followings, :search]
   before_action :setup_user, except: [:index, :search]
-  before_action :setup_q, only: [:index, :search]
   def index
+    session[:q] = "all"
+    @q = User.active.ransack(params[:q])
     @user = current_user # 検索フォームの表示非表示を切り替えるため
     @users = User.active.page(params[:page]).per(10)
   end
@@ -42,12 +44,14 @@ class Public::UsersController < ApplicationController
   end
   
   def followers
+    session[:q] = "followers"
     @q = @user.followers.active.ransack(params[:q])
     @users = @user.followers.active.page(params[:page]).per(10)
     render "index"
   end
   
   def followings
+    session[:q] = "followings"
     @q = @user.followings.active.ransack(params[:q])
     @users = @user.followings.active.page(params[:page]).per(10)
     render "index"
@@ -55,6 +59,14 @@ class Public::UsersController < ApplicationController
   
   def search
     @user = current_user # 検索フォームの表示非表示を切り替える為
+    case session[:q]
+    when "followers"
+      @q = @user.followers.active.ransack(params[:q])
+    when "followings"
+      @q = @user.followings.active.ransack(params[:q])
+    else
+      @q = User.all.active.ransack(params[:q])
+    end
     @users = @q.result(distinct: true).page(params[:page]).per(10)
     render "index"
   end
@@ -75,10 +87,6 @@ class Public::UsersController < ApplicationController
       unless @user.is_active
         redirect_to request.referer || user_path(current_user), notice: "そのユーザーはご覧いただけません。"
       end
-    end
-    
-    def setup_q
-      @q = User.active.ransack(params[:q])
     end
 
     def user_params
