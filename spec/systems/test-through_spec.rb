@@ -503,7 +503,7 @@ RSpec.describe "test-through", type: :system, js: true do
       click_link "", href: admin_user_path(@user1)
       expect(current_path).to eq admin_user_path(@user1)
       expect(page).to have_content "退会"
-      expect(page).to have_content "quit" + Time.now.to_s.gsub(" ", "") + @user1.email
+      expect(page).to have_content "quit" + Time.now.to_s.gsub(/\s|:/, "") + @user1.email
     end
   end
 end
