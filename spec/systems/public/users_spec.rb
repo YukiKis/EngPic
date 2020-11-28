@@ -41,6 +41,9 @@ RSpec.describe "users page", type: :system do
       expect(page).to have_field "q_name_start"
       expect(page).to have_button "検索"
     end
+    it "has button to reset" do
+      expect(page).to have_link "All users", href: users_path
+    end
     it "can search by user_name" do
       fill_in "q_name_start", with: user1.name
       click_button "検索"
