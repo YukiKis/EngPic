@@ -14,7 +14,7 @@ class Public::UsersController < ApplicationController
   end
 
   def edit
-    if @user !=current_user
+    if @user != current_user
       redirect_to user_path(@user)
     else
       @user = User.find(params[:id])
@@ -75,10 +75,12 @@ class Public::UsersController < ApplicationController
   end
   
   def quit
-    @user.is_active = false
-    @user.save
-    session.clear
-    redirect_to root_path, notice: "退会しました。またのご利用お待ちしております。"
+    if current_user = @user
+      @user.is_active = false
+      @user.save
+      session.clear
+      redirect_to root_path, notice: "退会しました。またのご利用お待ちしております。"
+    end
   end
   
   private
