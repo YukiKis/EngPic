@@ -69,6 +69,8 @@ ja:
               blank: "は必須項目です。"
             image:
               blank: "は必須項目です。"
+            tag_list:
+              too_long: "の数が多すぎます。(最大7個)"
   attributes:
     created_at: "作成日時"
     updated_at: "更新日時"

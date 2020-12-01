@@ -205,11 +205,19 @@ RSpec.describe "words page", js: true, type: :system do
       expect(page).to have_content "Tags"
       expect(page).to have_field "word[tag_list]", with: word1.tag_list
     end
+    it "has button for adding tags automatcally" do
+      expect(page).to have_field "word[is_auto]"
+    end
     it "has button to update a word" do
       expect(page).to have_button "Update!"
     end
     it "has button to delete a word" do
       expect(page).to have_link "Delete", href: word_path(word1)
+    end
+    it "is disabled if the word has more than 4 words" do
+      word1.update(tag_list: ["a", "b", "c", "d"])
+      visit current_path
+      expect(find("#word_is_auto")).to be_disabled
     end
     it "succeeds to update a word" do
       attach_file "word[image]", "#{ Rails.root }/spec/factories/noimage.jpg"
@@ -261,6 +269,9 @@ RSpec.describe "words page", js: true, type: :system do
     it "has field for tag-list" do
       expect(page).to have_content "Tags"
       expect(page).to have_field "word[tag_list]"
+    end
+    it "has button for adding tags automatcally" do
+      expect(page).to have_field "word[is_auto]"
     end
     it "has button to make a new word" do
       expect(page).to have_button "Create!"

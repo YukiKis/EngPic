@@ -9,6 +9,7 @@ class Word < ApplicationRecord
   validates :name, presence: true
   validates :meaning, presence: true
   validates :image, presence: true
+  validates :tag_list, length: { maximum: 7 }
   
   scope :by_same_name, ->(name){ where("words.name LIKE ?", "%#{ name }") }
   scope :by_same_meaning, ->(meaning){ where("meaning LIKE ?", "%#{ meaning }") }

@@ -32,13 +32,6 @@ $(document).on("turbolinks:load", function(){
     }
     reader.readAsDataURL(e.target.files[0]);
   });
-  $("#word_image").on("change", function(e){
-    var reader = new FileReader();
-    reader.onload = function(e){
-      $(".image").attr("src", e.target.result);
-    }
-    reader.readAsDataURL(e.target.files[0]);
-  });
   
   $("#theTarget").skippr({
     transition: "fade",
@@ -52,6 +45,27 @@ $(document).on("turbolinks:load", function(){
     keyboardOnAlways: true,
     hidePrevious: false
   });
+  
+  $("#word_image").on("change", function(e){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      $(".image").attr("src", e.target.result);  }
+    reader.readAsDataURL(e.target.files[0]);
+    $("#word_tag_list").val("");
+    $("#word_is_auto").prop("disabled", false);
+    $(".is-auto-label").text("自動でタグを追加する(3個)")
+  });
+  
+  $("#word_tag_list").on("change", function(){
+    var tag_list = $("#word_tag_list").val().split(",")
+    if(tag_list.length > 4){
+      $(".is-auto-label").text("タグ数が多すぎます");
+      $("#word_is_auto").prop("disabled", true);
+    }else{
+      $(".is-auto-label").text("自動でタグを追加する(3個)");
+      $("#word_is_auto").prop("disabled", false);
+    }
+  })
   
   $(".answer-card").on("mouseover", function(){
     $(this).find(".answer-form").stop(true).animate({ opacity: 1 }, 300);
@@ -119,4 +133,5 @@ $(document).on("turbolinks:load", function(){
       $(this).removeClass("invalid");
     }
   })
+  
 });
