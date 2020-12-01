@@ -51,6 +51,9 @@ $(document).on("turbolinks:load", function(){
     reader.onload = function(e){
       $(".image").attr("src", e.target.result);  }
     reader.readAsDataURL(e.target.files[0]);
+    $("#word_tag_list").val("");
+    $("#word_is_auto").prop("disabled", false);
+    $(".is-auto-label").text("自動でタグを追加する(3個)")
   });
   
   $(".answer-card").on("mouseover", function(){

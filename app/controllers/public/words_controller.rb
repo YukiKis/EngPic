@@ -53,7 +53,7 @@ class Public::WordsController < ApplicationController
           current_user.dictionary.add(@word)
           redirect_to word_path(@word)          
         end
-      else # safe searchに引っかかったとき
+      else # safe searchに引っかかったとき、既に保存したデータを削除、リダイレクト
         @word.destroy
         redirect_to new_word_path, notice: "先ほどの画像は不適切なため投稿出来ません。"
       end
@@ -75,8 +75,10 @@ class Public::WordsController < ApplicationController
   
   def update
     params = word_params.except(:is_auto)
+
     if @word.update(params)
-      if tags = Vision.get_image_data(@word.image) # vision apiからタグを持ってきて、問題ないとき
+      tags = Vision.get_image_data(@word.image) # vision apiからタグを持ってきて、問題ないとき
+      if tags != false
         if word_params[:is_auto] == "1"
           tags.each do |t|
             @word.tag_list << t
@@ -88,7 +90,9 @@ class Public::WordsController < ApplicationController
           current_user.dictionary.add(@word)
           redirect_to word_path(@word)          
         end
-      else # safe searchに引っかかったとき
+      else # safe searchに引っかかったとき、edit画面をrender
+        @word.image = open("#{ Rails.root }/app/assets/images/noimage.jpg")
+        @word.save
         @title = "Edit"
         @btn = "Update!"
         flash.now[:notice] = "先ほどの画像は不適切なため投稿出来ません。"

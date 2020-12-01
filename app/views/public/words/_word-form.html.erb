@@ -26,12 +26,13 @@
             <%= f.text_area :tag_list, class: "form-control" %>
           </div>
           <div class="form-group form-inline">
-            <% if word.tag_list.count > 5 %>
-              <%= f.label :is_auto, "タグ数が多すぎます", class: "control-form" %>
+            <% if word.tag_list.count >= 4 %>
+              <%= f.label :is_auto, "タグ数が多すぎます", class: "control-form is-auto-label" %>
               <%= f.check_box :is_auto, disabled: true, class: "form-control form-inline" %>
             <% else %>
-              <%= f.label :is_auto, "自動でタグを追加する", class: "control-form" %>
-              <%= f.check_box :is_auto, default: true, class: "form-control form-inline" %>
+              <%= f.label :is_auto, "自動でタグを追加する(3個)", class: "control-form is-auto-label" %>
+              <%= f.check_box :is_auto, default: true, class: "form-control form-inline" %><br>
+              <sapn>※既に自動追加されている場合は増加されません。</sapn><br>
             <% end %>
           </div>
           <%= f.submit "#{ btn }", class: "btn btn-primary" %>&emsp;
