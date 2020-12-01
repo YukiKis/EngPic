@@ -214,6 +214,11 @@ RSpec.describe "words page", js: true, type: :system do
     it "has button to delete a word" do
       expect(page).to have_link "Delete", href: word_path(word1)
     end
+    it "is disabled if the word has more than 4 words" do
+      word1.update(tag_list: ["a", "b", "c", "d"])
+      visit current_path
+      expect(find("#word_is_auto")).to be_disabled
+    end
     it "succeeds to update a word" do
       attach_file "word[image]", "#{ Rails.root }/spec/factories/noimage.jpg"
       fill_in "word[name]", with: "juice"
