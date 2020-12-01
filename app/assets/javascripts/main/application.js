@@ -56,6 +56,14 @@ $(document).on("turbolinks:load", function(){
     $(".is-auto-label").text("自動でタグを追加する(3個)")
   });
   
+  $("#word_tag_list").on("change", function(){
+    var tag_list = $("#word_tag_list").val().split(",")
+    if(tag_list.length >= 4){
+      $(".is-auto-label").text("タグ数が多すぎます");
+      $("#word_is_auto").prop("disabled", true);
+    }
+  })
+  
   $(".answer-card").on("mouseover", function(){
     $(this).find(".answer-form").stop(true).animate({ opacity: 1 }, 300);
   }).on("mouseout", function(){
