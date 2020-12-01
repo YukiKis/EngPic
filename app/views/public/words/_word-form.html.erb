@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
-    <h3 class="heading"><%= @title %> word</h3>
-    <%= render "layouts/error", resource: @word %>
+    <h3 class="heading"><%= title %> word</h3>
+    <%= render "layouts/error", resource: word %>
     <div class="row relative-class">
-      <%= form_with model: @word, local: true do |f| %>
+      <%= form_with model: word, local: true do |f| %>
         <div class="col-sm-4 col-sm-offset-1 text-center">
-          <%= attachment_image_tag @word, :image, class: "edit-img", fallback: "noimage.jpg" %>
+          <%= attachment_image_tag word, :image, class: "edit-img", fallback: "noimage.jpg" %>
           <%= f.attachment_field :image %>
         </div>
         <div class="z-index-1 col-sm-5 col-sm-offset-2">
@@ -25,8 +25,17 @@
             <%= f.label :tag_list, "Tags(カンマ区切りで入力)", class: "control-label" %>
             <%= f.text_area :tag_list, class: "form-control" %>
           </div>
-          <%= f.submit "#{ @btn }", class: "btn btn-primary" %>&emsp;
-            <% if @btn == "Update!" %>
+          <div class="form-group form-inline">
+            <% if word.tag_list.count > 5 %>
+              <%= f.label :is_auto, "タグ数が多すぎます", class: "control-form" %>
+              <%= f.check_box :is_auto, disabled: true, class: "form-control form-inline" %>
+            <% else %>
+              <%= f.label :is_auto, "自動でタグを追加する", class: "control-form" %>
+              <%= f.check_box :is_auto, default: true, class: "form-control form-inline" %>
+            <% end %>
+          </div>
+          <%= f.submit "#{ btn }", class: "btn btn-primary" %>&emsp;
+            <% if btn == "Update!" %>
             <%= link_to "Delete", word_path(@word), data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger", method: :delete %>
           <% end %>
         </div>

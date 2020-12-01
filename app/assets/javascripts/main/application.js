@@ -46,6 +46,13 @@ $(document).on("turbolinks:load", function(){
     hidePrevious: false
   });
   
+  $("#word_image").on("change", function(e){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      $(".image").attr("src", e.target.result);  }
+    reader.readAsDataURL(e.target.files[0]);
+  });
+  
   $(".answer-card").on("mouseover", function(){
     $(this).find(".answer-form").stop(true).animate({ opacity: 1 }, 300);
   }).on("mouseout", function(){

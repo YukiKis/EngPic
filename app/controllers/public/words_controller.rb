@@ -38,16 +38,25 @@ class Public::WordsController < ApplicationController
   end
   
   def create
-    @word = current_user.words.new(word_params)
+    params = word_params.except(:is_auto)
+    @word = current_user.words.new(params)
     if @word.save
-      tags = Vision.get_image_data(@word.image)
-      tags.each do |t|
-        @word.tag_list << t
-      end      
-      @word.save
-      debugger
-      current_user.dictionary.add(@word)
-      redirect_to word_path(@word)
+      if tags = Vision.get_image_data(@word.image) # vision apiからタグを持ってきて、問題ないとき
+        if word_params[:is_auto] == "1"
+          tags.each do |t|
+            @word.tag_list << t
+          end
+          @word.save
+          current_user.dictionary.add(@word)
+          redirect_to word_path(@word)
+        else
+          current_user.dictionary.add(@word)
+          redirect_to word_path(@word)          
+        end
+      else # safe searchに引っかかったとき
+        @word.destroy
+        redirect_to new_word_path, notice: "先ほどの画像は不適切なため投稿出来ません。"
+      end
     else
       @title = "New"
       @btn = "Create!"
@@ -65,17 +74,30 @@ class Public::WordsController < ApplicationController
   end
   
   def update
-    if @word.user != current_user
-      redirect_to word_path(@word)
-    else
-      if @word.update(word_params)
-        session[:image] = @word.image_id
-        redirect_to word_path(@word)
-      else
+    params = word_params.except(:is_auto)
+    if @word.update(params)
+      if tags = Vision.get_image_data(@word.image) # vision apiからタグを持ってきて、問題ないとき
+        if word_params[:is_auto] == "1"
+          tags.each do |t|
+            @word.tag_list << t
+          end
+          @word.save
+          current_user.dictionary.add(@word)
+          redirect_to word_path(@word)
+        else
+          current_user.dictionary.add(@word)
+          redirect_to word_path(@word)          
+        end
+      else # safe searchに引っかかったとき
         @title = "Edit"
         @btn = "Update!"
+        flash.now[:notice] = "先ほどの画像は不適切なため投稿出来ません。"
         render "edit"
       end
+    else
+      @title = "Edit"
+      @btn = "Update!"
+      render "edit"
     end
   end
   
@@ -126,7 +148,11 @@ class Public::WordsController < ApplicationController
   
   private
     def word_params
-      params.require(:word).permit(:name, :meaning, :image, :sentence, :tag_list)
+      params.require(:word).permit(:name, :meaning, :image, :sentence, :tag_list, :is_auto)
+    end
+    
+    def is_auto_params
+      params.require(:is_auto).permit(:true)
     end
     
     def setup_word

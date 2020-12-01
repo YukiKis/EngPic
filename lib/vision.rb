@@ -15,7 +15,10 @@ module Vision
           features: [
             {
               type: "LABEL_DETECTION"
-            }  
+            },
+            {
+              type: "SAFE_SEARCH_DETECTION"
+            }
           ]
         }]
       }.to_json
@@ -26,8 +29,12 @@ module Vision
       request = Net::HTTP::Post.new(uri.request_uri)
       request["Content-Type"] = "application/json"
       response = https.request(request, params)
-
-      JSON.parse(response.body)["responses"][0]["labelAnnotations"].pluck("description").take(3)
+      body = JSON.parse(response.body)["responses"][0]
+      if body["safeSearchAnnotation"].any? { |item| item[1] == "LIKELY" || item[1] == "VERY_LIKELY" }
+        return false
+      else
+        return body["labelAnnotations"].pluck("description").take(3)
+      end
     end
   end
 end
