@@ -58,9 +58,12 @@ $(document).on("turbolinks:load", function(){
   
   $("#word_tag_list").on("change", function(){
     var tag_list = $("#word_tag_list").val().split(",")
-    if(tag_list.length >= 4){
+    if(tag_list.length > 4){
       $(".is-auto-label").text("タグ数が多すぎます");
       $("#word_is_auto").prop("disabled", true);
+    }else{
+      $(".is-auto-label").text("自動でタグを追加する(3個)");
+      $("#word_is_auto").prop("disabled", false);
     }
   })
   
