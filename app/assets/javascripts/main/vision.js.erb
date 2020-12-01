@@ -1,0 +1,14 @@
+$(function(){
+var src = $("#word_image").attr("src")
+$("#word_image").on("change", function(e){
+  var reader = new FileReader();
+  reader.onload = function(e){
+    $(".image").attr("src", e.target.result);  }
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+<!--$("#word_image").on("change", function(){-->
+<!--  var tags = <%#= j(Vision.get_image_data(src)) %>;　-->
+<!--  $("#word_tag_list").val(tags)-->
+<!--  })-->
+})

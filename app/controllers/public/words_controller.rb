@@ -40,6 +40,12 @@ class Public::WordsController < ApplicationController
   def create
     @word = current_user.words.new(word_params)
     if @word.save
+      tags = Vision.get_image_data(@word.image)
+      tags.each do |t|
+        @word.tag_list << t
+      end      
+      @word.save
+      debugger
       current_user.dictionary.add(@word)
       redirect_to word_path(@word)
     else
